@@ -1,7 +1,0 @@
-Characters:
-Nymph:    Nymph
-?:        Unknown
-
-Dialogue:
-Nymph#bottom: ...
-?#top:        ...

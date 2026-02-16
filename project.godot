@@ -50,7 +50,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="VampireSurvivors cloned"
+config/name="MythSurvivors"
 run/main_scene="res://ui/Main.tscn"
 
 [autoload]

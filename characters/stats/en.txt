@@ -1,0 +1,5 @@
+atk: atk
+def: def
+evasion: eavsion
+hp: hp
+mana: mana

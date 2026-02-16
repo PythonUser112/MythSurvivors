@@ -1,0 +1,51 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=1]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=2]
+[ext_resource path="res://assets/skilltree/SkilltreeNode.gd" type="Script" id=3]
+[ext_resource path="res://assets/shaders/SkilltreeNode.gdshader" type="Shader" id=4]
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = ExtResource( 4 )
+shader_param/color = Plane( 1, 1, 1, 1 )
+shader_param/pix = 16.0
+shader_param/size = Vector2( 64, 64 )
+
+[sub_resource type="RichTextEffect" id=4]
+script = ExtResource( 1 )
+
+[node name="SkilltreeNode" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -856.0
+margin_bottom = -432.0
+script = ExtResource( 3 )
+active = true
+shift = Vector2( 40, 40 )
+
+[node name="GlowingCircle" type="ColorRect" parent="."]
+material = SubResource( 5 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 138.0
+margin_bottom = 138.0
+mouse_filter = 2
+mouse_default_cursor_shape = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 10.0
+margin_top = 90.0
+margin_right = 138.0
+margin_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource( 2 )
+custom_colors/default_color = Color( 0.5, 0.5, 0.5, 1 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]Skill[/jump_pulse][/center]"
+text = "
+Skill"
+scroll_active = false
+custom_effects = [ SubResource( 4 ) ]

@@ -1,0 +1,34 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ui/Main.gd" type="Script" id=2]
+[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
+[ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=5]
+
+[sub_resource type="DynamicFont" id=2]
+size = 32
+font_data = ExtResource( 5 )
+
+[sub_resource type="RichTextEffect" id=1]
+script = ExtResource( 3 )
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 4 )
+script = ExtResource( 2 )
+
+[node name="Stars" parent="." instance=ExtResource( 1 )]
+
+[node name="Title" type="RichTextLabel" parent="Stars"]
+margin_right = 1024.0
+margin_bottom = 80.0
+custom_fonts/normal_font = SubResource( 2 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]VampireSurvivors Cloned[/jump_pulse][/center]"
+text = "
+VampireSurvivors Cloned"
+scroll_active = false
+custom_effects = [ SubResource( 1 ) ]

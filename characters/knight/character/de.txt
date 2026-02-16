@@ -1,0 +1,6 @@
+- name: Artus
+- class: Ritter
+- playable_with: 0
+- xp: 0
+- weapon: sword
+- short_desc: Englands mutiger Ritter und König

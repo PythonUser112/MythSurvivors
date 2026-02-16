@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/LanguageSwitcher.gd" type="Script" id=2]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=3]
+
+[node name="LanguageSwitcher" type="MenuButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -910.0
+margin_bottom = -580.0
+theme = ExtResource( 3 )
+text = "Select Language"
+flat = false
+script = ExtResource( 2 )

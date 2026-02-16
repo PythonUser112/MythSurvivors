@@ -1,0 +1,6 @@
+fertigkeitsbaum_samen:
+- cost: 50
+- color: white
+- hp: 25
+- atk: 12.5
+- def: 12.5

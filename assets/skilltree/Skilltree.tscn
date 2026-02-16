@@ -1,0 +1,165 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://assets/skilltree/Skilltree.gd" type="Script" id=1]
+[ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=2]
+[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
+[ext_resource path="res://assets/images/barHorizontal_yellow_mid 200.png" type="Texture" id=5]
+[ext_resource path="res://assets/images/glassPanel_200.png" type="Texture" id=6]
+[ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://ui/UIButton.gd" type="Script" id=8]
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 3 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 0, 0, 0, 0.486275 )
+
+[sub_resource type="RichTextEffect" id=1]
+script = ExtResource( 3 )
+
+[sub_resource type="RichTextEffect" id=6]
+script = ExtResource( 3 )
+
+[sub_resource type="RichTextEffect" id=7]
+script = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=5]
+size = 24
+outline_size = 1
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 7 )
+
+[sub_resource type="RichTextEffect" id=4]
+script = ExtResource( 3 )
+
+[node name="Skilltree" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+theme = ExtResource( 4 )
+script = ExtResource( 1 )
+character_name = "example"
+
+[node name="InfoLayer" type="CanvasLayer" parent="."]
+
+[node name="CharacterLabel" type="RichTextLabel" parent="InfoLayer"]
+margin_right = 1024.0
+margin_bottom = 60.0
+mouse_filter = 2
+theme = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]Character[/jump_pulse][/center]
+[center][/center]"
+text = "
+Character
+"
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 2 ) ]
+
+[node name="SkillInformation" type="Panel" parent="InfoLayer"]
+margin_left = 1024.0
+margin_right = 1280.0
+margin_bottom = 600.0
+mouse_filter = 2
+theme = ExtResource( 4 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="SkillName" type="RichTextLabel" parent="InfoLayer/SkillInformation"]
+margin_right = 256.0
+margin_bottom = 48.0
+mouse_filter = 2
+theme = ExtResource( 4 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]Skill[/jump_pulse][/center]"
+text = "
+Skill"
+custom_effects = [ SubResource( 1 ) ]
+
+[node name="Attributes" type="RichTextLabel" parent="InfoLayer/SkillInformation"]
+margin_left = 10.0
+margin_top = 50.0
+margin_right = 246.0
+margin_bottom = 547.0
+bbcode_enabled = true
+custom_effects = [ SubResource( 6 ) ]
+__meta__ = {
+"_editor_description_": "[center]Hello
+Bye[/center]"
+}
+
+[node name="Costs" type="RichTextLabel" parent="InfoLayer/SkillInformation"]
+margin_top = 460.0
+margin_right = 236.0
+margin_bottom = 500.0
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]100 XP[/jump_pulse][/center]"
+text = "
+100 XP"
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 7 ) ]
+
+[node name="PurchaseButton" type="Control" parent="InfoLayer/SkillInformation"]
+margin_top = 500.0
+margin_right = 256.0
+margin_bottom = 600.0
+mouse_default_cursor_shape = 2
+script = ExtResource( 8 )
+text = "Purchase"
+margin = Vector2( 20, 20 )
+
+[node name="XPBar" type="TextureProgress" parent="InfoLayer"]
+margin_top = 570.0
+margin_right = 200.0
+margin_bottom = 600.0
+theme = ExtResource( 4 )
+max_value = 1000.0
+value = 500.0
+texture_over = ExtResource( 6 )
+texture_progress = ExtResource( 5 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/XPBar"]
+margin_top = -15.0
+margin_right = 200.0
+margin_bottom = 25.0
+custom_fonts/normal_font = SubResource( 5 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]500[/jump_pulse][/center]"
+text = "
+500"
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 4 ) ]
+
+[node name="Stars" parent="." instance=ExtResource( 2 )]
+margin_right = 2048.0
+margin_bottom = 1200.0
+mouse_filter = 2
+star_count = 1000
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, 300 )
+anchor_mode = 0
+current = true
+limit_left = 0
+limit_top = 0
+limit_right = 2048
+limit_bottom = 1200
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Connections" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+
+[node name="Skills" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2

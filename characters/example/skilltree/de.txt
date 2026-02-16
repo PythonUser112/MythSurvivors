@@ -1,0 +1,53 @@
+fertigkeitsbaum_samen:
+- atk: 25
+- color: white
+- cost: 50
+- def: 25
+- hp: 50
+angriff:
+- atk: 50
+- color: red
+- cost: 100
+- dep: fertigkeitsbaum_samen
+verteidigung:
+- color: yellow
+- cost: 100
+- def: 50
+- dep: fertigkeitsbaum_samen
+gesundheit:
+- color: green
+- cost: 100
+- dep: fertigkeitsbaum_samen
+- hp: 100
+magische_kraft:
+- color: purple
+- cost: 250
+- dep: angriff
+- dep: gesundheit
+- mana: 50
+ausweichen:
+- color: yellow
+- cost: 250
+- dep: verteidigung
+- evasion: 50
+unendlichkeit:
+- atk: 50
+- cost: 500
+- color: blue
+- def: 50
+- dep: angriff
+- dep: magische_kraft
+- hp: 100
+- mana: 50
+göttliche_kraft:
+- atk: 200
+- cost: 1000000
+- color: white
+- def: 200
+- dep: verteidigung
+- dep: ausweichen
+- dep: unendlichkeit
+- dep: magische_kraft
+- evasion: 200
+- hp: 1000
+- mana: 200

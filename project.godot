@@ -8,15 +8,61 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "RichTextEffect",
+"class": "JumpPulse",
+"language": "GDScript",
+"path": "res://assets/dialog/textfx/jump_pulse.gd"
+}, {
+"base": "RichTextEffect",
+"class": "RichTextGhost",
+"language": "GDScript",
+"path": "res://assets/dialog/textfx/ghost.gd"
+}, {
+"base": "RichTextEffect",
+"class": "RichTextMatrix",
+"language": "GDScript",
+"path": "res://assets/dialog/textfx/matrix.gd"
+}, {
+"base": "RichTextEffect",
+"class": "RichTextPulse",
+"language": "GDScript",
+"path": "res://assets/dialog/textfx/pulse.gd"
+}, {
+"base": "ColorRect",
+"class": "Stars",
+"language": "GDScript",
+"path": "res://assets/stars/Stars.gd"
+}, {
+"base": "Control",
+"class": "UIButton",
+"language": "GDScript",
+"path": "res://ui/UIButton.gd"
+} ]
+_global_script_class_icons={
+"JumpPulse": "",
+"RichTextGhost": "",
+"RichTextMatrix": "",
+"RichTextPulse": "",
+"Stars": "",
+"UIButton": ""
+}
+
 [application]
 
 config/name="VampireSurvivors cloned"
-run/main_scene="res://DemoVersion.tscn"
-config/icon="res://icon.png"
+run/main_scene="res://ui/Main.tscn"
 
 [autoload]
 
-Globals="*res://autoloads/globals.gd"
+IconManager="*res://assets/icons/icon_manager.gd"
+Skills="*res://characters/skills.gd"
+Characters="*res://characters/characters.gd"
+Locale="*res://ui/locale.gd"
+
+[debug]
+
+settings/stdout/print_fps=true
 
 [display]
 
@@ -60,7 +106,30 @@ right={
 select={
 "deadzone": 0.5,
 "events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777221,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":32,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":1,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+leave={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":16777220,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+zoom_in={
+"deadzone": 0.5,
+"events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":4,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":43,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":81,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+zoom_out={
+"deadzone": 0.5,
+"events": [ Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"pressed":false,"scancode":69,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":5,"pressed":false,"doubleclick":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":true,"meta":false,"command":true,"pressed":false,"scancode":45,"physical_scancode":0,"unicode":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 
@@ -84,4 +153,3 @@ common/enable_pause_aware_picking=true
 
 2d/snapping/use_gpu_pixel_snap=true
 environment/default_clear_color=Color( 0, 0, 0, 1 )
-environment/default_environment="res://default_env.tres"

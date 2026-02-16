@@ -1,0 +1,5 @@
+atk: Angriff
+def: Verteidigung
+evasion: Ausweichen
+hp: Gesundheit
+mana: Magische Kraft

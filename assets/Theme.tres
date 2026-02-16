@@ -1,0 +1,39 @@
+[gd_resource type="Theme" load_steps=11 format=2]
+
+[ext_resource path="res://assets/fonts/Jacquarda_Bastarda_9/JacquardaBastarda9-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=4]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=5]
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 20
+font_data = ExtResource( 2 )
+
+[sub_resource type="DynamicFont" id=7]
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 1, 1, 1, 0 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 2 )
+
+[resource]
+Button/fonts/font = SubResource( 3 )
+Label/fonts/font = SubResource( 1 )
+LineEdit/fonts/font = SubResource( 4 )
+ProgressBar/fonts/font = SubResource( 5 )
+RichTextLabel/fonts/normal_font = SubResource( 2 )
+TabContainer/fonts/font = SubResource( 7 )
+TabContainer/styles/panel = SubResource( 8 )
+TextEdit/fonts/font = SubResource( 6 )

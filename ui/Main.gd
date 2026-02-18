@@ -1,6 +1,9 @@
 extends Control
 
-func _ready():
+signal set_up
+
+func ready():
 	if OS.has_feature("developer"):
 # warning-ignore:return_value_discarded
 		get_tree().change_scene("res://developers/DeveloperMenu.tscn")
+	emit_signal("set_up")

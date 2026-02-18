@@ -1,0 +1,6 @@
+- name: Test
+- class: Test
+- playable_with: -1
+- xp: 500
+- weapon: none
+- short_desc: Testtesttest

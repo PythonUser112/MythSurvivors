@@ -3,6 +3,8 @@ shader_type canvas_item;
 uniform bool disabled;
 uniform float colors = 8;
 uniform vec2 pixels = vec2(200.0, 200.0);
+uniform float minrgb = 0.0;
+uniform float maxrgb = 1.0;
 
 void fragment() {
 	vec2 pos = round(pixels * UV) / pixels;
@@ -18,4 +20,6 @@ void fragment() {
 	else {
 		COLOR = round(colors * COLOR) / colors;
 	}
+	COLOR *= vec4(maxrgb - minrgb, maxrgb - minrgb, maxrgb - minrgb, 1.0);
+	COLOR += vec4(minrgb, minrgb, minrgb, 0);
 }

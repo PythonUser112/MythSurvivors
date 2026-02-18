@@ -28,6 +28,7 @@ func _ready():
 	color_rect.color = disabled_color
 	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	color_rect.rect_position = margin
+	color_rect.pause_mode = PAUSE_MODE_PROCESS
 	add_child(color_rect)
 	label = RichTextLabel.new()
 	label.rect_min_size = Vector2(100, 40)
@@ -38,8 +39,9 @@ func _ready():
 	label.bbcode_enabled = true
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.mouse_default_cursor_shape = CURSOR_POINTING_HAND
-	add_child(label)
 	label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
+	label.pause_mode = PAUSE_MODE_PROCESS
+	add_child(label)
 
 func _gui_input(event):
 	if event is InputEventMouseMotion:

@@ -1,0 +1,5 @@
+- name: Artus
+- class: knight
+- weapon: sword
+- short_desc: The brave king and knight of England
+- skill: Thousend Stigers

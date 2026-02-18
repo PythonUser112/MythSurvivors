@@ -59,6 +59,7 @@ IconManager="*res://assets/icons/icon_manager.gd"
 Skills="*res://characters/skills.gd"
 Characters="*res://characters/characters.gd"
 Locale="*res://ui/locale.gd"
+Modulate="*res://ui/Modulate.tscn"
 
 [debug]
 
@@ -66,6 +67,7 @@ settings/stdout/print_fps=true
 
 [display]
 
+window/per_pixel_transparency/allowed=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 

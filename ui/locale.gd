@@ -3,8 +3,8 @@ extends Node
 export (String) var lang = "en"
 
 var locales = {}
-
 var stat_translations = {}
+var language_select = {}
 
 func set_locale(locale):
 	Characters.characters = {}
@@ -21,6 +21,7 @@ func _ready():
 	for line in content:
 		if ": " in line:
 			locales[line.split(": ")[0]] = line.split(": ")[1]
+			language_select[line.split(": ")[0]] = line.split(": ")[2]
 	f.close()
 	for locale in locales:
 		f.open("res://characters/stats/%s.txt" % (locale), File.READ)

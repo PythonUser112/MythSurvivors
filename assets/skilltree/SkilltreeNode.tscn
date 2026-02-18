@@ -8,6 +8,7 @@
 [sub_resource type="ShaderMaterial" id=5]
 shader = ExtResource( 4 )
 shader_param/color = Plane( 1, 1, 1, 1 )
+shader_param/color_shades = 16.0
 shader_param/pix = 16.0
 shader_param/size = Vector2( 64, 64 )
 
@@ -33,6 +34,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 2
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
+pause_mode = 2
 margin_left = 10.0
 margin_top = 90.0
 margin_right = 138.0

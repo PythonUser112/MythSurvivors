@@ -1,6 +1,0 @@
-- name: Artus
-- class: knight
-- playable_with: 0
-- xp: 0
-- weapon: sword
-- short_desc: The brave king and knight of England

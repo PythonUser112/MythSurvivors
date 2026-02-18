@@ -1,6 +1,6 @@
 extends Node
 
-const character_file = "res://characters/%s/character/%s.txt"
+const character_file = "res://characters/%s/character.txt"
 var characters = {}
 
 class Character:
@@ -12,7 +12,7 @@ class Character:
 
 	func _init(character):
 		var f = File.new()
-		if not f.file_exists(character_file % [character, Locale.lang]):
+		if not f.file_exists(character_file % character):
 			push_error("Character '%s' doesn't exist!" %(character))
 		self.skilltree = Skills.get_skilltree(character)
 

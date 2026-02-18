@@ -5,9 +5,10 @@ code = "shader_type canvas_item;
 
 uniform vec4 bg_color = vec4(0, 0, 0.1, 1);
 uniform float speed = 5;
-uniform vec2 position;
+uniform float intensity = 1;
+uniform float glow = 0.25;
 
 void fragment() {
-	float visibility = (sin((TIME + position.x + position.y) * speed) + 1.0) / 2.0;
+	float visibility = (sin((TIME + SCREEN_UV.x + SCREEN_UV.y) * speed) + 1.0) / 2.0 * (intensity - glow) + glow;
 	COLOR = bg_color * (1.0 - visibility) + vec4(1, 1, 1, 1) * visibility;
 }"

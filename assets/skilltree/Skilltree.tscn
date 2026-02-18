@@ -44,6 +44,7 @@ character_name = "example"
 [node name="InfoLayer" type="CanvasLayer" parent="."]
 
 [node name="CharacterLabel" type="RichTextLabel" parent="InfoLayer"]
+pause_mode = 2
 margin_right = 1024.0
 margin_bottom = 60.0
 mouse_filter = 2
@@ -124,6 +125,7 @@ texture_over = ExtResource( 6 )
 texture_progress = ExtResource( 5 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="InfoLayer/XPBar"]
+pause_mode = 2
 margin_top = -15.0
 margin_right = 200.0
 margin_bottom = 25.0

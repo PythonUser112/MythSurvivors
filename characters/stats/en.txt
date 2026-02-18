@@ -1,5 +1,5 @@
-atk: atk
-def: def
-evasion: eavsion
-hp: hp
-mana: mana
+atk: Attack
+def: Defense
+evasion: Evasion
+hp: Health
+mana: Mana

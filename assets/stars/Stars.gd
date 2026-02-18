@@ -21,8 +21,9 @@ func _ready():
 		star.rect_position = Vector2(x, y)
 		star.material = ShaderMaterial.new()
 		star.material.shader = star_shader
+		star.material.set_shader_param("speed", (randi() % 100 + 1) / 50.0 * star_blink_speed)
 		star.material.set_shader_param("bg_color", color)
-		star.material.set_shader_param("speed", star_blink_speed * float(randi() % 100) / 50)
-		star.material.set_shader_param("position", star.rect_position / rect_size)
+		star.material.set_shader_param("glow", (randi() % 100) / 200.0)
+		star.material.set_shader_param("intensity", (randi() % 100) / 200.0 + 0.5)
 		add_child(star)
 

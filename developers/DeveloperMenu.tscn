@@ -15,7 +15,7 @@ font_data = ExtResource( 4 )
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 3 )
 
-[node name="DeveloperMenu" type="Control"]
+[node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 2 )
@@ -38,22 +38,22 @@ margin_bottom = 600.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/CenterContainer"]
 margin_left = 362.0
-margin_top = 250.0
+margin_top = 230.0
 margin_right = 662.0
-margin_bottom = 350.0
+margin_bottom = 370.0
 rect_min_size = Vector2( 240, 68 )
 alignment = 1
 
 [node name="SkilltreeButton" type="Control" parent="MainContainer/CenterContainer/VBoxContainer"]
 margin_right = 300.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 300, 100 )
+margin_bottom = 140.0
+rect_min_size = Vector2( 300, 140 )
 mouse_default_cursor_shape = 2
 script = ExtResource( 6 )
 text = "View example Skilltree"
-margin = Vector2( 20, 20 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainContainer"]
+pause_mode = 2
 margin_right = 1024.0
 margin_bottom = 48.0
 custom_fonts/normal_font = SubResource( 2 )
@@ -74,8 +74,6 @@ margin_bottom = 40.0
 theme = ExtResource( 2 )
 
 [node name="LanguageSwitcher" parent="HUD/Control" instance=ExtResource( 7 )]
-margin_right = -824.0
-margin_bottom = -17.0
 
 [node name="ExitButton" type="Button" parent="HUD/Control"]
 margin_left = 824.0
@@ -85,4 +83,4 @@ text = "Exit test"
 
 [connection signal="button_up" from="MainContainer/CenterContainer/VBoxContainer/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
 [connection signal="locale_changed" from="HUD/Control/LanguageSwitcher" to="." method="_on_LanguageSwitcher_locale_changed"]
-[connection signal="pressed" from="HUD/Control/ExitButton" to="." method="_on_ExitButton_pressed"]
+[connection signal="button_down" from="HUD/Control/ExitButton" to="." method="_on_ExitButton_pressed"]

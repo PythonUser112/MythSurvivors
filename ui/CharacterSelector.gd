@@ -3,6 +3,8 @@ extends Control
 export (String) var character
 export (bool) var disabled = false
 
+signal selected
+
 func _ready():
 	$Picture.texture = load("res://characters/%s/images/CharacterSelection.png" % character)
 	var char_name = Characters.get_character(character)
@@ -13,3 +15,6 @@ func _ready():
 		$Name.bbcode_text = "\n[center][jump_pulse]?[/jump_pulse][/center]"
 		$ShortDesc.hide()
 	$SelectButton.disabled = disabled
+
+func _on_SelectButton_pressed():
+	emit_signal("selected")

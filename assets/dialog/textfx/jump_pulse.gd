@@ -5,6 +5,9 @@ class_name JumpPulse
 
 var bbcode = "jump_pulse"
 
+func _ready():
+	pass
+
 func _process_custom_fx(char_fx):
 	var amp = char_fx.env.get("amp", 25)
 	var freq = char_fx.env.get("freq", 1)

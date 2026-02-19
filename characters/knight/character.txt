@@ -6,3 +6,5 @@
 - def: 0
 - evasion: 0
 - mana: 0
+- crit: 10
+- speed: 100

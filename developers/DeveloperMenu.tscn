@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/stars/Stars.gd" type="Script" id=1]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://developers/DeveloperMenu.gd" type="Script" id=5]
 [ext_resource path="res://ui/UIButton.gd" type="Script" id=6]
 [ext_resource path="res://ui/LanguageSwitcher.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/VButtonMenu.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -33,24 +34,36 @@ color = Color( 0, 0, 0.188235, 1 )
 script = ExtResource( 1 )
 
 [node name="CenterContainer" type="CenterContainer" parent="MainContainer"]
+margin_top = 100.0
 margin_right = 1024.0
 margin_bottom = 600.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainContainer/CenterContainer"]
-margin_left = 362.0
-margin_top = 230.0
-margin_right = 662.0
-margin_bottom = 370.0
+[node name="VButtonMenu" type="VBoxContainer" parent="MainContainer/CenterContainer"]
+margin_left = 392.0
+margin_top = 148.0
+margin_right = 632.0
+margin_bottom = 352.0
 rect_min_size = Vector2( 240, 68 )
 alignment = 1
+script = ExtResource( 8 )
 
-[node name="SkilltreeButton" type="Control" parent="MainContainer/CenterContainer/VBoxContainer"]
-margin_right = 300.0
-margin_bottom = 140.0
-rect_min_size = Vector2( 300, 140 )
+[node name="SkilltreeButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
+pause_mode = 2
+margin_right = 240.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 140, 100 )
 mouse_default_cursor_shape = 2
 script = ExtResource( 6 )
 text = "View example Skilltree"
+
+[node name="BackButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
+pause_mode = 2
+margin_top = 104.0
+margin_right = 240.0
+margin_bottom = 204.0
+rect_min_size = Vector2( 140, 100 )
+script = ExtResource( 6 )
+text = "Main Menu"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainContainer"]
 pause_mode = 2
@@ -81,6 +94,7 @@ margin_right = 1024.0
 margin_bottom = 23.0
 text = "Exit test"
 
-[connection signal="button_up" from="MainContainer/CenterContainer/VBoxContainer/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
+[connection signal="button_up" from="MainContainer/CenterContainer/VButtonMenu/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
+[connection signal="button_down" from="MainContainer/CenterContainer/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="locale_changed" from="HUD/Control/LanguageSwitcher" to="." method="_on_LanguageSwitcher_locale_changed"]
 [connection signal="button_down" from="HUD/Control/ExitButton" to="." method="_on_ExitButton_pressed"]

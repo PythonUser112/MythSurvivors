@@ -7,7 +7,7 @@ signal selected
 
 func _ready():
 	$Picture.texture = load("res://characters/%s/images/CharacterSelection.png" % character)
-	var char_name = Characters.get_character(character)
+	var character = Characters.get_character(character)
 	$Picture.material.set_shader_param("disabled", disabled)
 	$Picture.material.set_shader_param("colors", 8.0)
 	$Picture.material.set_shader_param("pixels", Vector2(200.0, 200.0))

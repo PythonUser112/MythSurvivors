@@ -38,6 +38,11 @@ _global_script_classes=[ {
 "class": "UIButton",
 "language": "GDScript",
 "path": "res://ui/UIButton.gd"
+}, {
+"base": "VBoxContainer",
+"class": "VButtonMenu",
+"language": "GDScript",
+"path": "res://ui/VButtonMenu.gd"
 } ]
 _global_script_class_icons={
 "JumpPulse": "",
@@ -45,7 +50,8 @@ _global_script_class_icons={
 "RichTextMatrix": "",
 "RichTextPulse": "",
 "Stars": "",
-"UIButton": ""
+"UIButton": "",
+"VButtonMenu": ""
 }
 
 [application]

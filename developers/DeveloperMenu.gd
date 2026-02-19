@@ -2,6 +2,11 @@ extends Control
 
 var scene
 
+func _ready():
+	Modulate.fade_in()
+	yield(Modulate, "finished")
+	$MainContainer/CenterContainer/VButtonMenu.activate()
+
 func _on_SkilltreeButton_pressed():
 	Modulate.fade_out()
 	yield(Modulate, "finished")
@@ -18,6 +23,8 @@ func _on_ExitButton_pressed():
 	$MainContainer.show()
 	$HUD.hide()
 	Modulate.fade_in()
+	yield(Modulate, "finished")
+	$MainContainer/CenterContainer/VButtonMenu.activate()
 
 func _on_LanguageSwitcher_locale_changed():
 	Modulate.fade_out()
@@ -29,3 +36,7 @@ func _on_LanguageSwitcher_locale_changed():
 	add_child(scene)
 	Modulate.fade_in()
 
+func _on_BackButton_button_down():
+	Modulate.fade_out()
+	yield(Modulate, "finished")
+	get_tree().change_scene("res://ui/Main.tscn")

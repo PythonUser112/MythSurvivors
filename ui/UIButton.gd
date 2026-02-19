@@ -13,7 +13,7 @@ export (Color) var normal_color = Color(0.35, 0.35, 0.35)
 export (Color) var focus_color = Color(0.5, 0.5, 0.5)
 export (Color) var pressed_color = Color(0.75, 0.75, 0.75)
 
-export (Vector2) var margin = Vector2(40, 40)
+export (Vector2) var margin = Vector2(20, 20)
 
 export (bool) var focused
 export (bool) var disabled
@@ -24,6 +24,8 @@ var label
 var jump_pulse
 
 func _ready():
+	pause_mode = PAUSE_MODE_PROCESS
+	rect_min_size = Vector2(100, 60) + 2 * margin
 	color_rect = ColorRect.new()
 	color_rect.color = disabled_color
 	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -31,7 +33,7 @@ func _ready():
 	color_rect.pause_mode = PAUSE_MODE_PROCESS
 	add_child(color_rect)
 	label = RichTextLabel.new()
-	label.rect_min_size = Vector2(100, 40)
+	label.rect_min_size = Vector2(100, 60)
 	jump_pulse = JumpPulse.new()
 	label.install_effect(jump_pulse)
 	label.rect_position = margin
@@ -55,6 +57,13 @@ func _gui_input(event):
 			emit_signal("button_up")
 
 func _process(_delta):
+	if focused:
+		if Input.is_action_just_pressed("ui_accept"):
+			pressed = true
+			emit_signal("button_down")
+		if Input.is_action_just_released("ui_accept"):
+			pressed = false
+			emit_signal("button_up")
 	if disabled:
 		color_rect.color = disabled_color
 	elif pressed:

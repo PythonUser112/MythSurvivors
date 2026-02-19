@@ -45,6 +45,7 @@ anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
 character = "knight"
+disabled = true
 
 [node name="Name" type="RichTextLabel" parent="."]
 margin_right = 200.0

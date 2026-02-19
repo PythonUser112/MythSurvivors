@@ -1,4 +1,4 @@
-- name: Artus
+- name: König Artus
 - class: Ritter
 - weapon: Schwert
 - short_desc: Englands mutiger Ritter und König

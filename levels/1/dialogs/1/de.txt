@@ -1,0 +1,37 @@
+Characters:
+?: nymph
+Hildegard: nymph
+Helena: nymph
+Artus: knight
+Apollo: apollo
+Pan: pan
+
+Dialog:
+#Scene temple
+- Apollo#top: Warum heißt diese Nymphe da Sonnennymphe, obwohl ich doch viel sonniger, schöner, geiler und sonniger bin?
+- Pan#bottom: Nun, sie ist halt die strahlendste...
+- Apollo#top: Das stimmt nicht! Strahlend bin nur ICH!!!
+- Pan#bottom: Herr, beruhigt Euch! Diese Aufregung ist Euch abgeraten und ...
+- Apollo#top: SCHWEIG!!! Sperre diese Nymphe ein!
+#Scene forest
+- Pan#top: Sind Sie Hildegard, die Sonnennymphe?
+- Hildegard#bottom: Ja, wieso?
+- Pan#top: Weil sie nun aufgrund von Apollos Ungehagen wegen Ihres neuen Titels in der Gemeinschaft und im Rat der Nymphen in diesen ausbruchsicheren Käfig gesperrt werdet.
+- Hildegard#bottom: Das ist aber gar nicht nett.
+- Pan#top: Befehl ist Befehl!
+#Scene forest
+- ?#top: Sie da, kommen Sie mal her!
+- Artus#bottom: Wer sind den Sie?
+- Helena#top: Oh, ich bin Helena, die Stellvertretende Vorsitzende im Rat der Nymphen.
+- Artus#bottom: Nymphen? Wir sind doch nicht etwa in Disneyland!?
+- Helena#top: Laut Blitz 20 Absatz 1 Göttergesetzbuch ist das Offenbaren von Übernatürlichen Wesen den Göttern und GodTok® vorbehalten.
+- Artus#bottom: ???
+- Helena#top: Auf jeden Fall ist Hildegard, die Vorsitzende des Rates der Nymphen entführt worden.
+- Artus#bottom: "Hildegard"? Ist sie Deutsche?
+- Helena#top: Wen juckt's?
+- Artus#bottom: ...
+- Artus#bottom: Wohin wurde sie gebracht?
+- Helena#top: Nach Norden.
+- Artus#bottom: Und ich muss ...?
+- Helena#top: Auf jeden Fall!
+- Artus#bottom: Danke!

@@ -1,0 +1,117 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://assets/stars/Stars.gd" type="Script" id=1]
+[ext_resource path="res://characters/knight/images/CharacterSelection.png" type="Texture" id=2]
+[ext_resource path="res://assets/shaders/PictureShader.gdshader" type="Shader" id=3]
+[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=4]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=5]
+[ext_resource path="res://ui/PictureRect.gd" type="Script" id=6]
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 3 )
+shader_param/disabled = null
+shader_param/colors = 8.0
+shader_param/pixels = Vector2( 200, 200 )
+shader_param/minrgb = 0.0
+shader_param/maxrgb = 1.0
+
+[sub_resource type="RichTextEffect" id=4]
+script = ExtResource( 4 )
+
+[sub_resource type="RichTextEffect" id=3]
+script = ExtResource( 4 )
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 4 )
+
+[node name="PictureRect" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -804.0
+margin_bottom = -380.0
+theme = ExtResource( 5 )
+script = ExtResource( 6 )
+
+[node name="Side1" type="ColorRect" parent="."]
+margin_right = 220.0
+margin_bottom = 220.0
+mouse_filter = 2
+
+[node name="ColorRect" type="ColorRect" parent="Side1"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 210.0
+margin_bottom = 210.0
+mouse_filter = 2
+color = Color( 0, 0, 0.486275, 1 )
+script = ExtResource( 1 )
+star_count = 50
+
+[node name="TextureRect" type="TextureRect" parent="Side1/ColorRect"]
+material = SubResource( 1 )
+margin_right = 100.0
+margin_bottom = 100.0
+rect_scale = Vector2( 2, 2 )
+mouse_filter = 2
+texture = ExtResource( 2 )
+
+[node name="Title" type="RichTextLabel" parent="Side1/ColorRect"]
+margin_right = 200.0
+margin_bottom = 50.0
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]König Artus[/jump_pulse][/center]"
+text = "
+König Artus"
+scroll_active = false
+custom_effects = [ SubResource( 4 ) ]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Side1/ColorRect"]
+margin_top = 150.0
+margin_right = 200.0
+margin_bottom = 200.0
+mouse_filter = 2
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]Klick mich an![/jump_pulse][/center]"
+text = "
+Klick mich an!"
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 3 ) ]
+
+[node name="Side2" type="ColorRect" parent="."]
+visible = false
+margin_right = 220.0
+margin_bottom = 220.0
+
+[node name="ColorRect" type="ColorRect" parent="Side2"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 210.0
+margin_bottom = 210.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Side2/ColorRect"]
+margin_right = 200.0
+margin_bottom = 200.0
+mouse_filter = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Side2/ColorRect/CenterContainer"]
+margin_top = 34.0
+margin_right = 200.0
+margin_bottom = 166.0
+rect_min_size = Vector2( 200, 0 )
+mouse_filter = 2
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse]Artus, der tapfere (und coole) Ritter, der auch an den Kreuzzügen beteiligt war (doch nicht so cool)
+"
+text = "
+Artus, der tapfere (und coole) Ritter, der auch an den Kreuzzügen beteiligt war (doch nicht so cool)
+"
+fit_content_height = true
+custom_effects = [ SubResource( 2 ) ]
+
+[node name="Tween" type="Tween" parent="."]

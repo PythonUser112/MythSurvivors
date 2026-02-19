@@ -1,0 +1,30 @@
+Skilltree by Orteil/Cookieclicker
+Characters based on One Piece & Genshin Impact
+Gameplay by Spacebot Interactive/Dragonyhm & VampireSurvivors
+Stories by varius authors, e.g. Homer, Ovid, Rick Riordan, ...
+Code: Tim
+Characters: Hannah
+Graphics: Shai
+Stories: Siri
+Music: Tim, Shai
+Testing: Tamara, Adrian, Pascal
+Stuff no one needs: everyone
+Engine: Juan Linietsky, Ariel Manzur
+Also Thanks to
+- Framework for Hardware
+- Fairlight & fr for Graphical & Musical Entertainment
+- RBG Wendlingen for Management Solutions
+- GitHub for File Sharing
+- The Open Source Community for Software we needed
+- The MIT for Scratch
+- Vercel with DOOM-Captcha for our Installer Concept
+- Teams for bringing us together <- NOOO!!! DELETE THIS FAST!!!
+- Hoyoverse for Genshin Impact - what a wonderful game!
+- and much mre people who shall stay unnamed
+
+And we thank YOU for playing this!
+
+©2026 by GodTok® Olympus Mons™
+We love to let you hate each other!
+
+PS: This is based on existing stories

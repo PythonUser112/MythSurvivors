@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/HButtonMenu.gd" type="Script" id=1]
+
+[node name="HButtonMenu" type="HBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 1 )

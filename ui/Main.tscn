@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/Main.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://ui/UIButton.gd" type="Script" id=6]
 [ext_resource path="res://ui/VButtonMenu.gd" type="Script" id=7]
+[ext_resource path="res://ui/HButtonMenu.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=2]
 size = 32
@@ -20,6 +21,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="Stars" parent="." instance=ExtResource( 1 )]
 
@@ -56,7 +59,6 @@ margin_bottom = 100.0
 rect_min_size = Vector2( 140, 100 )
 script = ExtResource( 6 )
 text = "Play"
-disabled = true
 
 [node name="SettingsButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
@@ -94,9 +96,9 @@ margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SpecialMenu"]
 margin_left = 30.0
-margin_top = 96.0
+margin_top = 148.0
 margin_right = 170.0
-margin_bottom = 404.0
+margin_bottom = 352.0
 script = ExtResource( 7 )
 
 [node name="DeveloperButton" type="Control" parent="SpecialMenu/VButtonMenu"]
@@ -109,6 +111,7 @@ text = "Developer Menu"
 
 [node name="GodTokButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
+visible = false
 margin_top = 104.0
 margin_right = 140.0
 margin_bottom = 204.0
@@ -119,14 +122,32 @@ disabled = true
 
 [node name="BackButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
-margin_top = 208.0
+margin_top = 104.0
 margin_right = 140.0
-margin_bottom = 308.0
+margin_bottom = 204.0
 rect_min_size = Vector2( 140, 100 )
 script = ExtResource( 6 )
 text = "Back"
 
-[node name="Tween" type="Tween" parent="."]
+[node name="CharacterSelector" type="ScrollContainer" parent="."]
+margin_left = 1024.0
+margin_top = 100.0
+margin_right = 1848.0
+margin_bottom = 492.0
+rect_min_size = Vector2( 824, 400 )
+scroll_vertical_enabled = false
+
+[node name="CenterContainer" type="CenterContainer" parent="CharacterSelector"]
+margin_right = 824.0
+margin_bottom = 380.0
+rect_min_size = Vector2( 824, 380 )
+
+[node name="HButtonMenu" type="HBoxContainer" parent="CharacterSelector/CenterContainer"]
+margin_left = 412.0
+margin_top = 190.0
+margin_right = 412.0
+margin_bottom = 190.0
+script = ExtResource( 8 )
 
 [connection signal="button_down" from="MainMenu/VButtonMenu/PlayButton" to="." method="_on_PlayButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/SettingsButton" to="." method="_on_SettingsButton_button_down"]

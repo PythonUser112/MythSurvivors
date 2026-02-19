@@ -39,4 +39,5 @@ func _on_LanguageSwitcher_locale_changed():
 func _on_BackButton_button_down():
 	Modulate.fade_out()
 	yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ui/Main.tscn")

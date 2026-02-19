@@ -42,9 +42,14 @@ script = ExtResource( 3 )
 material = SubResource( 6 )
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -824.0
+margin_bottom = -220.0
+rect_min_size = Vector2( 200, 380 )
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
-character = "knight"
+character_name = "knight"
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="Name" type="RichTextLabel" parent="."]
 margin_right = 200.0
@@ -80,13 +85,14 @@ scroll_following = true
 custom_effects = [ SubResource( 4 ) ]
 
 [node name="SelectButton" type="Control" parent="."]
+pause_mode = 2
 margin_top = 300.0
 margin_right = 200.0
 margin_bottom = 380.0
+rect_min_size = Vector2( 120, 80 )
 script = ExtResource( 6 )
 text = "Select"
 margin = Vector2( 10, 10 )
 
-[node name="Tween" type="Tween" parent="."]
-
-[connection signal="button_down" from="SelectButton" to="." method="_on_SelectButton_pressed"]
+[connection signal="button_down" from="SelectButton" to="." method="_on_SelectButton_button_down"]
+[connection signal="button_up" from="SelectButton" to="." method="_on_SelectButton_button_up"]

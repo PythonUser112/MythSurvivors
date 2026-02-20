@@ -166,6 +166,7 @@ margin_bottom = 100.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
 text = "Select Language"
+disabled = true
 
 [node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2

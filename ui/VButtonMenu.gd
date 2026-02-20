@@ -11,10 +11,19 @@ var selected: int = 0
 
 func update():
 	buttons = []
+	var i = 0
 	for child in get_children():
-		if not child.is_connected("button_down", self, "deactivate"):
-			child.connect("button_down", self, "deactivate")
+		child.id = i
+		if not child.is_connected("button_up", self, "deactivate"):
+			child.connect("button_up", self, "deactivate")
+			child.connect("focused", self, "focus_changed")
 		buttons.append(child)
+		i += 1
+
+func focus_changed(id):
+	if id != selected:
+		buttons[selected].focused = false
+		selected = id
 
 func deactivate():
 	active = false
@@ -40,6 +49,8 @@ func activate():
 			break
 
 func _process(_delta):
+	if not buttons:
+		update()
 	if active and is_visible_in_tree():
 		if Input.is_action_just_pressed("ui_down"):
 			buttons[selected].focused = false

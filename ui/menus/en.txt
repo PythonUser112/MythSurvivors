@@ -4,3 +4,12 @@ Main
 - Special
 - Credits
 - Exit
+Special
+- Developer Menu
+- GodTok®
+- Back
+Settings
+- Select Language
+- Back
+Language
+- Back

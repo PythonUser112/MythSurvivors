@@ -1,2 +1,2 @@
-de: Deutsch: Sprachauswahl
-en: English: Select Language
+de: Deutsch
+en: English

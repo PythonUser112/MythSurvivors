@@ -94,7 +94,7 @@ margin_right = 1024.0
 margin_bottom = 23.0
 text = "Exit test"
 
-[connection signal="button_up" from="MainContainer/CenterContainer/VButtonMenu/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
+[connection signal="button_down" from="MainContainer/CenterContainer/VButtonMenu/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
 [connection signal="button_down" from="MainContainer/CenterContainer/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="locale_changed" from="HUD/Control/LanguageSwitcher" to="." method="_on_LanguageSwitcher_locale_changed"]
 [connection signal="button_down" from="HUD/Control/ExitButton" to="." method="_on_ExitButton_pressed"]

@@ -7,10 +7,9 @@ var langs = []
 func change_lang(id):
 	emit_signal("locale_changed")
 	Locale.set_locale(langs[id])
-	text = Locale.language_select[Locale.lang]
 
 func _ready():
-	text = Locale.language_select[Locale.lang]
+	text = "Select Language"
 	for lang in Locale.locales:
 		langs.append(lang)
 		get_popup().add_item(Locale.locales[lang])

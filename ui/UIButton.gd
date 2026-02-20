@@ -5,9 +5,12 @@ class_name UIButton
 
 signal button_down
 signal button_up
+signal focused
 
 export (String) var text
 var old_text
+
+export (int) var id
 
 export (Color) var disabled_color = Color(0, 0, 0)
 export (Color) var normal_color = Color(0.35, 0.35, 0.35)
@@ -26,7 +29,10 @@ var jump_pulse
 
 func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
-	rect_min_size = Vector2(100, 60) + 2 * margin
+	if rect_min_size < Vector2(100, 60) + 2 * margin:
+		rect_min_size = Vector2(100, 60) + 2 * margin
+	if rect_min_size.x < 180:
+		rect_min_size.x = 180
 	color_rect = ColorRect.new()
 	color_rect.color = disabled_color
 	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -49,14 +55,18 @@ func _ready():
 
 func _gui_input(event):
 	if event is InputEventMouseMotion:
-		focused = event.position > margin and event.position < rect_size - margin and not disabled
+		if event.position > margin and event.position < rect_size - margin and not disabled:
+			focused = true
+			emit_signal("focused", id)
+		else:
+			focused = false
 	if focused:
-		if event is InputEventMouseButton and event.pressed or Input.is_action_just_pressed("select"):
+		if event is InputEventMouseButton and event.pressed:
 			pressed = true
 			emit_signal("button_down")
-		if event is InputEventMouseButton and not event.pressed or Input.is_action_just_released("select"):
-			pressed = false
-			emit_signal("button_up")
+	if event is InputEventMouseButton and not event.pressed and pressed:
+		pressed = false
+		emit_signal("button_up")
 
 func _process(_delta):
 	if color_rect == null:
@@ -68,9 +78,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("ui_accept"):
 			pressed = true
 			emit_signal("button_down")
-		if Input.is_action_just_released("ui_accept"):
-			pressed = false
-			emit_signal("button_up")
+	if Input.is_action_just_released("ui_accept") and pressed:
+		pressed = false
+		emit_signal("button_up")
 	if disabled:
 		color_rect.color = disabled_color
 	elif pressed:

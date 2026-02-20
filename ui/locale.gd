@@ -4,15 +4,33 @@ export (String) var lang = "en"
 
 var locales = {}
 var stat_translations = {}
-var language_select = {}
 
-func set_locale(locale):
+func set_locale(locale: String):
 	Characters.characters = {}
 	Skills.skilltrees = {}
 	lang = locale
 
-func get_stat(stat) -> String:
+func get_stat(stat: String) -> String:
 	return stat_translations[lang][stat]
+
+func get_menu_labels() -> Dictionary:
+	var f = File.new()
+	f.open("res://ui/menus/%s.txt" % lang, File.READ)
+	var content = f.get_as_text().split("\n")
+	f.close()
+	var current
+	var menu_labels = {}
+	for line in content:
+		if line.begins_with("- "):
+			if not current:
+				push_error("Label without menu!")
+			else:
+				menu_labels[current].append(line.right(2))
+		else:
+			if line:
+				current = line
+				menu_labels[current] = []
+	return menu_labels
 
 func _ready():
 	var f = File.new()
@@ -21,7 +39,6 @@ func _ready():
 	for line in content:
 		if ": " in line:
 			locales[line.split(": ")[0]] = line.split(": ")[1]
-			language_select[line.split(": ")[0]] = line.split(": ")[2]
 	f.close()
 	for locale in locales:
 		f.open("res://characters/stats/%s.txt" % (locale), File.READ)

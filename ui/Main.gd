@@ -19,6 +19,21 @@ func _ready():
 	$Credits.bbcode_text = content
 	$Stars.rect_size.y += $Credits.rect_size.y + 700
 	$Stars.redraw()
+	var button_texts = Locale.get_menu_labels()
+	var i
+	for menu in button_texts:
+		var menu_node = get_node(menu + "Menu").get_child(0)
+		i = 0
+		for button in menu_node.get_children():
+			button.text = button_texts[menu][i]
+			i += 1
+	for language in Locale.locales:
+		var button = UIButton.new()
+		button.text = Locale.locales[language]
+		button.connect("button_down", self, "select_language", [language])
+		$LanguageMenu/VButtonMenu.add_child(button)
+	$LanguageMenu/VButtonMenu/BackButton.raise()
+	$LanguageMenu/VButtonMenu.update()
 
 func _on_PlayButton_button_down():
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(0, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
@@ -40,13 +55,18 @@ func _on_SpecialButton_button_down():
 
 func _on_BackButton_button_down():
 	$Tween.interpolate_property($SpecialMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$MainMenu/VButtonMenu.activate()
 
 func _on_SettingsButton_button_down():
-	pass # Replace with function body.
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(0, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$SettingsMenu/VButtonMenu.activate()
 
 func _on_CreditButton_button_down():
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, -600), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
@@ -68,3 +88,9 @@ func _on_DeveloperButton_button_down():
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://developers/DeveloperMenu.tscn")
+
+func _on_LanguageButton_button_down():
+	pass # Replace with function body.
+
+func _on_LanguageMenu_BackButton_button_down():
+	pass # Replace with function body.

@@ -89,10 +89,11 @@ pause_mode = 2
 margin_top = 300.0
 margin_right = 200.0
 margin_bottom = 380.0
-rect_min_size = Vector2( 120, 80 )
+rect_min_size = Vector2( 180, 80 )
 script = ExtResource( 6 )
 text = "Select"
 margin = Vector2( 10, 10 )
 
 [connection signal="button_down" from="SelectButton" to="." method="_on_SelectButton_button_down"]
 [connection signal="button_up" from="SelectButton" to="." method="_on_SelectButton_button_up"]
+[connection signal="focused" from="SelectButton" to="." method="_on_SelectButton_focused"]

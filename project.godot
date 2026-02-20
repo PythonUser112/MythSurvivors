@@ -75,7 +75,7 @@ Modulate="*res://ui/Modulate.tscn"
 
 [debug]
 
-settings/stdout/print_fps=true
+settings/stdout/verbose_stdout=true
 
 [display]
 
@@ -158,6 +158,11 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_3="Player"
 2d_physics/layer_4="Items"
 2d_physics/layer_5="PlayerWeapons"
+
+[network]
+
+limits/debugger_stdout/max_chars_per_second=8192
+limits/debugger_stdout/max_messages_per_frame=40
 
 [physics]
 

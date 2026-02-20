@@ -4,8 +4,11 @@ export (String) var character_name
 export (bool) var focused = false setget set_focus, get_focus
 export (bool) var disabled = false
 
+export (int) var id
+
 signal button_down
 signal button_up
+signal focused
 
 func set_focus(value):
 	$SelectButton.focused = value
@@ -25,6 +28,7 @@ func _ready():
 	$SelectButton.disabled = disabled
 
 func _process(_delta):
+	$SelectButton.id = id
 	$SelectButton.disabled = disabled
 	focused = $SelectButton.focused
 
@@ -33,3 +37,6 @@ func _on_SelectButton_button_up():
 
 func _on_SelectButton_button_down():
 	emit_signal("button_down")
+
+func _on_SelectButton_focused(id):
+	emit_signal("focused", id)

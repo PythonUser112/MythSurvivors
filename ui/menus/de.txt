@@ -3,4 +3,13 @@ Main
 - Einstellungen
 - Bonusse
 - Mitwirkende
-- Verlassen
+- Beenden
+Special
+- Entwicklermenü
+- GodTok®
+- Zurück
+Settings
+- Sprache auswählen
+- Zurück
+Language
+- Zurück

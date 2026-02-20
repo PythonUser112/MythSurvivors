@@ -7,6 +7,7 @@ signal button_down
 signal button_up
 
 export (String) var text
+var old_text
 
 export (Color) var disabled_color = Color(0, 0, 0)
 export (Color) var normal_color = Color(0.35, 0.35, 0.35)
@@ -44,6 +45,7 @@ func _ready():
 	label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
 	label.pause_mode = PAUSE_MODE_PROCESS
 	add_child(label)
+	old_text = text
 
 func _gui_input(event):
 	if event is InputEventMouseMotion:
@@ -57,6 +59,11 @@ func _gui_input(event):
 			emit_signal("button_up")
 
 func _process(_delta):
+	if color_rect == null:
+		_ready()
+	if old_text != text:
+		label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
+		old_text = text
 	if focused:
 		if Input.is_action_just_pressed("ui_accept"):
 			pressed = true

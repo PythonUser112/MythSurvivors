@@ -9,6 +9,9 @@ export (float) var star_blink_speed = 5.0
 var star_shader = preload("res://assets/shaders/StarBlinkShader.tres")
 
 func _ready():
+	redraw()
+
+func redraw():
 	for _i in range(star_count):
 		var star = ColorRect.new()
 		star.rect_size = Vector2(1, 1)

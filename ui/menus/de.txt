@@ -1,0 +1,6 @@
+Main
+- Spielen
+- Einstellungen
+- Bonusse
+- Mitwirkende
+- Verlassen

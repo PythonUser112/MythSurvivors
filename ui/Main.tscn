@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/Main.gd" type="Script" id=2]
@@ -16,6 +16,9 @@ font_data = ExtResource( 5 )
 [sub_resource type="RichTextEffect" id=1]
 script = ExtResource( 3 )
 
+[sub_resource type="RichTextEffect" id=3]
+script = ExtResource( 3 )
+
 [node name="Main" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -25,6 +28,7 @@ script = ExtResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Stars" parent="." instance=ExtResource( 1 )]
+star_count = 500
 
 [node name="Title" type="RichTextLabel" parent="Stars"]
 margin_right = 1024.0
@@ -47,9 +51,8 @@ margin_right = -412.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="MainMenu"]
 margin_left = 30.0
-margin_top = 44.0
 margin_right = 170.0
-margin_bottom = 456.0
+margin_bottom = 516.0
 script = ExtResource( 7 )
 
 [node name="PlayButton" type="Control" parent="MainMenu/VButtonMenu"]
@@ -79,11 +82,20 @@ rect_min_size = Vector2( 140, 100 )
 script = ExtResource( 6 )
 text = "Special"
 
-[node name="ExitButton" type="Control" parent="MainMenu/VButtonMenu"]
+[node name="CreditButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 312.0
 margin_right = 140.0
 margin_bottom = 412.0
+rect_min_size = Vector2( 140, 100 )
+script = ExtResource( 6 )
+text = "Credits"
+
+[node name="ExitButton" type="Control" parent="MainMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 416.0
+margin_right = 140.0
+margin_bottom = 516.0
 rect_min_size = Vector2( 140, 100 )
 script = ExtResource( 6 )
 text = "Exit"
@@ -149,9 +161,19 @@ margin_right = 412.0
 margin_bottom = 190.0
 script = ExtResource( 8 )
 
+[node name="Credits" type="RichTextLabel" parent="."]
+margin_left = 100.0
+margin_top = 600.0
+margin_right = 924.0
+margin_bottom = 1200.0
+bbcode_enabled = true
+fit_content_height = true
+custom_effects = [ SubResource( 3 ) ]
+
 [connection signal="button_down" from="MainMenu/VButtonMenu/PlayButton" to="." method="_on_PlayButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/SettingsButton" to="." method="_on_SettingsButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/SpecialButton" to="." method="_on_SpecialButton_button_down"]
+[connection signal="button_down" from="MainMenu/VButtonMenu/CreditButton" to="." method="_on_CreditButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/ExitButton" to="." method="_on_ExitButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/DeveloperButton" to="." method="_on_DeveloperButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]

@@ -6,18 +6,23 @@ class_name VButtonMenu
 var active = false
 
 var buttons: Array = []
+var buttons_to_enable = []
 var selected: int = 0
 
 func update():
 	buttons = []
 	for child in get_children():
 		if not child.is_connected("button_down", self, "deactivate"):
-			child.connect("button_up", self, "deactivate")
+			child.connect("button_down", self, "deactivate")
 		buttons.append(child)
 
 func deactivate():
 	active = false
 	buttons[selected].focused = false
+	for button in buttons:
+		if not button.disabled:
+			buttons_to_enable.append(button)
+		button.disabled = true
 
 func _ready():
 	update()
@@ -26,6 +31,8 @@ func activate():
 	if active:
 		return
 	active = true
+	for button in buttons_to_enable:
+		button.disabled = false
 	for i in range(len(buttons)):
 		if not buttons[i].disabled:
 			buttons[i].focused = true

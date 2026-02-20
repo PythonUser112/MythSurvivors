@@ -1,0 +1,6 @@
+Main
+- Play
+- Settings
+- Special
+- Credits
+- Exit

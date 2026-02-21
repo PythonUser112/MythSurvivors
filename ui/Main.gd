@@ -10,8 +10,8 @@ func _ready():
 	for character in Characters.playable_characters:
 		var instance = character_selector.instance()
 		instance.character_name = character
-		$CharacterSelector/CenterContainer/HButtonMenu.add_child(instance)
-	$CharacterSelector/CenterContainer/HButtonMenu.update()
+		$CharacterSelection/CenterContainer/HButtonMenu.add_child(instance)
+	$CharacterSelection/CenterContainer/HButtonMenu.update()
 	var f = File.new()
 	f.open("res://credits.txt", File.READ)
 	var content = "\n[jump_pulse]" + f.get_as_text() + "[jump_pulse]"
@@ -37,11 +37,17 @@ func _ready():
 
 func _on_PlayButton_button_down():
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(0, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($CharacterSelector, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.interpolate_property($CharacterSelection, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
-	$CharacterSelector/CenterContainer/HButtonMenu.activate()
+	$CharacterSelection/CenterContainer/HButtonMenu.activate(1)
 
+func _on_CharacterSelection_BackButton_button_down():
+	$Tween.interpolate_property($CharacterSelection, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$MainMenu/VButtonMenu.activate()
 
 func _on_ExitButton_button_down():
 	get_tree().quit()

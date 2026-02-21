@@ -111,25 +111,25 @@ margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SpecialMenu"]
 margin_left = 10.0
-margin_top = 96.0
+margin_top = 93.0
 margin_right = 190.0
-margin_bottom = 404.0
+margin_bottom = 407.0
 script = ExtResource( 7 )
 
 [node name="DeveloperButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
 margin_right = 180.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 180, 100 )
+margin_bottom = 106.0
+rect_min_size = Vector2( 180, 106 )
 script = ExtResource( 6 )
 text = "Developer Menu"
 disabled = true
 
 [node name="GodTokButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
-margin_top = 104.0
+margin_top = 110.0
 margin_right = 180.0
-margin_bottom = 204.0
+margin_bottom = 210.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
 text = "GodTok®"
@@ -138,9 +138,9 @@ disabled = true
 
 [node name="BackButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
-margin_top = 208.0
+margin_top = 214.0
 margin_right = 180.0
-margin_bottom = 308.0
+margin_bottom = 314.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
 text = "Back"
@@ -154,25 +154,25 @@ margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SettingsMenu"]
 margin_left = 10.0
-margin_top = 148.0
+margin_top = 145.0
 margin_right = 190.0
-margin_bottom = 352.0
+margin_bottom = 355.0
 script = ExtResource( 7 )
 
 [node name="LanguageButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
 margin_right = 180.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 180, 100 )
+margin_bottom = 106.0
+rect_min_size = Vector2( 180, 106 )
 script = ExtResource( 6 )
 text = "Select Language"
 disabled = true
 
 [node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
-margin_top = 104.0
+margin_top = 110.0
 margin_right = 180.0
-margin_bottom = 204.0
+margin_bottom = 210.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
 text = "Back"
@@ -200,7 +200,7 @@ rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
 text = "Back"
 
-[node name="CharacterSelector" type="ScrollContainer" parent="."]
+[node name="CharacterSelection" type="ScrollContainer" parent="."]
 margin_left = 1024.0
 margin_top = 100.0
 margin_right = 1848.0
@@ -208,17 +208,25 @@ margin_bottom = 492.0
 rect_min_size = Vector2( 824, 400 )
 scroll_vertical_enabled = false
 
-[node name="CenterContainer" type="CenterContainer" parent="CharacterSelector"]
+[node name="CenterContainer" type="CenterContainer" parent="CharacterSelection"]
 margin_right = 824.0
 margin_bottom = 380.0
 rect_min_size = Vector2( 824, 380 )
 
-[node name="HButtonMenu" type="HBoxContainer" parent="CharacterSelector/CenterContainer"]
-margin_left = 412.0
-margin_top = 190.0
-margin_right = 412.0
-margin_bottom = 190.0
+[node name="HButtonMenu" type="HBoxContainer" parent="CharacterSelection/CenterContainer"]
+margin_left = 322.0
+margin_top = 140.0
+margin_right = 502.0
+margin_bottom = 240.0
 script = ExtResource( 8 )
+
+[node name="BackButton" type="Control" parent="CharacterSelection/CenterContainer/HButtonMenu"]
+pause_mode = 2
+margin_right = 180.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 180, 100 )
+script = ExtResource( 6 )
+text = "Back"
 
 [node name="Credits" type="RichTextLabel" parent="."]
 margin_left = 100.0
@@ -239,3 +247,4 @@ custom_effects = [ SubResource( 3 ) ]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/LanguageButton" to="." method="_on_LanguageButton_button_down"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="button_down" from="LanguageMenu/VButtonMenu/BackButton" to="." method="_on_LanguageMenu_BackButton_button_down"]
+[connection signal="button_down" from="CharacterSelection/CenterContainer/HButtonMenu/BackButton" to="." method="_on_CharacterSelection_BackButton_button_down"]

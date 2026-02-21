@@ -25,6 +25,7 @@ var pressed
 
 var color_rect
 var label
+var label_container
 var jump_pulse
 
 func _ready():
@@ -39,18 +40,21 @@ func _ready():
 	color_rect.rect_position = margin
 	color_rect.pause_mode = PAUSE_MODE_PROCESS
 	add_child(color_rect)
+	label_container = CenterContainer.new()
+	label_container.rect_position = margin
 	label = RichTextLabel.new()
 	label.rect_min_size = Vector2(100, 60)
+	label.fit_content_height = true
 	jump_pulse = JumpPulse.new()
 	label.install_effect(jump_pulse)
-	label.rect_position = margin
 	label.scroll_active = false
 	label.bbcode_enabled = true
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 	label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
 	label.pause_mode = PAUSE_MODE_PROCESS
-	add_child(label)
+	label_container.add_child(label)
+	add_child(label_container)
 	old_text = text
 
 func _gui_input(event):
@@ -89,5 +93,7 @@ func _process(_delta):
 		color_rect.color = focus_color
 	else:
 		color_rect.color = normal_color
+	label_container.rect_min_size.y = label.rect_size.y
+	rect_min_size.y = label.rect_size.y + 2 * margin.y
 	color_rect.rect_size = rect_size - margin * 2
-	label.rect_size = rect_size - margin * 2
+	label_container.rect_size = rect_size - margin * 2

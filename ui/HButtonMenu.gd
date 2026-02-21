@@ -36,23 +36,25 @@ func deactivate():
 func _ready():
 	update()
 
-func activate():
+func activate(to_select: int = 0):
 	if active:
 		return
 	active = true
 	for button in buttons_to_enable:
 		button.disabled = false
-	for i in range(len(buttons)):
-		if not buttons[i].disabled:
-			buttons[i].focused = true
-			selected = i
-			break
+	selected = to_select
+	if buttons[to_select].disabled:
+		for i in range(len(buttons)):
+			if not buttons[i].disabled:
+				selected = i
+				break
+	buttons[selected].focused = true
 
 func _process(_delta):
 	if not buttons:
 		update()
 	if active and is_visible_in_tree():
-		if Input.is_action_just_pressed("ui_down"):
+		if Input.is_action_just_pressed("ui_right"):
 			buttons[selected].focused = false
 			selected += 1
 			if selected == len(buttons):
@@ -65,7 +67,7 @@ func _process(_delta):
 						selected -= 1
 					break
 			buttons[selected].focused = true
-		if Input.is_action_just_pressed("ui_up"):
+		if Input.is_action_just_pressed("ui_left"):
 			buttons[selected].focused = false
 			selected -= 1
 			if selected < 0:

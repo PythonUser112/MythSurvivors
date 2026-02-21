@@ -16,7 +16,7 @@ Dialog:
 #Scene forest
 - Pan#top: Sind Sie Hildegard, die Sonnennymphe?
 - Hildegard#bottom: Ja, wieso?
-- Pan#top: Weil sie nun aufgrund von Apollos Ungehagen wegen Ihres neuen Titels in der Gemeinschaft und im Rat der Nymphen in diesen ausbruchsicheren Käfig gesperrt werdet.
+- Pan#top: Weil Sie nun aufgrund von Apollos Ungehagen wegen Ihres neuen Titels in der Gemeinschaft und im Rat der Nymphen in diesen ausbruchsicheren Käfig gesperrt werdet.
 - Hildegard#bottom: Das ist aber gar nicht nett.
 - Pan#top: Befehl ist Befehl!
 #Scene forest

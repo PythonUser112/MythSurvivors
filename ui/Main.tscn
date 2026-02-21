@@ -166,7 +166,6 @@ margin_bottom = 106.0
 rect_min_size = Vector2( 180, 106 )
 script = ExtResource( 6 )
 text = "Select Language"
-disabled = true
 
 [node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
@@ -203,9 +202,9 @@ text = "Back"
 [node name="CharacterSelection" type="ScrollContainer" parent="."]
 margin_left = 1024.0
 margin_top = 100.0
-margin_right = 1848.0
-margin_bottom = 492.0
-rect_min_size = Vector2( 824, 400 )
+margin_right = 2048.0
+margin_bottom = 500.0
+rect_min_size = Vector2( 1024, 400 )
 scroll_vertical_enabled = false
 
 [node name="CenterContainer" type="CenterContainer" parent="CharacterSelection"]

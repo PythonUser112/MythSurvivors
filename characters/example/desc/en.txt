@@ -1,6 +1,0 @@
-- name: Example
-- class: Example
-- playable_with: -1
-- xp: 500
-- weapon: none
-- short_desc: This is just an example

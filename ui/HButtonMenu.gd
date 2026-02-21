@@ -42,6 +42,8 @@ func activate(to_select: int = 0):
 	active = true
 	for button in buttons_to_enable:
 		button.disabled = false
+	if to_select >= len(buttons):
+		to_select = 0
 	selected = to_select
 	if buttons[to_select].disabled:
 		for i in range(len(buttons)):

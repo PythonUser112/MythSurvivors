@@ -1,0 +1,4 @@
+- name: Example
+- class: Example
+- weapon: Example
+- skill: Example

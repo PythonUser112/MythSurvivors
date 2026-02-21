@@ -6,7 +6,8 @@ var locales = {}
 var stat_translations = {}
 
 func set_locale(locale: String):
-	Characters.characters = {}
+	for character_name in Characters.characters:
+		Characters.get_character(character_name).set_lang(locale)
 	Skills.skilltrees = {}
 	lang = locale
 
@@ -32,7 +33,7 @@ func get_menu_labels() -> Dictionary:
 				menu_labels[current] = []
 	return menu_labels
 
-func _ready():
+func init():
 	var f = File.new()
 	f.open("res://locales.txt", File.READ)
 	var content = f.get_as_text().split("\n")

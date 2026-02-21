@@ -42,6 +42,7 @@ func _ready():
 	add_child(color_rect)
 	label_container = CenterContainer.new()
 	label_container.rect_position = margin
+	label_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label = RichTextLabel.new()
 	label.rect_min_size = Vector2(100, 60)
 	label.fit_content_height = true
@@ -66,6 +67,7 @@ func _gui_input(event):
 			focused = false
 	if focused:
 		if event is InputEventMouseButton and event.pressed:
+			print_debug("Pressed")
 			pressed = true
 			emit_signal("button_down")
 	if event is InputEventMouseButton and not event.pressed and pressed:

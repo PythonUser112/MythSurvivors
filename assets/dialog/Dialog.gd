@@ -30,7 +30,7 @@ func run():
 			else:
 				var character_name = line.split(":")[0]
 				var character_filename = line.split(":")[1].lstrip(" ")
-				characters[character_name] = character_filename
+				characters[character_name] = Characters.get_character(character_filename)
 		if not is_dialogue and line == "Dialogue:":
 			is_dialogue = true
 		elif is_dialogue:
@@ -45,7 +45,7 @@ func run():
 		var actor = element[0]
 		var text = element[1]
 		var align = element[2]
-		var icon = IconManager.get_icon(actor)
+		var icon = characters[actor].get_picture("icon")
 		if icon:
 			$DialogActor2/Actor2.texture = icon
 		if align == "top":

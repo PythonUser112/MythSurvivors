@@ -2,6 +2,9 @@ extends CanvasLayer
 
 signal finished
 
+func hide_everything():
+	$ColorRect.color = Color.black
+
 func fade_out():
 	$ColorRect.mouse_filter = Control.MOUSE_FILTER_STOP
 	$Tween.interpolate_property($ColorRect, "color", Color(0, 0, 0, 0), Color(0, 0, 0, 1), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)

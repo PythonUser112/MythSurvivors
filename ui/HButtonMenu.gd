@@ -15,7 +15,8 @@ func update():
 	for child in get_children():
 		child.id = i
 		if not child.is_connected("button_up", self, "deactivate"):
-			child.connect("button_up", self, "deactivate")
+			if not child.toggle_mode:
+				child.connect("button_up", self, "deactivate")
 			child.connect("focused", self, "focus_changed")
 		buttons.append(child)
 		i += 1

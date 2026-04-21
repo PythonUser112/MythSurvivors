@@ -3,6 +3,7 @@ extends Control
 export (String) var character_name
 export (bool) var focused = false setget set_focus, get_focus
 export (bool) var disabled = false
+export (bool) var toggle_mode = false
 
 export (int) var id
 

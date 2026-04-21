@@ -4,14 +4,13 @@ const character_selector = preload("res://ui/CharacterSelector.tscn")
 
 func _ready():
 	Modulate.hide_everything()
-	Locale.init()
-	Characters.init()
-	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not OS.has_feature("developer")
+	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not Globals.developer_mode
 	$MainMenu/VButtonMenu.activate()
 	$MainMenu.rect_position = Vector2(412, 100)
 	Modulate.fade_in()
 	for character in Characters.playable_characters:
 		var instance = character_selector.instance()
+		instance.connect("button_down", self, "character_selected", [character])
 		instance.character_name = character
 		$CharacterSelection/CenterContainer/HButtonMenu.add_child(instance)
 	$CharacterSelection/CenterContainer/HButtonMenu.update()
@@ -115,6 +114,15 @@ func _on_LanguageMenu_BackButton_button_down():
 func select_language(lang: String):
 	Modulate.fade_out()
 	yield(Modulate, "finished")
-	Locale.lang = lang
+	Locale.set_locale(lang)
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ui/Main.tscn")
+
+func _on_TruthpediaButton_button_down():
+	Modulate.fade_out()
+	yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://truthpedia/Wiki.tscn")
+
+func character_selected(character: String):
+	pass

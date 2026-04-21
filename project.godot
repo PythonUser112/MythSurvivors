@@ -67,11 +67,12 @@ run/main_scene="res://ui/Main.tscn"
 
 [autoload]
 
-IconManager="*res://assets/icons/icon_manager.gd"
-Skills="*res://characters/skills.gd"
-Characters="*res://characters/characters.gd"
+Globals="*res://assets/globals.gd"
 Locale="*res://ui/locale.gd"
 Modulate="*res://ui/Modulate.tscn"
+IconManager="*res://assets/icons/icon_manager.gd"
+Characters="*res://characters/characters.gd"
+Skills="*res://characters/skills.gd"
 
 [debug]
 

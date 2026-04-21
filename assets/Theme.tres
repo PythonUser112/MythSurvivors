@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=13 format=2]
 
 [ext_resource path="res://assets/fonts/Jacquarda_Bastarda_9/JacquardaBastarda9-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=2]
@@ -29,6 +29,10 @@ bg_color = Color( 1, 1, 1, 0 )
 [sub_resource type="DynamicFont" id=6]
 font_data = ExtResource( 2 )
 
+[sub_resource type="DynamicFont" id=9]
+size = 12
+font_data = ExtResource( 1 )
+
 [resource]
 Button/fonts/font = SubResource( 3 )
 Label/fonts/font = SubResource( 1 )
@@ -39,3 +43,4 @@ RichTextLabel/fonts/normal_font = SubResource( 2 )
 TabContainer/fonts/font = SubResource( 7 )
 TabContainer/styles/panel = SubResource( 8 )
 TextEdit/fonts/font = SubResource( 6 )
+WindowDialog/fonts/title_font = SubResource( 9 )

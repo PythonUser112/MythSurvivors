@@ -1,6 +1,6 @@
 extends Node
 
-export (String) var lang = "en"
+export (String) var lang
 
 var locales = {}
 var stat_translations = {}
@@ -10,6 +10,7 @@ func set_locale(locale: String):
 		Characters.get_character(character_name).set_lang(locale)
 	Skills.skilltrees = {}
 	lang = locale
+	Globals.update_config({"lang": locale})
 
 func get_stat(stat: String) -> String:
 	return stat_translations[lang][stat]
@@ -51,3 +52,8 @@ func init():
 			if ": " in line:
 				var key_value = line.split(": ")
 				stat_translations[locale][key_value[0]] = key_value[1]
+	if not lang in locales:
+		print_debug("Invalid language: ", lang)
+		lang = "en"
+		Globals.update_config({"lang": lang})
+	Characters.init()

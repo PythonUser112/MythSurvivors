@@ -6,6 +6,7 @@ Main
 - Exit
 Special
 - Developer Menu
+- TruthPedia Wiki®
 - GodTok®
 - Back
 Settings

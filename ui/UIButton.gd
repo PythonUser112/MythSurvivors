@@ -5,6 +5,7 @@ class_name UIButton
 
 signal button_down
 signal button_up
+signal toggled(button_pressed)
 signal focused
 
 export (String) var text
@@ -19,8 +20,10 @@ export (Color) var pressed_color = Color(0.75, 0.75, 0.75)
 
 export (Vector2) var margin = Vector2(20, 20)
 
-export (bool) var focused
-export (bool) var disabled
+export (bool) var focused = false
+export (bool) var disabled = false
+export (bool) var toggle_mode = false
+export (bool) var down = false
 var pressed
 
 var color_rect
@@ -67,8 +70,10 @@ func _gui_input(event):
 			focused = false
 	if focused:
 		if event is InputEventMouseButton and event.pressed:
-			print_debug("Pressed")
 			pressed = true
+			if toggle_mode:
+				down = not down
+				emit_signal("toggled", down)
 			emit_signal("button_down")
 	if event is InputEventMouseButton and not event.pressed and pressed:
 		pressed = false
@@ -89,7 +94,7 @@ func _process(_delta):
 		emit_signal("button_up")
 	if disabled:
 		color_rect.color = disabled_color
-	elif pressed:
+	if (pressed and not toggle_mode) or (down and toggle_mode):
 		color_rect.color = pressed_color
 	elif focused:
 		color_rect.color = focus_color

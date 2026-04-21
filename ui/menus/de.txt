@@ -6,6 +6,7 @@ Main
 - Beenden
 Special
 - Entwicklermenü
+- TruthPedia®
 - GodTok®
 - Zurück
 Settings

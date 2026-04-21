@@ -106,8 +106,6 @@ func get_character(character_name) -> Character:
 	return characters[character_name]
 
 func init():
-	if not Locale.locales:
-		push_error("Locale not ready, might result in chaos!")
 	var f = File.new()
 	f.open("res://characters/characters.txt", File.READ)
 	var content = f.get_as_text().split("\n")

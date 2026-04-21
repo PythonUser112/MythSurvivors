@@ -111,9 +111,9 @@ margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SpecialMenu"]
 margin_left = 10.0
-margin_top = 93.0
+margin_top = 41.0
 margin_right = 190.0
-margin_bottom = 407.0
+margin_bottom = 459.0
 script = ExtResource( 7 )
 
 [node name="DeveloperButton" type="Control" parent="SpecialMenu/VButtonMenu"]
@@ -125,26 +125,36 @@ script = ExtResource( 6 )
 text = "Developer Menu"
 disabled = true
 
-[node name="GodTokButton" type="Control" parent="SpecialMenu/VButtonMenu"]
+[node name="TruthpediaButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 110.0
 margin_right = 180.0
 margin_bottom = 210.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
-text = "GodTok®"
+text = "Truthpedia®"
 id = 1
-disabled = true
 
-[node name="BackButton" type="Control" parent="SpecialMenu/VButtonMenu"]
+[node name="GodTokButton" type="Control" parent="SpecialMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 214.0
 margin_right = 180.0
 margin_bottom = 314.0
 rect_min_size = Vector2( 180, 100 )
 script = ExtResource( 6 )
-text = "Back"
+text = "GodTok®"
 id = 2
+disabled = true
+
+[node name="BackButton" type="Control" parent="SpecialMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 318.0
+margin_right = 180.0
+margin_bottom = 418.0
+rect_min_size = Vector2( 180, 100 )
+script = ExtResource( 6 )
+text = "Back"
+id = 3
 
 [node name="SettingsMenu" type="CenterContainer" parent="."]
 margin_left = 1024.0
@@ -242,6 +252,7 @@ custom_effects = [ SubResource( 3 ) ]
 [connection signal="button_down" from="MainMenu/VButtonMenu/CreditButton" to="." method="_on_CreditButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/ExitButton" to="." method="_on_ExitButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/DeveloperButton" to="." method="_on_DeveloperButton_button_down"]
+[connection signal="button_down" from="SpecialMenu/VButtonMenu/TruthpediaButton" to="." method="_on_TruthpediaButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/LanguageButton" to="." method="_on_LanguageButton_button_down"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]

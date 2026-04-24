@@ -94,7 +94,7 @@ func _process(_delta):
 		emit_signal("button_up")
 	if disabled:
 		color_rect.color = disabled_color
-	if (pressed and not toggle_mode) or (down and toggle_mode):
+	elif (pressed and not toggle_mode) or (down and toggle_mode):
 		color_rect.color = pressed_color
 	elif focused:
 		color_rect.color = focus_color

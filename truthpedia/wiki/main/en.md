@@ -3,6 +3,7 @@ Stumbled in here and don't know what to do? How about...
     ...learning something about the [mayor gods](wiki://gods) and [religions](wiki://religions)?
     ...going back and playing somehing?
     ...learning something about [MythSurvirors](wiki://mythsurvivors)?
+    ...reading the [godstitution](wiki://godstitution)?
     ...-killing yourself?-
     ...-quitting this game?-
     ...hitting an apple tree?

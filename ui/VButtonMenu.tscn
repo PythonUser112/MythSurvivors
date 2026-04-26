@@ -5,4 +5,5 @@
 [node name="VButtonMenu" type="VBoxContainer"]
 margin_right = 40.0
 margin_bottom = 40.0
+rect_min_size = Vector2( 250, 0 )
 script = ExtResource( 1 )

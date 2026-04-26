@@ -22,4 +22,4 @@ Das MythSurvirsor\-Team hat die absolute Macht und alle verneigen sich vor ihm.
 
 # $2: Technologie
 ## $2 (1)
-GodTok®, OpenAA / GodGPT®, MeTube® und TruthPedia® sind juristisch nicht belangbar, nur deren Benutzer. Natürlich weren wir auch auf Anfragen die Identitäten der Benutzer herausgeben, sollte eine Straftat begangen worden sein.
+GodTok®, OpenAA / GodGPT®, MeTube® und TruthPedia® sind juristisch nicht belangbar, nur deren Benutzer. Natürlich werden wir auch auf Anfragen die Identitäten der Benutzer herausgeben, sollte eine Straftat begangen worden sein.

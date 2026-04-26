@@ -26,7 +26,7 @@ custom_styles/panel = SubResource( 2 )
 
 [node name="Title" type="RichTextLabel" parent="InfoLayer/WikiTitle"]
 margin_right = 1026.0
-margin_bottom = 40.0
+margin_bottom = 50.0
 bbcode_enabled = true
 bbcode_text = "
 [font=res://assets/fonts/Jacquard_24/FontBig.tres][center][jump_pulse]TruthPedia Wiki[/jump_pulse][/center][/font]"

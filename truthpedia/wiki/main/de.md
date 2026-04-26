@@ -4,9 +4,10 @@ Du bist hier rein, ohne was damit anfangen zu können? Wie wäre es dann,
     ...irgendwas zu tun?
     ...etwas über [MythSurvirors](wiki://mythsurvivors) zu lernen?
     ...die [Göttergesetze (GG)](wiki://godstitution) zu lesen?
-    ...-dich umzubringen?-
-    ...-dieses Spiel zu beenden?-
+    -...dich umzubringen?-
+    -...dieses Spiel zu beenden?-
     ...einen Apfelbaum so kräftig wie möglich zu schlagen?
+
 
 
 Truthpedia is ©2026 by GodTok® and MythSurvivors Enterprises.

@@ -35,8 +35,8 @@ func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
 	if rect_min_size < Vector2(100, 60) + 2 * margin:
 		rect_min_size = Vector2(100, 60) + 2 * margin
-	if rect_min_size.x < 180:
-		rect_min_size.x = 180
+	if rect_min_size.x < 200:
+		rect_min_size.x = 200
 	color_rect = ColorRect.new()
 	color_rect.color = disabled_color
 	color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -47,7 +47,7 @@ func _ready():
 	label_container.rect_position = margin
 	label_container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	label = RichTextLabel.new()
-	label.rect_min_size = Vector2(100, 60)
+	label.rect_min_size = Vector2(rect_min_size.x - 2 * margin.x, 60)
 	label.fit_content_height = true
 	jump_pulse = JumpPulse.new()
 	label.install_effect(jump_pulse)

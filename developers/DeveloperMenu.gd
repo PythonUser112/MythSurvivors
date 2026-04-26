@@ -5,7 +5,6 @@ var scene
 func _ready():
 	Modulate.fade_in()
 	yield(Modulate, "finished")
-	$MainContainer/CenterContainer/VButtonMenu.activate()
 
 func _on_SkilltreeButton_pressed():
 	Modulate.fade_out()
@@ -24,7 +23,6 @@ func _on_ExitButton_pressed():
 	$HUD.hide()
 	Modulate.fade_in()
 	yield(Modulate, "finished")
-	$MainContainer/CenterContainer/VButtonMenu.activate()
 
 func _on_LanguageSwitcher_locale_changed():
 	Modulate.fade_out()
@@ -41,3 +39,9 @@ func _on_BackButton_button_down():
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ui/Main.tscn")
+
+func _on_TruthpediaEditor_pressed():
+	Modulate.fade_out()
+	yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://developers/WikiPageCreator.tscn")

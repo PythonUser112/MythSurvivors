@@ -4,7 +4,7 @@ export (String) var wikipage
 export (bool) var fail = false
 
 const title = "\n[center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontBig.tres]%s[/font][/jump_pulse][/center]"
-const heading = "\n[center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontMedium.tres]%s[/font][/jump_pulse][/center]"
+const heading = "\n[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontMedium.tres]%s[/font][/jump_pulse][/center][/u]"
 
 var ypositions = {}
 
@@ -95,15 +95,21 @@ func _ready():
 				if state == 0:
 					if character == "[" and not escaped:
 						state = 1
-						line_parsed += "[url="
+						line_parsed += "[color=aqua][url="
 						tmp1 = ""
 						tmp2 = ""
 					elif character == "-" and not escaped:
 						if crossed and not last_was_space:
-							line_parsed += "[/s]"
+							line_parsed += "[/s][/color]"
 							crossed = false
 						elif not crossed:
 							state = 3
+					elif character == "_" and not escaped:
+						if crossed and not last_was_space:
+							line_parsed += "[/u]"
+							crossed = false
+						elif not crossed:
+							state = 4
 					else:
 						line_parsed += character
 				elif state == 1:
@@ -116,7 +122,7 @@ func _ready():
 						line_parsed += tmp2
 						line_parsed += "]"
 						line_parsed += tmp1
-						line_parsed += "[/url]"
+						line_parsed += "[/url][/color]"
 						state = 0
 					elif character != "(" and not escaped:
 						tmp2 += character
@@ -125,7 +131,15 @@ func _ready():
 						line_parsed += "-"
 					else:
 						crossed = true
-						line_parsed += "[s]"
+						line_parsed += "[color=grey][s]"
+					line_parsed += character
+					state = 0
+				elif state == 4:
+					if character in [" ", "\n", "\t"]:
+						line_parsed += "_"
+					else:
+						crossed = true
+						line_parsed += "[u]"
 					line_parsed += character
 					state = 0
 				last_was_space = character in [" ", "\n", "\t"]
@@ -135,12 +149,12 @@ func _ready():
 		var label = RichTextLabel.new()
 		label.connect("meta_clicked", self, "_on_Content_meta_clicked")
 		label.custom_effects = [JumpPulse.new()]
+		label.rect_min_size.x = 762
+		label.rect_size.x = 762
 		label.fit_content_height = true
 		label.bbcode_enabled = true
 		label.scroll_active = false
 		label.bbcode_text = bbcode_text
-		label.rect_min_size.x = 762
-		label.rect_size.x = 762
 		content_container.add_child(label)
 		$ContentContainer/VBoxContainer.add_child(content_container)
 		label.update()
@@ -149,6 +163,9 @@ func _ready():
 		content_container.name = part
 		content_container.rect_min_size = label.rect_min_size
 		ypositions[part] = content_container.rect_position.y
+	$ContentContainer/VBoxContainer.rect_size.y = 0
+	$ContentContainer/VBoxContainer.update()
+	yield(get_tree(), "idle_frame")
 	$ContentContainer/VBoxContainer.rect_min_size = $ContentContainer/VBoxContainer.rect_size
 
 func _on_Content_meta_clicked(meta):

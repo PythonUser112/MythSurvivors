@@ -1,13 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/stars/Stars.gd" type="Script" id=1]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=2]
 [ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
 [ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://developers/DeveloperMenu.gd" type="Script" id=5]
-[ext_resource path="res://ui/UIButton.gd" type="Script" id=6]
-[ext_resource path="res://ui/LanguageSwitcher.tscn" type="PackedScene" id=7]
-[ext_resource path="res://ui/VButtonMenu.gd" type="Script" id=8]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -40,30 +37,32 @@ margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="MainContainer/CenterContainer"]
 margin_left = 392.0
-margin_top = 148.0
+margin_top = 210.0
 margin_right = 632.0
-margin_bottom = 352.0
+margin_bottom = 289.0
 rect_min_size = Vector2( 240, 68 )
+custom_constants/separation = 5
 alignment = 1
-script = ExtResource( 8 )
 
-[node name="SkilltreeButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
+[node name="SkilltreeButton" type="Button" parent="MainContainer/CenterContainer/VButtonMenu"]
 pause_mode = 2
 margin_right = 240.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 140, 100 )
+margin_bottom = 23.0
 mouse_default_cursor_shape = 2
-script = ExtResource( 6 )
-text = "View example Skilltree"
+text = "View Example Skilltree"
 
-[node name="BackButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
-pause_mode = 2
-margin_top = 104.0
+[node name="TruthpediaEditor" type="Button" parent="MainContainer/CenterContainer/VButtonMenu"]
+margin_top = 28.0
 margin_right = 240.0
-margin_bottom = 204.0
-rect_min_size = Vector2( 140, 100 )
-script = ExtResource( 6 )
-text = "Main Menu"
+margin_bottom = 51.0
+text = "Truthpedia Article Editor"
+
+[node name="BackButton" type="Button" parent="MainContainer/CenterContainer/VButtonMenu"]
+pause_mode = 2
+margin_top = 56.0
+margin_right = 240.0
+margin_bottom = 79.0
+text = "Back to Main Menu"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainContainer"]
 pause_mode = 2
@@ -78,23 +77,6 @@ Developer Menu"
 scroll_active = false
 custom_effects = [ SubResource( 1 ) ]
 
-[node name="HUD" type="CanvasLayer" parent="."]
-visible = false
-
-[node name="Control" type="Control" parent="HUD"]
-margin_right = 1024.0
-margin_bottom = 40.0
-theme = ExtResource( 2 )
-
-[node name="LanguageSwitcher" parent="HUD/Control" instance=ExtResource( 7 )]
-
-[node name="ExitButton" type="Button" parent="HUD/Control"]
-margin_left = 824.0
-margin_right = 1024.0
-margin_bottom = 23.0
-text = "Exit test"
-
 [connection signal="button_down" from="MainContainer/CenterContainer/VButtonMenu/SkilltreeButton" to="." method="_on_SkilltreeButton_pressed"]
+[connection signal="pressed" from="MainContainer/CenterContainer/VButtonMenu/TruthpediaEditor" to="." method="_on_TruthpediaEditor_pressed"]
 [connection signal="button_down" from="MainContainer/CenterContainer/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
-[connection signal="locale_changed" from="HUD/Control/LanguageSwitcher" to="." method="_on_LanguageSwitcher_locale_changed"]
-[connection signal="button_down" from="HUD/Control/ExitButton" to="." method="_on_ExitButton_pressed"]

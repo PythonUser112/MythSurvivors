@@ -3,7 +3,7 @@ extends Control
 export (String) var wikipage
 export (bool) var fail = false
 
-const heading = "\n[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontMedium.tres]%s[/font][/jump_pulse][/center][/u]"
+const heading = "[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontMedium.tres]%s[/font][/jump_pulse][/center][/u]"
 
 var ypositions = {}
 
@@ -41,7 +41,7 @@ func redraw():
 				ypositions[part] = content_container.rect_position.y
 			part = line.right(2)
 			image_part = true
-			bbcode_text = heading % part
+			bbcode_text = "\n" + heading % part
 			$TableOfContents/Index.bbcode_text += "\n[url=%s]%s[/url]"%[line.right(2), line.right(2)]
 			continue
 		if line.begins_with("## "):
@@ -153,7 +153,8 @@ func redraw():
 		label.update()
 		yield(get_tree(), "idle_frame")
 		label.rect_min_size.y = label.rect_size.y
-		content_container.name = part
+		if part:
+			content_container.name = part
 		content_container.rect_min_size = label.rect_min_size
 		ypositions[part] = content_container.rect_position.y
 	$ContentContainer/VBoxContainer.rect_size.y = 0

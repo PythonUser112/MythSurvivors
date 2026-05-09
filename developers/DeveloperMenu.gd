@@ -12,7 +12,6 @@ func _on_SkilltreeButton_pressed():
 	scene = preload("res://assets/skilltree/Skilltree.tscn").instance()
 	$MainContainer.hide()
 	add_child(scene)
-	$HUD.show()
 	Modulate.fade_in()
 
 func _on_ExitButton_pressed():
@@ -20,7 +19,6 @@ func _on_ExitButton_pressed():
 	yield(Modulate, "finished")
 	scene.queue_free()
 	$MainContainer.show()
-	$HUD.hide()
 	Modulate.fade_in()
 	yield(Modulate, "finished")
 

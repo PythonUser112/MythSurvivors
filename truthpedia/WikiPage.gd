@@ -18,7 +18,7 @@ func _ready():
 	f.open(wiki, File.READ)
 	var content = f.get_as_text().split("\n")
 	f.close()
-	$TitlePanel/PageTitle.bbcode_text = title % get_parent().files[wikipage].capitalize()
+	$TitlePanel/PageTitle.bbcode_text = title % get_parent().files[wikipage]
 	var image_part = false
 	var bbcode_text = ""
 	var part = ""
@@ -46,7 +46,7 @@ func _ready():
 				ypositions[part] = content_container.rect_position.y
 			part = line.right(2)
 			image_part = true
-			bbcode_text = heading % part
+			bbcode_text = "\n" + heading % part
 			$TableOfContents/Index.bbcode_text += "\n[url=%s]%s[/url]"%[line.right(2), line.right(2)]
 			continue
 		if line.begins_with("## "):
@@ -160,7 +160,8 @@ func _ready():
 		label.update()
 		yield(get_tree(), "idle_frame")
 		label.rect_min_size.y = label.rect_size.y
-		content_container.name = part
+		if part:
+			content_container.name = part
 		content_container.rect_min_size = label.rect_min_size
 		ypositions[part] = content_container.rect_position.y
 	$ContentContainer/VBoxContainer.rect_size.y = 0

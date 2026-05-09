@@ -15,16 +15,24 @@ func _ready():
 	Modulate.fade_in()
 	$EditorContainer/Editor/TextEdit.call_deferred("grab_focus")
 	$EditorContainer/Editor/TextEdit.clear_colors()
-	$EditorContainer/Editor/TextEdit.add_color_region("# ", "", Color.magenta, true)
-	$EditorContainer/Editor/TextEdit.add_color_region("## ", "", Color.pink, true)
-	$EditorContainer/Editor/TextEdit.add_color_region("[", ")", Color.aqua, false)
+	$EditorContainer/Editor/TextEdit.add_color_region("# ", "", Color.magenta)
+	$EditorContainer/Editor/TextEdit.add_color_region("## ", "", Color.pink)
+	$EditorContainer/Editor/TextEdit.add_color_region("[", ")", Color.aqua, true)
 	$EditorContainer/Editor/TextEdit.add_color_region(" -", "- ", Color.gray, true)
 	$EditorContainer/Editor/TextEdit.add_color_region(" _", "_ ", Color.aquamarine, true)
+	$EditorContainer/Editor/TextEdit.add_color_region("\\-", " ", Color.turquoise, true)
+	$EditorContainer/Editor/TextEdit.add_color_override("brace_mismatch_color", Color.red)
+	$EditorContainer/Editor/TextEdit.add_color_override("function_color", Color.white)
+	$EditorContainer/Editor/TextEdit.add_color_override("member_variable_color", Color.white)
+	$EditorContainer/Editor/TextEdit.add_color_override("number_color", Color.white)
+	$EditorContainer/Editor/TextEdit.add_color_override("symbol_color", Color.white)
 	$NewURLDialog/GridContainer/TargetType.get_popup().connect("index_pressed", self, "change_index")
 
 func _on_EditorContainer_tab_changed(tab):
 	if tab == 0:
 		$EditorContainer/Editor/TextEdit.grab_focus()
+	else:
+		$EditorContainer/Preview.redraw()
 
 func _on_ClearButton_pressed():
 	mode = CLEAR
@@ -99,10 +107,6 @@ func _on_OpenDialog_file_selected(path):
 	f.close()
 	$EditorContainer/Editor/TextEdit.grab_focus()
 
-func _on_TextEdit_text_changed():
-	saved = false
-	$EditorContainer/Preview.redraw()
-
 func _on_SaveButton_pressed():
 	$SaveDialog.popup_centered()
 
@@ -110,7 +114,7 @@ func _on_OpenButton_pressed():
 	if saved:
 		$OpenDialog.popup_centered()
 	else:
-		mode = CLEAR
+		mode = OPEN
 		$UnsavedChangesDialog.popup_centered()
 
 func _on_HeadingButton_pressed():
@@ -132,7 +136,7 @@ func _on_SaveFinishedDialog_popup_hide():
 
 func _on_UnsavedChangesDialog_confirmed():
 	if mode == OPEN:
-		$OpenDialog.popup()
+		$OpenDialog.popup_centered()
 	elif mode == CLEAR:
 		$EditorContainer/Editor/TextEdit.text = ""
 	elif mode == QUIT:
@@ -156,7 +160,7 @@ func _process(_delta):
 		if saved:
 			$OpenDialog.popup_centered()
 		else:
-			mode = CLEAR
+			mode = OPEN
 			$UnsavedChangesDialog.popup_centered()
 	elif Input.is_action_pressed("save_file"):
 		$SaveDialog.popup_centered()

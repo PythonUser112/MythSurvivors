@@ -111,6 +111,7 @@ syntax_highlighting = true
 show_line_numbers = true
 draw_tabs = true
 draw_spaces = true
+highlight_all_occurrences = true
 smooth_scrolling = true
 minimap_draw = true
 caret_block_mode = true
@@ -264,7 +265,6 @@ dialog_autowrap = true
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/HeadingButton" to="." method="_on_HeadingButton_pressed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/Heading2Button" to="." method="_on_Heading2Button_pressed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="text_changed" from="EditorContainer/Editor/TextEdit" to="." method="_on_TextEdit_text_changed"]
 [connection signal="meta_clicked" from="EditorContainer/Preview/TableOfContents/Index" to="EditorContainer/Preview" method="_on_Index_meta_clicked"]
 [connection signal="confirmed" from="NewURLDialog" to="." method="_on_NewURLDialog_confirmed"]
 [connection signal="popup_hide" from="NewURLDialog" to="." method="_on_NewURLDialog_popup_hide"]

@@ -81,7 +81,11 @@ _global_script_class_icons={
 [application]
 
 config/name="MythSurvivors"
-run/main_scene="res://ui/Main.tscn"
+run/main_scene="res://ui/BootSplash.tscn"
+boot_splash/show_image=false
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 
 [autoload]
 

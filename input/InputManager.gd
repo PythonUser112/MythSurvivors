@@ -88,7 +88,7 @@ func deserialize_action(action_string: String) -> InputEvent:
 			action.command = (modifier == "command") or action.command
 			action.control = (modifier == "control") or action.control
 			action.meta = (modifier == "meta") or action.meta
-			action.dhift = (modifier == "shift") or action.shift
+			action.shift = (modifier == "shift") or action.shift
 	elif action_identifier == "JoyButton":
 		action = InputEventJoypadButton.new()
 		action.button_index = int(action_parts.pop_front())
@@ -106,24 +106,38 @@ func load_profile(profile: String, profile_name: String = ""):
 		if profile != "default":
 			push_error("Profile '%s' doesn't exist, loading default profile!" % profile)
 			load_profile("default", profile)
+			return
 		else:
 			profiles[profile_name] = {}
 			for action in InputMap.get_actions():
 				var action_list = InputMap.get_action_list(action)
 				profiles[profile_name][action] = action_list
 			return
+	profiles[profile_name] = {}
+	f.open(profile_path % profile, File.READ)
+	var content = f.get_as_text().split("\n")
+	f.close()
+	var current_action = ""
+	for line in content:
+		if line:
+			if line.begins_with("- "):
+				line = line.right(2)
+				profiles[profile_name][current_action].append(deserialize_action(line))
+			else:
+				current_action = line
+				profiles[profile_name][current_action] = []
 
 func save_profile(profile_name: String):
-	var f = File.new()
-	if f.open(profile_path % profile_name, File.WRITE) != OK:
-		push_error("Couldn't save profile!")
-		return
 	var whole_string = ""
 	for action_name in profiles[profile_name]:
 		var action_list: Array = profiles[profile_name][action_name]
 		whole_string += action_name + "\n"
 		for action in action_list:
 			whole_string += "- " + serialize_action(action) + "\n"
+	var f = File.new()
+	if f.open(profile_path % profile_name, File.WRITE) != OK:
+		push_error("Couldn't save profile!")
+		return
 	f.store_string(whole_string)
 	f.close()
 

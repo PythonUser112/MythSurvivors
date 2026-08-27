@@ -1,0 +1,4 @@
+- name: King Artus
+- class: knight
+- weapon: sword
+- skill: Thousend Stigers

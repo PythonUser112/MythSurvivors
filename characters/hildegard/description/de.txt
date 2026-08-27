@@ -1,0 +1,4 @@
+- name: König Artus
+- class: Ritter
+- weapon: Schwert
+- skill: Tausend Schwerthiebe

@@ -1,0 +1,10 @@
+- playable: yes
+- playable_with: 0
+- weapon: sword
+- hp: 100
+- atk: 1
+- def: 0
+- evasion: 0
+- mana: 10
+- crit: 0
+- speed: 100

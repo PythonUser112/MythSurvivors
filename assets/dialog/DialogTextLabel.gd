@@ -2,45 +2,32 @@ extends RichTextLabel
 
 signal finished
 
-export (float) var space_speed = 0.025
-export (float) var character_speed = 0.05
-export (float) var stop_speed = 0.2
-
-var to_show
 var time_elapsed
 var character
-var finished = true
-
-func _ready():
-	bbcode_enabled = true
 
 func show_text(_text: String):
-	finished = false
 	time_elapsed = 0
 	character = 0
 	visible_characters = 0
-	bbcode_text = "\n[center][jump_pulse]" + _text + "[/jump_pulse][/center]"
-	to_show = _text
+	var count = _text.count("<<")
+	var show_text = ""
+	var characters = 0
+	var index = 0
+	var last_index = 0
+	for i in range(count):
+		index = _text.find("<<", index)
+		show_text += _text.substr(last_index, index - last_index)
+		characters += index - last_index 
+		last_index = _text.find(">>", index)
+		var action = _text.substr(index + 2, last_index - index - 2)
+		show_text += InputManager.get_action_symbols(action)
+		index += 2
+		last_index += 2
+	characters += len(_text) - last_index
+	show_text += _text.substr(index + 2)
+	print(show_text, " ", characters)
+	bbcode_text = "\n[center][jump_pulse][slow_show]" + show_text + "[/slow_show][/jump_pulse][/center]"
+	$Timer.start(0.2 * characters + 0.1)
 
-func _process(delta):
-	if not finished:
-		time_elapsed += delta
-		match to_show[character]:
-			"":
-				if time_elapsed > space_speed:
-					time_elapsed -= space_speed
-					visible_characters += 1
-					character += 1
-			[".", ",", "!", "?"]:
-				if time_elapsed > stop_speed:
-					time_elapsed -= stop_speed
-					visible_characters += 1
-					character += 1
-			_:
-				if time_elapsed > character_speed:
-					time_elapsed -= stop_speed
-					visible_characters += 1
-					character += 1
-		if character == len(to_show):
-			finished = true
-			emit_signal("finished")
+func _on_Timer_timeout():
+	emit_signal("finished")

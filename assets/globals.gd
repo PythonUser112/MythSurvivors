@@ -17,7 +17,6 @@ func _ready():
 		if ": " in line and line.begins_with("- "):
 			line = line.right(2).split(": ")
 			config[line[0]] = line[1]
-	print_debug(config)
 	developer_mode = config.get("developer", null) != null or OS.has_feature("developer")
 	Locale.lang = config.get("lang")
 	Locale.init()

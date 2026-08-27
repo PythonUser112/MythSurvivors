@@ -1,6 +1,6 @@
 extends Control
 
-export (String) var data_file
+export (String, FILE) var data_file
 
 func show():
 	$Dialog.hide()

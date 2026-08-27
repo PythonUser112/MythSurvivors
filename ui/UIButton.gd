@@ -24,6 +24,7 @@ export (bool) var focused = false
 export (bool) var disabled = false
 export (bool) var toggle_mode = false
 export (bool) var down = false
+export (bool) var deactivated = false
 var pressed
 
 var color_rect
@@ -85,6 +86,8 @@ func _process(_delta):
 	if old_text != text:
 		label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
 		old_text = text
+	if deactivated:
+		focused = false
 	if focused:
 		if Input.is_action_just_pressed("ui_accept"):
 			pressed = true

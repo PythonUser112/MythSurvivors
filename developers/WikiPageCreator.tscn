@@ -189,20 +189,22 @@ margin_left = 92.0
 margin_right = 150.0
 margin_bottom = 24.0
 
-[node name="TargetType" type="MenuButton" parent="NewURLDialog/GridContainer"]
+[node name="TargetType" type="OptionButton" parent="NewURLDialog/GridContainer"]
 margin_left = 170.0
-margin_right = 255.0
+margin_right = 301.0
 margin_bottom = 24.0
-text = "Target Type"
-items = [ "Truthpedia page", null, 0, false, false, 0, 0, null, "", false, "Wikipedia Page", null, 0, false, false, 1, 0, null, "", false, "Webpage", null, 0, false, false, 2, 0, null, "", false ]
+text = "Truthpedia page"
+items = [ "Truthpedia page", null, false, 0, false, "Wikipedia Page", null, false, 0, false, "Webpage", null, false, 0, false ]
+selected = 0
 
-[node name="TargetLanguage" type="MenuButton" parent="NewURLDialog/GridContainer"]
-margin_left = 275.0
-margin_right = 386.0
+[node name="TargetLanguage" type="OptionButton" parent="NewURLDialog/GridContainer"]
+margin_left = 321.0
+margin_right = 395.0
 margin_bottom = 24.0
 disabled = true
-text = "Target language"
-items = [ "English", null, 0, false, false, 0, 0, null, "", false, "Deutsch", null, 0, false, false, 1, 0, null, "", false ]
+text = "English"
+items = [ "English", null, false, 0, false, "Deutsch", null, false, 0, false ]
+selected = 0
 
 [node name="ContentLabel" type="Label" parent="NewURLDialog/GridContainer"]
 margin_top = 33.0

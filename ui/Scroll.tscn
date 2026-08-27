@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://assets/fonts/Italianno.tres" type="DynamicFont" id=1]
+[ext_resource path="res://assets/dialog/textfx/scroll_decipher.gd" type="Script" id=2]
+[ext_resource path="res://ui/Scroll.gd" type="Script" id=3]
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 2 )
+
+[node name="Scroll" type="Control"]
+margin_right = 1024.0
+margin_bottom = 600.0
+script = ExtResource( 3 )
+text = "Hello There!
+I ain't be doing stuff like that, but I am bored, so why not try something new?"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_right = 1024.0
+margin_bottom = 600.0
+color = Color( 0.74902, 0.666667, 0.411765, 1 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+visible = false
+margin_right = 1026.0
+margin_bottom = 600.0
+custom_colors/default_color = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_y = 20
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "
+[center][scroll lift_height=20 lift_duration=0.5]Hello There!
+I ain't be doing stuff like that, but I am bored, so why not try something new?[/scroll][/center]"
+text = "
+Hello There!
+I ain't be doing stuff like that, but I am bored, so why not try something new?"
+custom_effects = [ SubResource( 2 ) ]

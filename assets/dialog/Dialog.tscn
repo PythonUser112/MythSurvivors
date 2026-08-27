@@ -29,10 +29,10 @@ custom_styles/panel = SubResource( 1 )
 margin_right = 100.0
 margin_bottom = 100.0
 expand = true
+stretch_mode = 6
 
 [node name="DialogText" parent="DialogActor1" instance=ExtResource( 1 )]
 margin_right = 1024.0
-scroll_active = false
 
 [node name="ActorLabel1" type="RichTextLabel" parent="DialogActor1"]
 margin_top = 70.0
@@ -57,10 +57,10 @@ custom_styles/panel = SubResource( 2 )
 margin_right = 100.0
 margin_bottom = 100.0
 expand = true
+stretch_mode = 6
 
 [node name="DialogText" parent="DialogActor2" instance=ExtResource( 1 )]
 margin_right = 1024.0
-scroll_active = false
 
 [node name="ActorLabel2" type="RichTextLabel" parent="DialogActor2"]
 margin_top = 70.0

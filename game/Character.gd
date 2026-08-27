@@ -32,8 +32,12 @@ func move(dir):
 
 func _on_AnimatedSprite_animation_finished():
 	moving = false
+	$AnimatedSprite.play("idle")
 
 func _ready():
+	$AnimatedSprite.frames.add_frame("idle", Characters.get_character(character).get_picture("idle"))
 	for dir in directions:
 		for frame in range(4):
-			$AnimatedSprite.frames.add_frame(dir, Characters.get_character(character).get_picture(dir + "/" + frame + ".png"))
+			$AnimatedSprite.frames.add_frame(dir, Characters.get_character(character).get_picture(dir + "/%s" % frame))
+	yield(get_tree(), "idle_frame")
+	$AnimatedSprite.play("idle")

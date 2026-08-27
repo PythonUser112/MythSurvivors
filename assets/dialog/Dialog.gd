@@ -1,6 +1,6 @@
 extends Control
 
-export (String) var dialog_file
+export (String, FILE) var dialog_file
 
 signal dialog_finished
 

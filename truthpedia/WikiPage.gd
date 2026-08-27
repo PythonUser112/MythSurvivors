@@ -176,9 +176,19 @@ func _on_Content_meta_clicked(meta):
 		OS.shell_open(meta)
 	elif meta.begins_with("wiki://"):
 		var new_page = meta.right(7)
-		get_parent().change_to(new_page)
+		var heading = ""
+		if "#" in meta:
+			new_page = new_page.split("#")
+			heading = new_page[1]
+			new_page = new_page[0]
+		get_parent().change_to(new_page, heading)
 
 func _on_Index_meta_clicked(meta):
+	scroll_to(meta)
+
+func scroll_to(meta):
+	if not meta:
+		return
 	meta = String(meta)
 	var y_target = clamp(ypositions[meta] - 20, 0, $ContentContainer/VBoxContainer.rect_size.y)
 	$Tween.interpolate_property($ContentContainer, "scroll_vertical", null, y_target, 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)

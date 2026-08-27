@@ -3,7 +3,7 @@
 [ext_resource path="res://game/Character.gd" type="Script" id=1]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 8, 16 )
+extents = Vector2( 16, 32 )
 
 [sub_resource type="SpriteFrames" id=2]
 animations = [ {
@@ -11,6 +11,11 @@ animations = [ {
 "loop": false,
 "name": "down",
 "speed": 8.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
 }, {
 "frames": [  ],
 "loop": false,
@@ -29,7 +34,9 @@ animations = [ {
 } ]
 
 [node name="Character" type="Area2D"]
+position = Vector2( 512, 300 )
 script = ExtResource( 1 )
+character = "knight"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
@@ -49,8 +56,10 @@ cast_to = Vector2( -12, 0 )
 cast_to = Vector2( 12, 0 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+scale = Vector2( 2, 2 )
 frames = SubResource( 2 )
-animation = "down"
+animation = "idle"
+playing = true
 
 [node name="Tween" type="Tween" parent="."]
 

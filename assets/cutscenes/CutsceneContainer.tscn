@@ -10,6 +10,7 @@ bg_color = Color( 1, 1, 1, 1 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+data_file = "res://levels/1/dialogs/1/de.txt"
 
 [node name="CutscenePanel" type="Panel" parent="."]
 margin_right = 1024.0

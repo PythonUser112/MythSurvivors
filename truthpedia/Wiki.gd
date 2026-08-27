@@ -28,7 +28,7 @@ func _ready():
 	add_child(current_page)
 	Modulate.fade_in()
 
-func change_to(page):
+func change_to(page, heading):
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 	current_page.queue_free()
@@ -42,6 +42,8 @@ func change_to(page):
 		add_child(current_page)
 		$ErrorDialog.popup_centered()
 	Modulate.fade_in()
+	yield(Modulate, "finished")
+	current_page.scroll_to(heading)
 
 func _on_BackButton_button_down():
 	Modulate.fade_out()

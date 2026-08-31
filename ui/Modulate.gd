@@ -21,3 +21,6 @@ func _on_Tween_tween_all_completed():
 	get_tree().paused = false
 	$ColorRect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	emit_signal("finished")
+
+func show_everything():
+	$ColorRect.color.a = 0

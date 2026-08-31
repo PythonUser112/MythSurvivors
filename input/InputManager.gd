@@ -57,12 +57,8 @@ func get_modifiers(action: InputEventWithModifiers) -> PoolStringArray:
 	var modifiers = PoolStringArray()
 	if action.alt:
 		modifiers.append("alt")
-	if action.command:
-		modifiers.append("command")
 	if action.control:
 		modifiers.append("control")
-	if action.meta:
-		modifiers.append("meta")
 	if action.shift:
 		modifiers.append("shift")
 	return modifiers
@@ -76,6 +72,9 @@ func serialize_action(action: InputEvent) -> String:
 		return "Key_%s_%s" % [action.scancode, "_".join(get_modifiers(action))]
 	return ""
 
+func action_in_list(action: String, status, list: Array) -> bool:
+	return false
+
 func deserialize_action(action_string: String) -> InputEvent:
 	var action_parts: Array = action_string.lstrip("\n ").rstrip("\n ").split("_")
 	var action_identifier = action_parts.pop_front()
@@ -85,9 +84,7 @@ func deserialize_action(action_string: String) -> InputEvent:
 		action.scancode = int(action_parts.pop_front())
 		for modifier in action_parts:
 			action.alt = (modifier == "alt") or action.alt
-			action.command = (modifier == "command") or action.command
 			action.control = (modifier == "control") or action.control
-			action.meta = (modifier == "meta") or action.meta
 			action.shift = (modifier == "shift") or action.shift
 	elif action_identifier == "JoyButton":
 		action = InputEventJoypadButton.new()

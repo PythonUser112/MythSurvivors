@@ -1,14 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=1]
-[ext_resource path="res://assets/Theme.tres" type="Theme" id=2]
-[ext_resource path="res://assets/fonts/Jacquard_24/FontReallyBig.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/fonts/Jacquard_24/FontMedium.tres" type="DynamicFont" id=4]
 [ext_resource path="res://ui/LoadingProgressBar.gd" type="Script" id=5]
 [ext_resource path="res://ui/BootSplash.gd" type="Script" id=6]
-
-[sub_resource type="RichTextEffect" id=1]
-script = ExtResource( 1 )
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 1, 0, 0, 0.752941 )
@@ -33,35 +28,20 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 6 )
 
-[node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 1024.0
-margin_bottom = 600.0
+[node name="LoadingScene" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="LoadingProgressBar" type="ProgressBar" parent="LoadingScene"]
+margin_top = 288.0
 margin_right = 1024.0
-margin_bottom = 60.0
-theme = ExtResource( 2 )
-custom_fonts/normal_font = ExtResource( 3 )
-bbcode_enabled = true
-bbcode_text = "
-[center][jump_pulse amp=80
-]MythSurvivors[/jump_pulse][/center]"
-text = "
-MythSurvivors"
-scroll_active = false
-scroll_following = true
-custom_effects = [ SubResource( 1 ) ]
-
-[node name="LoadingProgressBar" type="ProgressBar" parent="."]
-margin_top = 576.0
-margin_right = 1024.0
-margin_bottom = 600.0
+margin_bottom = 312.0
 custom_styles/fg = SubResource( 2 )
 custom_styles/bg = SubResource( 3 )
 percent_visible = false
 script = ExtResource( 5 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="LoadingProgressBar"]
+[node name="LoadingLabel" type="RichTextLabel" parent="LoadingScene/LoadingProgressBar"]
 margin_top = -2.0
 margin_right = 1024.0
 margin_bottom = 22.0

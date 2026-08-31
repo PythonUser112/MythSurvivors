@@ -5,18 +5,32 @@ var finished: Dictionary = {}
 var finished_no = 0
 var tasks = 0
 var time_max: int = 15
+var f = File.new()
 
 func _ready():
 	Modulate.fade_in()
 	yield(Modulate, "finished")
-	var main_scene = yield(load_asset("ui/Main.tscn"), "completed")
+	var intro_handler = load_asset("ui/Intro.tscn")
+	var main_handler = load_asset("ui/Main.tscn")
+	var splash
+	if f.file_exists("res://splash.png") or f.file_exists("user://splash.png"):
+		splash = yield(load_asset("splash.png"), "completed")
+	var intro_scene = yield(intro_handler, "completed").instance()
+	var main_scene = yield(main_handler, "completed")
 	Modulate.fade_out()
 	yield(Modulate, "finished")
+	$LoadingScene.queue_free()
+	add_child(intro_scene)
+	intro_scene.splash = splash
+	Modulate.show_everything()
+	yield(intro_scene, "finished")
+	Modulate.fade_out()
+	yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
 	get_tree().change_scene_to(main_scene)
 
 func load_asset(asset: String):
 	var load_path: String
-	var f = File.new()
 	if asset.begins_with("/") or asset.begins_with("C:\\")\
 	or asset.begins_with("res://") or asset.begins_with("user://"):
 		load_path = asset
@@ -29,12 +43,13 @@ func load_asset(asset: String):
 	if not f.file_exists(load_path):
 		push_error("Couldn't find asset '%s'"%(asset))
 		breakpoint
+		return
 	loaders.append([ResourceLoader.load_interactive(load_path), load_path])
 	tasks += 1
 	while not load_path in finished:
 		yield(get_tree(), "idle_frame")
 	finished_no += 1
-	$LoadingProgressBar.value = 100.0 * finished_no / tasks
+	$LoadingScene/LoadingProgressBar.value = 100.0 * finished_no / tasks
 	return finished[load_path]
 
 func _process(_delta):
@@ -53,7 +68,7 @@ func _process(_delta):
 			return
 		elif err == OK:
 			var progress = (100.0 * loaders[0][0].get_stage() / loaders[0][0].get_stage_count() + finished_no) / tasks
-			$LoadingProgressBar.value = progress
+			$LoadingScene/LoadingProgressBar.value = progress
 		else:
 			loaders = []
 			return

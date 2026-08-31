@@ -1,0 +1,95 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=1]
+[ext_resource path="res://assets/IntroTheme.tres" type="Theme" id=2]
+[ext_resource path="res://ui/Intro.gd" type="Script" id=3]
+[ext_resource path="res://assets/dialog/textfx/slow_show.gd" type="Script" id=4]
+[ext_resource path="res://godot_splash.png" type="Texture" id=5]
+[ext_resource path="res://assets/fonts/Jacquard_24/FontReallyBig.tres" type="DynamicFont" id=6]
+
+[sub_resource type="RichTextEffect" id=1]
+script = ExtResource( 1 )
+
+[sub_resource type="RichTextEffect" id=2]
+script = ExtResource( 4 )
+
+[sub_resource type="RichTextEffect" id=3]
+script = ExtResource( 4 )
+
+[node name="Intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="Page1" type="Control" parent="."]
+margin_top = -40.0
+margin_right = 1024.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page1"]
+margin_right = 1024.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 1024, 40 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse][slow_show]PythonUser112 presents...[/slow_show][/jump_pulse][/center]"
+text = "
+PythonUser112 presents..."
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 1 ), SubResource( 2 ) ]
+
+[node name="Page2" type="Control" parent="."]
+margin_top = -40.0
+margin_right = 1024.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page2"]
+margin_top = -5.0
+margin_right = 1024.0
+margin_bottom = 35.0
+rect_min_size = Vector2( 1024, 40 )
+bbcode_enabled = true
+bbcode_text = "
+[center][jump_pulse][slow_show]Made with Godot [/slow_show][/jump_pulse][/center]"
+text = "
+Made with Godot "
+scroll_active = false
+scroll_following = true
+custom_effects = [ SubResource( 1 ), SubResource( 2 ) ]
+
+[node name="TextureRect" type="TextureRect" parent="Page2"]
+margin_left = 600.0
+margin_right = 640.0
+margin_bottom = 40.0
+texture = ExtResource( 5 )
+expand = true
+
+[node name="Page3" type="Control" parent="."]
+margin_top = -48.0
+margin_right = 1024.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Page3"]
+margin_right = 1024.0
+margin_bottom = 48.0
+rect_min_size = Vector2( 1024, 48 )
+custom_fonts/normal_font = ExtResource( 6 )
+bbcode_enabled = true
+bbcode_text = "[center][slow_show]MythSurvivors[/slow_show][/center]"
+text = "MythSurvivors"
+scroll_active = false
+custom_effects = [ SubResource( 3 ) ]
+
+[node name="TextureRect" type="TextureRect" parent="Page3"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 40.0
+margin_bottom = 40.0
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="tween_completed" from="Tween" to="." method="_on_Tween_tween_completed"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

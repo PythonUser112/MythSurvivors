@@ -15,7 +15,7 @@ animations = [ {
 "frames": [  ],
 "loop": true,
 "name": "idle",
-"speed": 5.0
+"speed": 8.0
 }, {
 "frames": [  ],
 "loop": false,
@@ -34,26 +34,31 @@ animations = [ {
 } ]
 
 [node name="Character" type="Area2D"]
-position = Vector2( 512, 300 )
 script = ExtResource( 1 )
-character = "knight"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( 0, -8 )
 shape = SubResource( 1 )
 
 [node name="RayDown" type="RayCast2D" parent="."]
+enabled = true
 cast_to = Vector2( 0, 12 )
 collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="."]
+enabled = true
 cast_to = Vector2( 0, -12 )
+collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="."]
+enabled = true
 cast_to = Vector2( -12, 0 )
+collide_with_areas = true
 
 [node name="RayRight" type="RayCast2D" parent="."]
+enabled = true
 cast_to = Vector2( 12, 0 )
+collide_with_areas = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 scale = Vector2( 2, 2 )
@@ -63,4 +68,14 @@ playing = true
 
 [node name="Tween" type="Tween" parent="."]
 
-[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
+[node name="IdleTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[node name="FrameTimer" type="Timer" parent="."]
+wait_time = 0.125
+one_shot = true
+
+[connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
+[connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
+[connection signal="timeout" from="FrameTimer" to="." method="_on_FrameTimer_timeout"]

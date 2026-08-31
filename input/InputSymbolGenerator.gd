@@ -85,6 +85,7 @@ func _ready():
 			if line:
 				line = line.split(": ")
 				symbols[line[0]] = line[1]
+	get_key_symbol(JOYSTICK, "0+")
 
 func get_joybutton_name(key):
 	return JOYBUTTONS[key][0]
@@ -201,6 +202,12 @@ func get_key_symbol(type, key):
 		add_color_rects(2, 2, 1, 3, 9, Color.gray)
 		add_color_rect(3, 1, 3, 5, Color.gray)
 		add_pixel(4, 3, Color.black)
+		var idx = {"1-": 0, "0+": 1, "1+": 2, "0-": 3}[key]
+		var i = 0
+		for pos in rot:
+			if idx != i:
+				add_pixel(4 + pos[0], 3 + pos[1])
+			i += 1
 		add_pixel(0, 5, Color.gray)
 		add_pixel(1, 6, Color.gray)
 		add_color_rect(2, 7, 5, 1, Color.gray)
@@ -211,10 +218,11 @@ func get_key_symbol(type, key):
 		add_color_rects(1, 13, 1, 2, 9, Color.black)
 		add_color_rects(1, 16, 1, 2, 9, Color.black)
 		add_color_rects(2, 13, 1, 1, 9, Color.black)
-		add_color_rects(2, 17, 1, 1, 9, Color.black)
-		add_color_rects(1, 15, 1, 1, 9, Color.black)
-		add_color_rects(2, 14, 1, 3, 9, Color.black)
-		add_color_rect(3, 16, 3, 1, Color.black)
+		add_color_rect(2, 17, 5, 1, Color.black)
+		add_color_rects(1, 15, 1, 1, 9, Color.white)
+		add_color_rects(2, 14, 1, 3, 9, Color.white)
+		add_color_rect(3, 16, 3, 1, Color.white)
+		imagepath = "user://joystick_%s.png" % int(Time.get_unix_time_from_system() * 1000000)
 	while image.is_empty():
 		$InputSymbolViewport/Control.update()
 		yield(VisualServer, "frame_post_draw")

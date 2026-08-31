@@ -41,7 +41,7 @@ func move(dir):
 	$IdleTimer.stop()
 	$FrameTimer.stop()
 	if (diridx[dir] - old_direction) in [2, -2]:
-		var between = (diridx[dir] + old_direction) / 2 + (randi() % 2) * 2
+		var between = ((diridx[dir] + old_direction) / 2 + (randi() % 2) * 2) % 4
 		var anim = diridx.keys()[between]
 		$AnimatedSprite.animation = anim
 		$AnimatedSprite.playing = false

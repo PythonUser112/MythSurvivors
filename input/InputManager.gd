@@ -4,7 +4,7 @@ export (String) var current_profile = "default"
 export (String) var profile_path = "user://profile_%s.txt"
 export (String) var profile_list = "user://profiles.txt"
 
-enum {
+enum ActionStatus {
 	PRESSED,
 	RELEASED
 }
@@ -20,14 +20,14 @@ func _ready():
 func _input(event: InputEvent):
 	if event is InputEventKey:
 		if event.pressed:
-			new_events.append([InputSymbolGenerator.KEYBOARD, PRESSED, event])
+			new_events.append([InputSymbolGenerator.KEYBOARD, ActionStatus.PRESSED, event])
 		else:
-			new_events.append([InputSymbolGenerator.KEYBOARD, RELEASED, event])
+			new_events.append([InputSymbolGenerator.KEYBOARD, ActionStatus.RELEASED, event])
 	elif event is InputEventJoypadButton:
 		if event.pressed:
-			new_events.append([InputSymbolGenerator.JOYBUTTON, PRESSED, event])
+			new_events.append([InputSymbolGenerator.JOYBUTTON, ActionStatus.PRESSED, event])
 		else:
-			new_events.append([InputSymbolGenerator.JOYBUTTON, RELEASED, event])
+			new_events.append([InputSymbolGenerator.JOYBUTTON, ActionStatus.RELEASED, event])
 	elif event is InputEventJoypadMotion:
 		new_events.append([InputSymbolGenerator.JOYSTICK, null, event])
 	else:
@@ -140,24 +140,24 @@ func save_profile(profile_name: String):
 
 func is_action_pressed(action: String) -> bool:
 	for possibility in profiles[current_profile][action]:
-		if [possibility[0], PRESSED, possibility[1]] in events:
+		if [possibility[0], ActionStatus.PRESSED, possibility[1]] in events:
 			return true
 	return false
 
 func is_action_released(action: String) -> bool:
 	for possibility in profiles[current_profile][action]:
-		if [possibility[0], RELEASED, possibility[1]] in events:
+		if [possibility[0], ActionStatus.RELEASED, possibility[1]] in events:
 			return true
 	return false
 
 func is_action_just_pressed(action: String) -> bool:
 	for possibility in profiles[current_profile][action]:
-		if [possibility[0], PRESSED, possibility[1]] in new_events:
+		if [possibility[0], ActionStatus.PRESSED, possibility[1]] in new_events:
 			return true
 	return false
 
 func is_action_just_released(action: String) -> bool:
 	for possibility in profiles[current_profile][action]:
-		if [possibility[0], PRESSED, possibility[1]] in new_events:
+		if [possibility[0], ActionStatus.RELEASED, possibility[1]] in new_events:
 			return true
 	return false

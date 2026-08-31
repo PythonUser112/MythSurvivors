@@ -8,6 +8,8 @@ collision_layer = 4
 collision_mask = 11
 script = ExtResource( 2 )
 character = "artus"
+npc = false
+start_direction = 0
 
-[node name="Camera2D" type="Camera2D" parent="." index="9"]
+[node name="Camera2D" type="Camera2D" parent="." index="8"]
 current = true

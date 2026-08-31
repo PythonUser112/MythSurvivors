@@ -11,4 +11,4 @@ collision_mask = 31
 character = "artus"
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 512, 300 )
+position = Vector2( 512, 288 )

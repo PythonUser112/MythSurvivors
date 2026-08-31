@@ -15,7 +15,7 @@ animations = [ {
 "frames": [  ],
 "loop": true,
 "name": "idle",
-"speed": 8.0
+"speed": 0.75
 }, {
 "frames": [  ],
 "loop": false,
@@ -41,23 +41,27 @@ position = Vector2( 0, -8 )
 shape = SubResource( 1 )
 
 [node name="RayDown" type="RayCast2D" parent="."]
+position = Vector2( 0, 1 )
 enabled = true
-cast_to = Vector2( 0, 12 )
+cast_to = Vector2( 0, 11 )
 collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="."]
+position = Vector2( 0, -1 )
 enabled = true
-cast_to = Vector2( 0, -12 )
+cast_to = Vector2( 0, -11 )
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="."]
+position = Vector2( -1, 0 )
 enabled = true
-cast_to = Vector2( -12, 0 )
+cast_to = Vector2( -11, 0 )
 collide_with_areas = true
 
 [node name="RayRight" type="RayCast2D" parent="."]
+position = Vector2( 1, 0 )
 enabled = true
-cast_to = Vector2( 12, 0 )
+cast_to = Vector2( 11, 0 )
 collide_with_areas = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
@@ -74,8 +78,9 @@ one_shot = true
 
 [node name="FrameTimer" type="Timer" parent="."]
 wait_time = 0.125
-one_shot = true
+__meta__ = {
+"_editor_description_": "Has the duration of exactly one walking frame"
+}
 
 [connection signal="tween_all_completed" from="Tween" to="." method="_on_Tween_tween_all_completed"]
 [connection signal="timeout" from="IdleTimer" to="." method="_on_IdleTimer_timeout"]
-[connection signal="timeout" from="FrameTimer" to="." method="_on_FrameTimer_timeout"]

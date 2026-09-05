@@ -1,15 +1,27 @@
+CREDITS
+¯¯¯¯¯¯¯
+
 Skilltree by Orteil/Cookieclicker
 Characters based on One Piece & Genshin Impact
 Gameplay by Spacebot Interactive/Dragonyhm & VampireSurvivors
 Stories by varius authors, e.g. Homer, Ovid, Rick Riordan, ...
-Code: Tim
-Characters: Hannah
+
+
+Code: Roman, Tim
+Character Design: Hannah
 Graphics: Shai
 Stories: Siri
-Music: Tim, Shai
-Testing: Tamara, Adrian, Pascal
+Music: Shai, Tim
+Testing: Adrian, Pascal, Tamara
+TruthPedia®: Saskia, Tim
+Weapon Design: Max
+(Not Funny) Jokes: Victoria, Tim
 Stuff no one needs: everyone
+
+
 Engine: Juan Linietsky, Ariel Manzur
+
+
 Also Thanks to
 - Framework for Hardware
 - Fairlight & Farbrausch for Graphical & Musical Entertainment
@@ -22,9 +34,12 @@ Also Thanks to
 - Hoyoverse for Genshin Impact - what a wonderful game!
 - and much mre people who shall stay unnamed
 
-And we thank YOU for playing this!
+
+And we thank YOU for playing this shit!
+
+
+The characters depicted in this game are purely (!!!!!) fictional. Any resemblance to existing persons are unintended coincidences, except for one.
+
 
 ©2026 by GodTok® & Olympus Mons®
 We love to let you hate each other!
-
-PS: This game is based on existing stories and games

@@ -1,14 +1,19 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://tiles/AppleTree/AppleTree.gd" type="Script" id=1]
-[ext_resource path="res://tiles/AppleTree/Tree.png" type="Texture" id=2]
+[ext_resource path="res://tiles/AppleTree/AppleTree.png" type="Texture" id=2]
+[ext_resource path="res://assets/shaders/PictureShader.gdshader" type="Shader" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 24, 24 )
+extents = Vector2( 32, 48 )
 
-[sub_resource type="CapsuleShape2D" id=2]
-radius = 16.0
-height = 16.0
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 3 )
+shader_param/disabled = null
+shader_param/colors = 8.0
+shader_param/pixels = Vector2( 24, 24 )
+shader_param/minrgb = 0.0
+shader_param/maxrgb = 1.0
 
 [node name="AppleTree" type="Area2D"]
 collision_mask = 23
@@ -18,12 +23,9 @@ script = ExtResource( 1 )
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( -4, 4 )
+scale = Vector2( 2, 2 )
 texture = ExtResource( 2 )
-
-[node name="StaticBody" type="StaticBody2D" parent="."]
-collision_mask = 4
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody"]
-shape = SubResource( 2 )
 
 [connection signal="area_entered" from="." to="." method="_on_AppleTree_area_entered"]

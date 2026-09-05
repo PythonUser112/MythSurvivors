@@ -43,25 +43,25 @@ shape = SubResource( 1 )
 [node name="RayDown" type="RayCast2D" parent="."]
 position = Vector2( 0, 1 )
 enabled = true
-cast_to = Vector2( 0, 11 )
+cast_to = Vector2( 0, 16 )
 collide_with_areas = true
 
 [node name="RayUp" type="RayCast2D" parent="."]
 position = Vector2( 0, -1 )
 enabled = true
-cast_to = Vector2( 0, -11 )
+cast_to = Vector2( 0, -16 )
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast2D" parent="."]
 position = Vector2( -1, 0 )
 enabled = true
-cast_to = Vector2( -11, 0 )
+cast_to = Vector2( -16, 0 )
 collide_with_areas = true
 
 [node name="RayRight" type="RayCast2D" parent="."]
 position = Vector2( 1, 0 )
 enabled = true
-cast_to = Vector2( 11, 0 )
+cast_to = Vector2( 16, 0 )
 collide_with_areas = true
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]

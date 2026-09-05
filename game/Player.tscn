@@ -10,7 +10,6 @@ script = ExtResource( 2 )
 character = "artus"
 npc = false
 start_direction = 0
-lives = 0
 
 [node name="Camera2D" type="Camera2D" parent="." index="8"]
 current = true

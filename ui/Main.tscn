@@ -29,7 +29,7 @@ script = ExtResource( 2 )
 [node name="Tween" type="Tween" parent="."]
 
 [node name="Stars" parent="." instance=ExtResource( 1 )]
-star_count = 500
+star_count = 1000
 
 [node name="Title" type="RichTextLabel" parent="Stars"]
 margin_right = 1024.0

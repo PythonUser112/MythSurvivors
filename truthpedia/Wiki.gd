@@ -29,20 +29,21 @@ func _ready():
 	Modulate.fade_in()
 
 func change_to(page, heading):
-	Modulate.fade_out()
-	yield(Modulate, "finished")
-	current_page.queue_free()
-	current_page = preload("res://truthpedia/WikiPage.tscn").instance()
-	current_page.wikipage = page
-	add_child(current_page)
-	yield(get_tree(), "idle_frame")
-	if current_page.fail:
+	if page != current_page.wikipage:
+		Modulate.fade_out()
+		yield(Modulate, "finished")
+		current_page.queue_free()
 		current_page = preload("res://truthpedia/WikiPage.tscn").instance()
-		current_page.wikipage = "main"
+		current_page.wikipage = page
 		add_child(current_page)
-		$ErrorDialog.popup_centered()
-	Modulate.fade_in()
-	yield(Modulate, "finished")
+		yield(get_tree(), "idle_frame")
+		if current_page.fail:
+			current_page = preload("res://truthpedia/WikiPage.tscn").instance()
+			current_page.wikipage = "main"
+			add_child(current_page)
+			$ErrorDialog.popup_centered()
+		Modulate.fade_in()
+		yield(Modulate, "finished")
 	current_page.scroll_to(heading)
 
 func _on_BackButton_button_down():
@@ -76,7 +77,7 @@ func _on_SearchButton_pressed():
 			var button = UIButton.new()
 			button.text = files[page]
 			button.rect_min_size = Vector2(500, 200)
-			button.connect("button_down", self, "change_to", [page])
+			button.connect("button_down", self, "change_to", [page, ""])
 			current_page.add_child(button)
 		add_child(current_page)
 		Modulate.fade_in()

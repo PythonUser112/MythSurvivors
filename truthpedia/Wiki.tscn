@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=1]
+[ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=1]
 [ext_resource path="res://truthpedia/Wiki.gd" type="Script" id=2]
 [ext_resource path="res://ui/UIButton.gd" type="Script" id=3]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=4]

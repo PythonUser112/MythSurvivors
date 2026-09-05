@@ -69,7 +69,7 @@ func _ready():
 				content_container.name = part
 				content_container.rect_min_size = label.rect_min_size
 				ypositions[part] = content_container.rect_position.y
-			part = line.right(2)
+			part = line.right(3)
 			image_part = true
 			bbcode_text = heading % part
 			$TableOfContents/Index.bbcode_text += "\n  [url=%s]%s[/url]"%[line.right(2), line.right(2)]

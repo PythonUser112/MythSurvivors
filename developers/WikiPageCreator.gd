@@ -6,10 +6,10 @@ enum {
 	CLEAR
 }
 
-var saved = false
+var saved = true
 var mode
 var url_type = 0
-var lang = "de"
+var lang = Locale.lang
 
 func _ready():
 	Modulate.fade_in()
@@ -71,12 +71,18 @@ func _on_NewURLDialog_confirmed():
 	if url_type > 0:
 		target = target.percent_encode()
 	target = ["wiki://", "https://%s.wikipedia.org/wiki/" % lang, "https://"][url_type] + target
+	if $NewURLDialog/GridContainer/TargetSection.editable and $NewURLDialog/GridContainer/TargetSection.text:
+		target += "#" + $NewURLDialog/GridContainer/TargetSection.text
 	var interior = "[%s](%s)"%[$NewURLDialog/GridContainer/Content.text, target]
 	var text = text_left + interior + text_right
 	$EditorContainer/Editor/TextEdit.set_line(cursory, text)
 	$EditorContainer/Editor/TextEdit.cursor_set_column(cursorx + interior.length())
 
 func _on_URLButton_pressed():
+	$NewURLDialog/GridContainer/TargetSection.text = ""
+	$NewURLDialog/GridContainer/Content.text = ""
+	$NewURLDialog/GridContainer/Target.text = ""
+	$NewURLDialog/GridContainer/TargetType.selected = 0
 	$NewURLDialog.popup_centered()
 
 func _on_NewURLDialog_popup_hide():
@@ -151,6 +157,7 @@ func _on_UnsavedChangesDialog_popup_hide():
 func change_index(index):
 	url_type = index
 	$NewURLDialog/GridContainer/TargetLanguage.disabled = index != 1
+	$NewURLDialog/GridContainer/TargetSection.editable = index != 2
 
 func change_target_language(index):
 	lang = $NewURLDialog/GridContainer/TargetLanguage.get_popup().get_item_text(index)

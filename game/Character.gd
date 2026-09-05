@@ -1,5 +1,7 @@
 extends Area2D
 
+signal moving_finished
+
 export (String) var character
 export (bool) var npc = true
 export (int) var speed = 16
@@ -57,6 +59,8 @@ func move(dir):
 		$AnimatedSprite.play(dir)
 
 func _on_Tween_tween_all_completed():
+	if moving:
+		emit_signal("moving_finished")
 	moving = false
 	$AnimatedSprite.stop()
 	$AnimatedSprite.frame = 0

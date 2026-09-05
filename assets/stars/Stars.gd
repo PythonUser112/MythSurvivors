@@ -3,7 +3,7 @@ tool
 extends ColorRect
 class_name Stars
 
-export (int) var star_count = 250
+export (int) var star_count = 500
 export (float) var star_blink_speed = 5.0
 
 var star_shader = preload("res://assets/shaders/StarBlinkShader.tres")

@@ -1,7 +1,7 @@
 Characters:
 Apollo: apollo
 Pan: pan
-Artus: knight
+Artus: artus
 
 Dialog:
 - Artus#bottom: ...

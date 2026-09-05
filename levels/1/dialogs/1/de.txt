@@ -1,8 +1,8 @@
 Characters:
-?: nymph
-Hildegard: nymph
-Helena: nymph
-Artus: knight
+?: hildegard
+Hildegard: hildegard
+Helena: hildegard
+Artus: artus
 Apollo: apollo
 Pan: pan
 
@@ -34,4 +34,4 @@ Dialog:
 - Helena#top: Nach Norden.
 - Artus#bottom: Und ich muss ...?
 - Helena#top: Auf jeden Fall!
-- Artus#bottom: Danke!
+- Artus#bottom: Dankeschön, hatte ja eh nichts anderes zu tun :-(

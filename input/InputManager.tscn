@@ -3,6 +3,7 @@
 [ext_resource path="res://input/InputManager.gd" type="Script" id=1]
 
 [node name="InputManager" type="Control"]
+visible = false
 margin_right = 1024.0
 margin_bottom = 600.0
 mouse_filter = 2

@@ -65,7 +65,6 @@ const JOYBUTTONS = {
 const rot = [[0, -1], [1, 0], [0, 1], [-1, 0]]
 
 var symbols = {}
-const SYMBOL_TEMPLATE = "[img src=%s][/img]"
 var storagefile_content: String
 
 func _ready():
@@ -85,7 +84,6 @@ func _ready():
 			if line:
 				line = line.split(": ")
 				symbols[line[0]] = line[1]
-	get_key_symbol(JOYSTICK, "0+")
 
 func get_joybutton_name(key):
 	return JOYBUTTONS[key][0]
@@ -115,16 +113,14 @@ func add_pixel(x, y, color=Color.black):
 func get_type_name(type):
 	return {KEYBOARD: "KEYBOARD", JOYBUTTON: "JOYBUTTON", JOYSTICK: "JOYSTICK"}[type]
 
-func wait():
-	$InputSymbolViewport/Control.update()
-	while not Input.is_action_just_pressed("select"):
-		yield(VisualServer, "frame_post_draw")
-	yield(VisualServer, "frame_post_draw")
-
 func get_key_symbol(type, key):
 	if get_type_name(type) + str(key) in symbols:
 		yield(get_tree(), "idle_frame")
-		return SYMBOL_TEMPLATE % symbols[get_type_name(type) + str(key)]
+		var texture = ImageTexture.new()
+		var image = Image.new()
+		image.load(symbols[get_type_name(type) + str(key)])
+		texture.create_from_image(image)
+		return texture
 	var imagepath: String
 	var image: Image = Image.new()
 	if type == KEYBOARD:
@@ -241,4 +237,6 @@ func get_key_symbol(type, key):
 	for child in $InputSymbolViewport/Control.get_children():
 		child.queue_free()
 	yield(get_tree(), "idle_frame")
-	return SYMBOL_TEMPLATE % imagepath
+	var texture = ImageTexture.new()
+	texture.create_from_image(image)
+	return texture

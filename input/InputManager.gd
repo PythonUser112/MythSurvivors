@@ -32,7 +32,6 @@ func _input(event: InputEvent):
 		new_events.append([InputSymbolGenerator.JOYSTICK, null, event])
 	else:
 		return
-	get_tree().set_input_as_handled()
 
 func load_profiles():
 	var f = File.new()
@@ -50,8 +49,21 @@ func load_profiles():
 		load_profile("default")
 		save_profile("default")
 
-func get_action_symbols(action: String) -> String:
-	return ""
+func get_action_symbols(action: String, profile: String = "default") -> String:
+	var symbols = []
+	for event in profiles[profile][action]:
+		print(event)
+		if symbols:
+			symbols.append(" or ")
+		if event is InputEventKey:
+			if event.control:
+				symbols.append(yield(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_CONTROL), "completed"))
+			if event.shift:
+				symbols.append(yield(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_SHIFT), "completed"))
+			if event.alt:
+				symbols.append(yield(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_ALT), "completed"))
+			symbols.append(yield(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, event.scancode), "completed"))
+	return symbols
 
 func get_modifiers(action: InputEventWithModifiers) -> PoolStringArray:
 	var modifiers = PoolStringArray()
@@ -72,6 +84,9 @@ func serialize_action(action: InputEvent) -> String:
 		return "Key_%s_%s" % [action.scancode, "_".join(get_modifiers(action))]
 	return ""
 
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
+# warning-ignore:unused_argument
 func action_in_list(action: String, status, list: Array) -> bool:
 	return false
 

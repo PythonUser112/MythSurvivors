@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/Main.gd" type="Script" id=2]
-[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
+[ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=3]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
 [ext_resource path="res://assets/fonts/Jacquard_24/Jacquard24-Regular.ttf" type="DynamicFontData" id=5]
 [ext_resource path="res://ui/UIButton.gd" type="Script" id=6]

@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/stars/Stars.gd" type="Script" id=1]
 [ext_resource path="res://characters/knight/images/CharacterSelection.png" type="Texture" id=2]
 [ext_resource path="res://assets/shaders/PictureShader.gdshader" type="Shader" id=3]
-[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=4]
+[ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=4]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=5]
 [ext_resource path="res://ui/PictureRect.gd" type="Script" id=6]
 

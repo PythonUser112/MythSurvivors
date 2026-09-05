@@ -2,8 +2,8 @@ extends Node
 
 export (bool) var developer_mode = false
 export (String) var lang
-var config = {}
-const config_path = "user://config.txt"
+var config: Dictionary = {}
+const config_path: String = "user://config.txt"
 
 func _ready():
 	var f = File.new()

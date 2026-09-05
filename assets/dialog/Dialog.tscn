@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/dialog/DialogTextLabel.tscn" type="PackedScene" id=1]
 [ext_resource path="res://assets/dialog/Dialog.gd" type="Script" id=2]
-[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
+[ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=3]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
 
 [sub_resource type="StyleBoxFlat" id=1]

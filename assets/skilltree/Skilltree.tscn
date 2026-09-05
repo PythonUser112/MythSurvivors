@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/skilltree/Skilltree.gd" type="Script" id=1]
 [ext_resource path="res://assets/stars/Stars.tscn" type="PackedScene" id=2]
-[ext_resource path="res://assets/dialog/textfx/jump_pulse.gd" type="Script" id=3]
+[ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=3]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
 [ext_resource path="res://assets/images/barHorizontal_yellow_mid 200.png" type="Texture" id=5]
 [ext_resource path="res://assets/images/glassPanel_200.png" type="Texture" id=6]

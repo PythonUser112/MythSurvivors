@@ -8,6 +8,9 @@ var time_max: int = 15
 var f = File.new()
 
 func _ready():
+	if Globals.config.get("developer", "0") == "1":
+		if get_tree().change_scene("res://ui/Main.tscn") == OK:
+			return
 	Modulate.fade_in()
 	yield(Modulate, "finished")
 	var intro_handler = load_asset("ui/Intro.tscn")

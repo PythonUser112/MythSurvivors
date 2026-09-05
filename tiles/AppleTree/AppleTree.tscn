@@ -10,8 +10,8 @@ extents = Vector2( 24, 24 )
 radius = 16.0
 height = 16.0
 
-[node name="AppleTree" type="Area2D" groups=["Environment"]]
-collision_mask = 16
+[node name="AppleTree" type="Area2D"]
+collision_mask = 23
 script = ExtResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

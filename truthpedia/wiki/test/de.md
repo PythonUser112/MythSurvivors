@@ -1,5 +1,7 @@
 # Erstes
-![Alt text](wiki://test/test_de.png "Testbild")
+
+![Alt text](wiki://test/test_de.jpg "Testbild")
+
 [Lorem](https://de.wikipedia.org/wiki/Lorem_Ipsum) [ipsum](wiki://ipsum) dolor sit amet
 A
 B

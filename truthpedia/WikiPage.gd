@@ -9,7 +9,7 @@ const heading = "\n[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/F
 var ypositions = {}
 
 func _ready():
-	var wiki = "res://truthpedia/wiki/" + wikipage + "/" + Locale.lang + ".md"
+	var wiki = get_parent().WIKIPATH + wikipage + "/" + Locale.lang + ".md"
 	var f = File.new()
 	if not f.file_exists(wiki):
 		push_error("Wikipage %s does not exist!" % wikipage)
@@ -75,9 +75,12 @@ func _ready():
 			$TableOfContents/Index.bbcode_text += "\n  [url=%s]%s[/url]"%[line.right(2), line.right(2)]
 			continue
 		if image_part:
+			if line.strip_edges() == "":
+				continue
 			if line.begins_with("!["):
-				push_warning("Image handling not supported!")
-				var _path = line.split("(")[1].split(" ")[0]
+				var _path = line.split("(")[1].split(" ")[0].replace("wiki://", get_parent().WIKIPATH)
+				var alt_text = line.split("[")[1].split("]")[0]
+				bbcode_text += "\n[img]%s[/img]\n%s"%[_path, alt_text]
 				continue
 			image_part = false
 		if bbcode_text and not image_part:
@@ -145,7 +148,7 @@ func _ready():
 				last_was_space = character in [" ", "\n", "\t"]
 			bbcode_text += "\n[font=res://assets/fonts/Jacquard_24/FontSmall.tres]%s[/font]" % line_parsed
 	if bbcode_text:
-		content_container = Control.new()
+		content_container = VBoxContainer.new()
 		var label = RichTextLabel.new()
 		label.connect("meta_clicked", self, "_on_Content_meta_clicked")
 		label.custom_effects = [JumpPulse.new()]

@@ -1,11 +1,13 @@
 extends Control
 
+const WIKIPATH = "res://truthpedia/wiki/"
+
 var current_page: Control
 var files = {}
 
 func _ready():
 	var wikidir = Directory.new()
-	if wikidir.open("res://truthpedia/wiki") != OK:
+	if wikidir.open(WIKIPATH) != OK:
 		push_error("Truthpedia wiki doesn't exist!")
 		return
 	wikidir.list_dir_begin()
@@ -14,8 +16,8 @@ func _ready():
 	while dir != "":
 		dir = wikidir.get_next()
 		if wikidir.current_is_dir() and not dir.begins_with("."):
-			if f.file_exists("res://truthpedia/wiki/" + dir + "/names.txt"):
-				f.open("res://truthpedia/wiki/" + dir + "/names.txt", File.READ)
+			if f.file_exists(WIKIPATH + dir + "/names.txt"):
+				f.open(WIKIPATH + dir + "/names.txt", File.READ)
 				var content = f.get_as_text().split("\n")
 				f.close()
 				for line in content:
@@ -29,7 +31,7 @@ func _ready():
 	Modulate.fade_in()
 
 func change_to(page, heading):
-	if page != current_page.wikipage:
+	if page != current_page.get("wikipage"):
 		Modulate.fade_out()
 		yield(Modulate, "finished")
 		current_page.queue_free()

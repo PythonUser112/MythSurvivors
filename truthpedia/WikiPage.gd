@@ -9,21 +9,31 @@ const heading = "\n[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/F
 var ypositions = {}
 
 func _ready():
-	var wiki = get_parent().WIKIPATH + wikipage + "/" + Locale.lang + ".md"
-	var f = File.new()
-	if not f.file_exists(wiki):
-		push_error("Wikipage %s does not exist!" % wikipage)
-		fail = true
-		return
-	f.open(wiki, File.READ)
-	var content = f.get_as_text().split("\n")
-	f.close()
-	$TitlePanel/PageTitle.bbcode_text = title % get_parent().files[wikipage]
-	var image_part = false
+	redraw()
+
+func redraw():
+	var content
+	if get_parent().get("WIKIPATH") != null:
+		var wiki = get_parent().WIKIPATH + wikipage + "/" + Locale.lang + ".md"
+		var f = File.new()
+		if not f.file_exists(wiki):
+			push_error("Wikipage %s does not exist!" % wikipage)
+			fail = true
+			return
+		f.open(wiki, File.READ)
+		content = f.get_as_text().split("\n")
+		f.close()
+		$TitlePanel/PageTitle.bbcode_text = title % get_parent().files[wikipage]
+	else:
+		content = get_parent().get_node("Editor/TextEdit").text.split("\n")
+		$TableOfContents/Index.bbcode_text = ""
+		for child in $ContentContainer/VBoxContainer.get_children():
+			child.queue_free()
 	var bbcode_text = ""
 	var part = ""
 	var content_container
 	for line in content:
+		print(line)
 		if line.begins_with("# "):
 			if bbcode_text:
 				content_container = HBoxContainer.new()
@@ -45,7 +55,6 @@ func _ready():
 				content_container.rect_min_size = label.rect_min_size
 				ypositions[part] = content_container.rect_position.y
 			part = line.right(2)
-			image_part = true
 			bbcode_text = "\n" + heading % part
 			$TableOfContents/Index.bbcode_text += "\n[url=%s]%s[/url]"%[line.right(2), line.right(2)]
 			continue
@@ -70,20 +79,20 @@ func _ready():
 				content_container.rect_min_size = label.rect_min_size
 				ypositions[part] = content_container.rect_position.y
 			part = line.right(3)
-			image_part = true
 			bbcode_text = heading % part
 			$TableOfContents/Index.bbcode_text += "\n  [url=%s]%s[/url]"%[line.right(2), line.right(2)]
 			continue
-		if image_part:
-			if line.strip_edges() == "":
-				continue
+		if bbcode_text:
 			if line.begins_with("!["):
-				var _path = line.split("(")[1].split(" ")[0].replace("wiki://", get_parent().WIKIPATH)
+				var _path = line.split("(")[1].split(")")[0]
+				if "wiki://" in line:
+					line = line.replace("wiki://", get_parent().WIKIPATH)
 				var alt_text = line.split("[")[1].split("]")[0]
-				bbcode_text += "\n[img]%s[/img]\n%s"%[_path, alt_text]
+				if alt_text:
+					bbcode_text += "\n[img]%s[/img]\n%s\n"%[_path, alt_text]
+				else:
+					bbcode_text += "[img]%s[/img]"%(_path)
 				continue
-			image_part = false
-		if bbcode_text and not image_part:
 			var line_parsed = ""
 			var state = 0
 			var tmp1

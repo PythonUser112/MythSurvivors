@@ -3,7 +3,8 @@ extends Control
 enum {
 	OPEN,
 	QUIT,
-	CLEAR
+	CLEAR,
+	DESTROY
 }
 
 var saved = true
@@ -21,12 +22,14 @@ func _ready():
 	$EditorContainer/Editor/TextEdit.add_color_region(" -", "- ", Color.gray, true)
 	$EditorContainer/Editor/TextEdit.add_color_region(" _", "_ ", Color.aquamarine, true)
 	$EditorContainer/Editor/TextEdit.add_color_region("\\-", " ", Color.turquoise, true)
+	$EditorContainer/Editor/TextEdit.add_color_region("![", ")", Color.green, true)
 	$EditorContainer/Editor/TextEdit.add_color_override("brace_mismatch_color", Color.red)
 	$EditorContainer/Editor/TextEdit.add_color_override("function_color", Color.white)
 	$EditorContainer/Editor/TextEdit.add_color_override("member_variable_color", Color.white)
 	$EditorContainer/Editor/TextEdit.add_color_override("number_color", Color.white)
 	$EditorContainer/Editor/TextEdit.add_color_override("symbol_color", Color.white)
 	$NewURLDialog/GridContainer/TargetType.get_popup().connect("index_pressed", self, "change_index")
+	get_tree().set_auto_accept_quit(false)
 
 func _on_EditorContainer_tab_changed(tab):
 	if tab == 0:
@@ -137,6 +140,9 @@ func _on_Heading2Button_pressed():
 	$EditorContainer/Editor/TextEdit.cursor_set_column(3)
 	$EditorContainer/Editor/TextEdit.grab_focus()
 
+func _on_ImageButton_pressed():
+	$ImageDialog.popup_centered()
+
 func _on_SaveFinishedDialog_popup_hide():
 	$EditorContainer/Editor/TextEdit.grab_focus()
 
@@ -146,10 +152,13 @@ func _on_UnsavedChangesDialog_confirmed():
 	elif mode == CLEAR:
 		$EditorContainer/Editor/TextEdit.text = ""
 	elif mode == QUIT:
+		get_tree().set_auto_accept_quit(true)
 		Modulate.fade_out()
 		yield(Modulate, "finished")
 	# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://developers/DeveloperMenu.tscn")
+	elif mode == DESTROY:
+		get_tree().quit()
 
 func _on_UnsavedChangesDialog_popup_hide():
 	$EditorContainer/Editor/TextEdit.grab_focus()
@@ -171,3 +180,23 @@ func _process(_delta):
 			$UnsavedChangesDialog.popup_centered()
 	elif Input.is_action_pressed("save_file"):
 		$SaveDialog.popup_centered()
+
+func _notification(what):
+	if what == MainLoop.NOTIFICATION_WM_QUIT_REQUEST:
+		if saved:
+			get_tree().quit()
+		else:
+			mode = DESTROY
+			$UnsavedChangesDialog.popup_centered()
+
+func _on_ImageDialog_file_selected(path):
+	$EditorContainer/Editor/TextEdit.cursor_set_column(0)
+	$EditorContainer/Editor/TextEdit.insert_text_at_cursor("![Image heading](%s)\n"%(path))
+	$EditorContainer/Editor/TextEdit.cursor_set_line($EditorContainer/Editor/TextEdit.cursor_get_line() - 1)
+	$EditorContainer/Editor/TextEdit.cursor_set_column(15)
+
+func _on_ImageDialog_popup_hide():
+	$EditorContainer/Editor/TextEdit.grab_focus()
+
+func _on_TextEdit_text_changed():
+	saved = false

@@ -3,11 +3,13 @@ extends Node
 export (bool) var developer_mode = false
 export (String) var lang
 var config: Dictionary = {}
+var new_game = false
 const config_path: String = "user://config.txt"
 
 func _ready():
 	var f = File.new()
 	if not f.file_exists(config_path):
+		new_game = true
 		f.open(config_path, File.WRITE_READ)
 	else:
 		f.open(config_path, File.READ)

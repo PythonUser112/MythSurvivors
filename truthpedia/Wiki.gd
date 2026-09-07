@@ -4,6 +4,7 @@ const WIKIPATH = "res://truthpedia/wiki/"
 
 var current_page: Control
 var files = {}
+var history = ["main"]
 
 func _ready():
 	var wikidir = Directory.new()
@@ -30,7 +31,15 @@ func _ready():
 	add_child(current_page)
 	Modulate.fade_in()
 
-func change_to(page, heading):
+func has_page(page: String) -> bool:
+	var f = File.new()
+	var path = page.replace("wiki://", WIKIPATH).split("#")[0]
+	return f.file_exists(path + "/" + Locale.lang + ".md")
+
+func change_to(page: String, heading: String):
+	if not has_page("wiki://" + page):
+		$ErrorDialog.popup_centered()
+		return
 	if page != current_page.get("wikipage"):
 		Modulate.fade_out()
 		yield(Modulate, "finished")
@@ -38,12 +47,8 @@ func change_to(page, heading):
 		current_page = preload("res://truthpedia/WikiPage.tscn").instance()
 		current_page.wikipage = page
 		add_child(current_page)
-		yield(get_tree(), "idle_frame")
-		if current_page.fail:
-			current_page = preload("res://truthpedia/WikiPage.tscn").instance()
-			current_page.wikipage = "main"
-			add_child(current_page)
-			$ErrorDialog.popup_centered()
+		$InfoLayer/WikiTitle/LastButton.disabled = false
+		history.append(page)
 		Modulate.fade_in()
 		yield(Modulate, "finished")
 	current_page.scroll_to(heading)
@@ -83,3 +88,8 @@ func _on_SearchButton_pressed():
 			current_page.add_child(button)
 		add_child(current_page)
 		Modulate.fade_in()
+
+func _on_LastButton_button_down():
+	history.pop_back()
+	change_to(history[-1], "")
+	$InfoLayer/WikiTitle/LastButton.disabled = len(history) == 1

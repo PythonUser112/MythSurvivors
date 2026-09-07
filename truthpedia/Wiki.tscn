@@ -37,12 +37,23 @@ custom_effects = [ SubResource( 1 ) ]
 
 [node name="BackButton" type="Control" parent="InfoLayer/WikiTitle"]
 pause_mode = 2
-margin_right = 180.0
-margin_bottom = 106.0
+margin_right = 200.0
+margin_bottom = 100.0
 rect_min_size = Vector2( 200, 100 )
 rect_scale = Vector2( 0.5, 0.5 )
 script = ExtResource( 3 )
 text = "Back to Main Menu"
+
+[node name="LastButton" type="Control" parent="InfoLayer/WikiTitle"]
+pause_mode = 2
+margin_left = 100.0
+margin_right = 300.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 100 )
+rect_scale = Vector2( 0.5, 0.5 )
+script = ExtResource( 3 )
+text = "Last Page"
+disabled = true
 
 [node name="Search" type="HBoxContainer" parent="InfoLayer/WikiTitle"]
 margin_left = 824.0
@@ -80,4 +91,5 @@ dialog_text = "Could not find that page...
 ¯¯¯¯¯"
 
 [connection signal="button_down" from="InfoLayer/WikiTitle/BackButton" to="." method="_on_BackButton_button_down"]
+[connection signal="button_down" from="InfoLayer/WikiTitle/LastButton" to="." method="_on_LastButton_button_down"]
 [connection signal="pressed" from="InfoLayer/WikiTitle/Search/SearchButton" to="." method="_on_SearchButton_pressed"]

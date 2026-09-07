@@ -65,6 +65,7 @@ func _process(_delta):
 						selected -= 1
 					break
 			buttons[selected].focused = true
+			buttons[selected].grab_focus()
 		if Input.is_action_just_pressed("ui_up"):
 			buttons[selected].focused = false
 			selected -= 1
@@ -78,3 +79,4 @@ func _process(_delta):
 						selected += 1
 					break
 			buttons[selected].focused = true
+			buttons[selected].grab_focus()

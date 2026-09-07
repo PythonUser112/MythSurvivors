@@ -6,7 +6,6 @@ class_name HButtonMenu
 var active = false
 
 var buttons: Array = []
-var buttons_to_enable = []
 var selected: int = 0
 
 func update():
@@ -30,9 +29,7 @@ func deactivate():
 	active = false
 	buttons[selected].focused = false
 	for button in buttons:
-		if not button.disabled:
-			buttons_to_enable.append(button)
-		button.disabled = true
+		button.deactivated = true
 
 func _ready():
 	update()
@@ -41,10 +38,8 @@ func activate(to_select: int = 0):
 	if active:
 		return
 	active = true
-	for button in buttons_to_enable:
-		button.disabled = false
-	if to_select >= len(buttons):
-		to_select = 0
+	for button in buttons:
+		button.deactivated = false
 	selected = to_select
 	if buttons[to_select].disabled:
 		for i in range(len(buttons)):
@@ -70,6 +65,7 @@ func _process(_delta):
 						selected -= 1
 					break
 			buttons[selected].focused = true
+			buttons[selected].grab_focus()
 		if Input.is_action_just_pressed("ui_left"):
 			buttons[selected].focused = false
 			selected -= 1
@@ -83,3 +79,4 @@ func _process(_delta):
 						selected += 1
 					break
 			buttons[selected].focused = true
+			buttons[selected].grab_focus()

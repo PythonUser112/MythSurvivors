@@ -16,13 +16,14 @@ func _ready():
 	Modulate.fade_in()
 	$EditorContainer/Editor/TextEdit.call_deferred("grab_focus")
 	$EditorContainer/Editor/TextEdit.clear_colors()
-	$EditorContainer/Editor/TextEdit.add_color_region("# ", "", Color.magenta)
-	$EditorContainer/Editor/TextEdit.add_color_region("## ", "", Color.pink)
-	$EditorContainer/Editor/TextEdit.add_color_region("[", ")", Color.aqua, true)
-	$EditorContainer/Editor/TextEdit.add_color_region(" -", "- ", Color.gray, true)
-	$EditorContainer/Editor/TextEdit.add_color_region(" _", "_ ", Color.aquamarine, true)
-	$EditorContainer/Editor/TextEdit.add_color_region("\\-", " ", Color.turquoise, true)
-	$EditorContainer/Editor/TextEdit.add_color_region("![", ")", Color.green, true)
+	$EditorContainer/Editor/TextEdit.add_color_region("# ", "", Color.darkmagenta)
+	$EditorContainer/Editor/TextEdit.add_color_region("## ", "", Color.magenta)
+	$EditorContainer/Editor/TextEdit.add_color_region("### ", "", Color.pink)
+	$EditorContainer/Editor/TextEdit.add_color_region("[", ")", Color.aqua)
+	$EditorContainer/Editor/TextEdit.add_color_region(" -", "- ", Color.gray)
+	$EditorContainer/Editor/TextEdit.add_color_region(" _", "_", Color.aquamarine)
+	$EditorContainer/Editor/TextEdit.add_color_region("![", ")", Color.green)
+	$EditorContainer/Editor/TextEdit.add_color_region("!!", "", Color.yellow)
 	$EditorContainer/Editor/TextEdit.add_color_override("brace_mismatch_color", Color.red)
 	$EditorContainer/Editor/TextEdit.add_color_override("function_color", Color.white)
 	$EditorContainer/Editor/TextEdit.add_color_override("member_variable_color", Color.white)
@@ -75,7 +76,7 @@ func _on_NewURLDialog_confirmed():
 		target = target.percent_encode()
 	target = ["wiki://", "https://%s.wikipedia.org/wiki/" % lang, "https://"][url_type] + target
 	if $NewURLDialog/GridContainer/TargetSection.editable and $NewURLDialog/GridContainer/TargetSection.text:
-		target += "#" + $NewURLDialog/GridContainer/TargetSection.text
+		target += "#" + $NewURLDialog/GridContainer/TargetSection.text.http_escape()
 	var interior = "[%s](%s)"%[$NewURLDialog/GridContainer/Content.text, target]
 	var text = text_left + interior + text_right
 	$EditorContainer/Editor/TextEdit.set_line(cursory, text)

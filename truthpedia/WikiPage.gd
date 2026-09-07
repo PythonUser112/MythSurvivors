@@ -1,7 +1,6 @@
 extends Control
 
 export (String) var wikipage
-export (bool) var fail = false
 
 const title = "\n[center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontBig.tres]%s[/font][/jump_pulse][/center]"
 const heading = "\n[u][center][jump_pulse][font=res://assets/fonts/Jacquard_24/FontMedium.tres]%s[/font][/jump_pulse][/center][/u]"
@@ -16,10 +15,6 @@ func redraw():
 	if get_parent().get("WIKIPATH") != null:
 		var wiki = get_parent().WIKIPATH + wikipage + "/" + Locale.lang + ".md"
 		var f = File.new()
-		if not f.file_exists(wiki):
-			push_error("Wikipage %s does not exist!" % wikipage)
-			fail = true
-			return
 		f.open(wiki, File.READ)
 		content = f.get_as_text().split("\n")
 		f.close()
@@ -32,8 +27,11 @@ func redraw():
 	var bbcode_text = ""
 	var part = ""
 	var content_container
+	var idx = 0
 	for line in content:
-		print(line)
+		if line.begins_with("!!"):
+			push_warning("Warning: line %s: Todo mark!" % (idx))
+			continue
 		if line.begins_with("# "):
 			if bbcode_text:
 				content_container = HBoxContainer.new()
@@ -80,13 +78,37 @@ func redraw():
 				ypositions[part] = content_container.rect_position.y
 			part = line.right(3)
 			bbcode_text = heading % part
-			$TableOfContents/Index.bbcode_text += "\n  [url=%s]%s[/url]"%[line.right(2), line.right(2)]
+			$TableOfContents/Index.bbcode_text += "\n - [url=%s]%s[/url]"%[line.right(3), line.right(3)]
+			continue
+		if line.begins_with("### "):
+			if bbcode_text:
+				content_container = HBoxContainer.new()
+				var label = RichTextLabel.new()
+				label.custom_effects = [JumpPulse.new()]
+				label.fit_content_height = true
+				label.bbcode_enabled = true
+				label.scroll_active = false
+				label.bbcode_text = bbcode_text
+				label.rect_min_size.x = 762
+				label.rect_size.x = 762
+				label.connect("meta_clicked", self, "_on_Content_meta_clicked")
+				content_container.add_child(label)
+				$ContentContainer/VBoxContainer.add_child(content_container)
+				label.update()
+				yield(get_tree(), "idle_frame")
+				label.rect_min_size.y = label.rect_size.y
+				content_container.name = part
+				content_container.rect_min_size = label.rect_min_size
+				ypositions[part] = content_container.rect_position.y
+			part = line.right(4)
+			bbcode_text = heading % part
+			$TableOfContents/Index.bbcode_text += "\n   - [url=%s]%s[/url]"%[line.right(4), line.right(4)]
 			continue
 		if bbcode_text:
 			if line.begins_with("!["):
 				var _path = line.split("(")[1].split(")")[0]
 				if "wiki://" in line:
-					line = line.replace("wiki://", get_parent().WIKIPATH)
+					line = line.replace("wiki://", get_parent().WIKIPATH).http_unescape()
 				var alt_text = line.split("[")[1].split("]")[0]
 				if alt_text:
 					bbcode_text += "\n[img]%s[/img]\n%s\n"%[_path, alt_text]
@@ -98,12 +120,14 @@ func redraw():
 			var tmp1
 			var tmp2
 			var crossed = false
+			var underlined = false
 			var last_was_space = false
 			var escaped = false
 			for character in line:
-				if character == "\\":
+				if character == "\\" and not escaped:
 					escaped = true
 					continue
+				last_was_space = character in [" ", "\n", "\t"]
 				if state == 0:
 					if character == "[" and not escaped:
 						state = 1
@@ -114,13 +138,13 @@ func redraw():
 						if crossed and not last_was_space:
 							line_parsed += "[/s][/color]"
 							crossed = false
-						elif not crossed:
+						elif not crossed and last_was_space:
 							state = 3
 					elif character == "_" and not escaped:
-						if crossed and not last_was_space:
+						if underlined and not last_was_space:
 							line_parsed += "[/u]"
 							crossed = false
-						elif not crossed:
+						elif not underlined and last_was_space:
 							state = 4
 					else:
 						line_parsed += character
@@ -132,6 +156,10 @@ func redraw():
 				elif state == 2:
 					if character == ")" and not escaped:
 						line_parsed += tmp2
+						if tmp2.begins_with("wiki://"):
+							if get_parent().get("WIKIPATH") != null:
+								if not get_parent().has_page(tmp2):
+									push_error("Page %s doesn't exist!" % tmp2)
 						line_parsed += "]"
 						line_parsed += tmp1
 						line_parsed += "[/url][/color]"
@@ -150,11 +178,11 @@ func redraw():
 					if character in [" ", "\n", "\t"]:
 						line_parsed += "_"
 					else:
-						crossed = true
+						underlined = true
 						line_parsed += "[u]"
 					line_parsed += character
 					state = 0
-				last_was_space = character in [" ", "\n", "\t"]
+			idx += 1
 			bbcode_text += "\n[font=res://assets/fonts/Jacquard_24/FontSmall.tres]%s[/font]" % line_parsed
 	if bbcode_text:
 		content_container = VBoxContainer.new()
@@ -193,7 +221,7 @@ func _on_Content_meta_clicked(meta):
 			new_page = new_page.split("#")
 			heading = new_page[1]
 			new_page = new_page[0]
-		get_parent().change_to(new_page, heading)
+		get_parent().change_to(new_page, heading.http_unescape())
 
 func _on_Index_meta_clicked(meta):
 	scroll_to(meta)

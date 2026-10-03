@@ -4,7 +4,8 @@ enum {
 	OPEN,
 	QUIT,
 	CLEAR,
-	DESTROY
+	DESTROY,
+	OPEN_RES
 }
 
 var saved = true
@@ -122,7 +123,7 @@ func _on_SaveButton_pressed():
 
 func _on_OpenButton_pressed():
 	if saved:
-		$OpenDialog.popup_centered()
+		$OpenDialogExtern.popup_centered()
 	else:
 		mode = OPEN
 		$UnsavedChangesDialog.popup_centered()
@@ -149,7 +150,9 @@ func _on_SaveFinishedDialog_popup_hide():
 
 func _on_UnsavedChangesDialog_confirmed():
 	if mode == OPEN:
-		$OpenDialog.popup_centered()
+		$OpenDialogExtern.popup_centered()
+	if mode == OPEN_RES:
+		$OpenDialogRes.popup_centered()
 	elif mode == CLEAR:
 		$EditorContainer/Editor/TextEdit.text = ""
 	elif mode == QUIT:
@@ -175,7 +178,7 @@ func change_target_language(index):
 func _process(_delta):
 	if Input.is_action_pressed("open_file"):
 		if saved:
-			$OpenDialog.popup_centered()
+			$OpenDialogExtern.popup_centered()
 		else:
 			mode = OPEN
 			$UnsavedChangesDialog.popup_centered()
@@ -201,3 +204,10 @@ func _on_ImageDialog_popup_hide():
 
 func _on_TextEdit_text_changed():
 	saved = false
+
+func _on_OpenResButton_pressed():
+	if saved:
+		$OpenDialogRes.popup_centered()
+	else:
+		mode = OPEN_RES
+		$UnsavedChangesDialog.popup_centered()

@@ -1,5 +1,7 @@
 extends Control
 
+export (Array, PackedScene) var levels = []
+
 const character_selector = preload("res://ui/CharacterSelector.tscn")
 
 func _ready():

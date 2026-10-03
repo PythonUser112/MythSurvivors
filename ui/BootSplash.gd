@@ -8,9 +8,6 @@ var time_max: int = 15
 var f = File.new()
 
 func _ready():
-	if Globals.config.get("developer", "0") == "1":
-		if get_tree().change_scene("res://ui/Main.tscn") == OK:
-			return
 	Modulate.fade_in()
 	yield(Modulate, "finished")
 	var intro_handler = load_asset("ui/Intro.tscn")
@@ -23,12 +20,13 @@ func _ready():
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 	$LoadingScene.queue_free()
-	add_child(intro_scene)
-	intro_scene.splash = splash
-	Modulate.show_everything()
-	yield(intro_scene, "finished")
-	Modulate.fade_out()
-	yield(Modulate, "finished")
+	if Globals.config.get("developer", "0") == "0":
+		add_child(intro_scene)
+		intro_scene.splash = splash
+		Modulate.show_everything()
+		yield(intro_scene, "finished")
+		Modulate.fade_out()
+		yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene_to(main_scene)
 

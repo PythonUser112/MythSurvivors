@@ -34,72 +34,78 @@ rect_min_size = Vector2( 0, 50 )
 alignment = 1
 
 [node name="SaveButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 58.0
-margin_right = 99.0
+margin_left = 2.0
+margin_right = 43.0
 margin_bottom = 50.0
 text = "Save"
 
-[node name="OpenButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 103.0
-margin_right = 150.0
+[node name="OpenExternButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
+margin_left = 47.0
+margin_right = 120.0
 margin_bottom = 50.0
-text = "Open"
+text = "Open (FS)"
+
+[node name="OpenResButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
+margin_left = 124.0
+margin_right = 205.0
+margin_bottom = 50.0
+text = "Open (RES)"
 
 [node name="ClearButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 154.0
-margin_right = 198.0
+margin_left = 209.0
+margin_right = 253.0
 margin_bottom = 50.0
 text = "Clear"
 
 [node name="VSeparator" type="VSeparator" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 202.0
-margin_right = 206.0
+margin_left = 257.0
+margin_right = 261.0
 margin_bottom = 50.0
 
 [node name="UnderlineButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 210.0
-margin_right = 314.0
+margin_left = 265.0
+margin_right = 369.0
 margin_bottom = 50.0
 text = "Underline text"
 
 [node name="CrossButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 318.0
-margin_right = 394.0
+margin_left = 373.0
+margin_right = 449.0
 margin_bottom = 50.0
 text = "Cross text"
 
 [node name="URLButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 398.0
-margin_right = 462.0
+margin_left = 453.0
+margin_right = 517.0
 margin_bottom = 50.0
 text = "Add link"
 
 [node name="HeadingButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 466.0
-margin_right = 557.0
+margin_left = 521.0
+margin_right = 612.0
 margin_bottom = 50.0
 text = "Add heading"
 
 [node name="Heading2Button" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 561.0
-margin_right = 660.0
+margin_left = 616.0
+margin_right = 715.0
 margin_bottom = 50.0
 text = "Add heading2"
 
 [node name="ImageButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 664.0
-margin_right = 757.0
+margin_left = 719.0
+margin_right = 812.0
 margin_bottom = 50.0
 text = "Insert image"
 
 [node name="VSeparator2" type="VSeparator" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 761.0
-margin_right = 765.0
+margin_left = 816.0
+margin_right = 820.0
 margin_bottom = 50.0
 
 [node name="BackButton" type="Button" parent="EditorContainer/Editor/Toolbar"]
-margin_left = 769.0
-margin_right = 958.0
+margin_left = 824.0
+margin_right = 1013.0
 margin_bottom = 50.0
 text = "Go back to developer menu"
 
@@ -252,7 +258,7 @@ resizable = true
 dialog_text = "File saved!"
 dialog_autowrap = true
 
-[node name="OpenDialog" type="FileDialog" parent="."]
+[node name="OpenDialogExtern" type="FileDialog" parent="."]
 margin_right = 416.0
 margin_bottom = 184.0
 rect_min_size = Vector2( 512, 300 )
@@ -261,6 +267,17 @@ resizable = true
 mode_overrides_title = false
 mode = 0
 access = 2
+filters = PoolStringArray( "*md ; MarkDown / TruthPedia Wiki File" )
+show_hidden_files = true
+
+[node name="OpenDialogRes" type="FileDialog" parent="."]
+margin_right = 416.0
+margin_bottom = 184.0
+rect_min_size = Vector2( 512, 300 )
+window_title = "Open article"
+resizable = true
+mode_overrides_title = false
+mode = 0
 filters = PoolStringArray( "*md ; MarkDown / TruthPedia Wiki File" )
 show_hidden_files = true
 
@@ -289,7 +306,8 @@ dialog_autowrap = true
 
 [connection signal="tab_changed" from="EditorContainer" to="." method="_on_EditorContainer_tab_changed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/SaveButton" to="." method="_on_SaveButton_pressed"]
-[connection signal="pressed" from="EditorContainer/Editor/Toolbar/OpenButton" to="." method="_on_OpenButton_pressed"]
+[connection signal="pressed" from="EditorContainer/Editor/Toolbar/OpenExternButton" to="." method="_on_OpenButton_pressed"]
+[connection signal="pressed" from="EditorContainer/Editor/Toolbar/OpenResButton" to="." method="_on_OpenResButton_pressed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/ClearButton" to="." method="_on_ClearButton_pressed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/UnderlineButton" to="." method="_on_UnderlineButton_pressed"]
 [connection signal="pressed" from="EditorContainer/Editor/Toolbar/CrossButton" to="." method="_on_CrossButton_pressed"]
@@ -304,7 +322,8 @@ dialog_autowrap = true
 [connection signal="popup_hide" from="NewURLDialog" to="." method="_on_NewURLDialog_popup_hide"]
 [connection signal="file_selected" from="SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 [connection signal="popup_hide" from="SaveFinishedDialog" to="." method="_on_SaveFinishedDialog_popup_hide"]
-[connection signal="file_selected" from="OpenDialog" to="." method="_on_OpenDialog_file_selected"]
+[connection signal="file_selected" from="OpenDialogExtern" to="." method="_on_OpenDialog_file_selected"]
+[connection signal="file_selected" from="OpenDialogRes" to="." method="_on_OpenDialog_file_selected"]
 [connection signal="confirmed" from="UnsavedChangesDialog" to="." method="_on_UnsavedChangesDialog_confirmed"]
 [connection signal="popup_hide" from="UnsavedChangesDialog" to="." method="_on_UnsavedChangesDialog_popup_hide"]
 [connection signal="file_selected" from="ImageDialog" to="." method="_on_ImageDialog_file_selected"]

@@ -1,12 +1,14 @@
 extends Node
 
-var GLOBALFONT = "Standard_by_LB"
+var GLOBALFONT = "Standard"
 
 var fonts = {}
 
 func _ready():
 	var file = File.new()
-	file.open("res://input/Fonts.txt", File.READ)
+	if file.open("res://assets/fonts/Fonts.txt", File.READ) != OK:
+		push_error("Can't open font file!")
+		return
 	var lines = file.get_as_text().split("\n")
 	var font_name
 	for line in lines:

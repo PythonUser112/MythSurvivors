@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://ui/UIButton.gd" type="Script" id=1]
+[ext_resource path="res://ui/HButtonMenu.gd" type="Script" id=2]
+
+[node name="LevelSelection" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_right = 12.0
+margin_bottom = 12.0
+rect_min_size = Vector2( 1024, 0 )
+follow_focus = true
+scroll_vertical_enabled = false
+
+[node name="HButtonMenu" type="HBoxContainer" parent="ScrollContainer"]
+margin_right = 200.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 0, 100 )
+script = ExtResource( 2 )
+
+[node name="UIButton" type="Control" parent="ScrollContainer/HButtonMenu"]
+pause_mode = 2
+margin_right = 200.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 1 )
+text = "Hello"

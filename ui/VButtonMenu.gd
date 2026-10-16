@@ -3,6 +3,8 @@ tool
 extends VBoxContainer
 class_name VButtonMenu
 
+export (bool) var deactivate_on_press = true
+
 var active = false
 
 var buttons: Array = []
@@ -14,7 +16,7 @@ func update():
 	for child in get_children():
 		child.id = i
 		if not child.is_connected("button_up", self, "deactivate"):
-			if not child.toggle_mode:
+			if not child.toggle_mode and deactivate_on_press:
 				child.connect("button_up", self, "deactivate")
 			child.connect("focused", self, "focus_changed")
 		buttons.append(child)

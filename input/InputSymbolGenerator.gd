@@ -14,6 +14,7 @@ const KEYBOARD_SPECIALS = {
 	KEY_CONTROL: "CTRL",
 	KEY_DELETE: "DEL",
 	KEY_DOWN: "↓",
+	KEY_END: "END",
 	KEY_ENTER: "ENTER",
 	KEY_ESCAPE: "ESC",
 	KEY_F1: "F1",
@@ -32,13 +33,18 @@ const KEYBOARD_SPECIALS = {
 	KEY_F14: "F14",
 	KEY_F15: "F15",
 	KEY_F16: "F16",
+	KEY_HOME: "HOME",
 	KEY_INSERT: "INST",
+	KEY_KP_ENTER: "ENTER",
 	KEY_LEFT: "←",
+	KEY_PAGEDOWN: "PADE↓",
+	KEY_PAGEUP: "PAGE↑",
 	KEY_RIGHT: "→",
 	KEY_SHIFT: "SHIFT",
 	KEY_SPACE: "SPACE",
 	KEY_SUPER_L: "WINDOWS",
 	KEY_SUPER_R: "WINDOWS",
+	KEY_TAB: "→>",
 	KEY_UP: "↑"
 }
 
@@ -239,4 +245,5 @@ func get_key_symbol(type, key):
 	yield(get_tree(), "idle_frame")
 	var texture = ImageTexture.new()
 	texture.create_from_image(image)
+	symbols[get_type_name(type) + str(key)] = imagepath
 	return texture

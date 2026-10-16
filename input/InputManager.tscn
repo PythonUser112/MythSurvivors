@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://input/InputManager.gd" type="Script" id=1]
+[ext_resource path="res://assets/Theme.tres" type="Theme" id=2]
 
 [node name="InputManager" type="Control"]
 visible = false
 margin_right = 1024.0
 margin_bottom = 600.0
 mouse_filter = 2
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
 
 [node name="InputManagementContainer" type="Control" parent="."]
@@ -19,8 +21,8 @@ margin_right = 643.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 300, 600 )
 follow_focus = true
-scroll_vertical_enabled = false
+scroll_horizontal_enabled = false
 
-[node name="Profiles" type="VBoxContainer" parent="InputManagementContainer/ScrollContainer"]
+[node name="Actions" type="VBoxContainer" parent="InputManagementContainer/ScrollContainer"]
 margin_right = 300.0
 rect_min_size = Vector2( 300, 0 )

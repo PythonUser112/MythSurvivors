@@ -51,7 +51,8 @@ func move(dir):
 		$AnimatedSprite.playing = false
 		$AnimatedSprite.frame = 0
 		$FrameTimer.start()
-		yield($FrameTimer, "timeout")
+		old_direction = diridx[dir]
+		return
 	old_direction = diridx[dir]
 	if not raycasts[dir].is_colliding():
 		$Tween.interpolate_property(self, "position", null, position + directions[dir] * speed, 0.5)
@@ -83,3 +84,6 @@ func _on_IdleTimer_timeout():
 	$AnimatedSprite.animation = "idle"
 	$AnimatedSprite.frame = old_direction
 	$AnimatedSprite.playing = not npc
+
+func _on_FrameTimer_timeout():
+	moving = false

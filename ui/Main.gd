@@ -15,8 +15,6 @@ func _ready():
 	var content = "\n[jump_pulse]" + f.get_as_text() + "[jump_pulse]"
 	f.close()
 	$Credits.bbcode_text = content
-	$Stars.rect_size.y += $Credits.rect_size.y + 700
-	$Stars.redraw()
 	var button_texts = Locale.get_menu_labels()
 	var i
 	for menu in button_texts:
@@ -66,13 +64,11 @@ func _on_CreditButton_button_down():
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, -600), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($Stars/Title, "rect_position", null, Vector2(0, -700), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($Credits, "rect_position", null, Vector2(100, -$Credits.rect_size.y), 30, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 1)
-	$Tween.interpolate_property($Stars, "rect_position", null, Vector2(0, -600 - $Credits.rect_size.y), 30, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 1)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$Credits.rect_position = Vector2(100, 600)
 	$Stars/Title.rect_position = Vector2(0, 0)
 	$Tween.interpolate_property($MainMenu, "rect_position", Vector2(412, -500 - $Credits.rect_size.y), Vector2(412, 100), 10, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($Stars, "rect_position", Vector2(0, -600 - $Credits.rect_size.y), Vector2(0, 0), 10, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	yield($Tween, "tween_completed")
 	$MainMenu/VButtonMenu.activate()
@@ -109,3 +105,8 @@ func _on_TruthpediaButton_button_down():
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://truthpedia/Wiki.tscn")
+
+func _on_BindingsButton_button_up():
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.start()
+	InputManager.activate()

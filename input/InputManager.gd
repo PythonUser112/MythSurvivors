@@ -1,5 +1,7 @@
 extends Control
 
+signal menu_closed
+
 var action_symbol_scene = preload("res://input/ActionSymbol.tscn")
 var font = preload("res://assets/fonts/Jacquard_24/FontSmall.tres")
 var input_symbol_generator_scene = preload("res://input/InputSymbolGenerator.tscn")
@@ -33,28 +35,79 @@ func get_action_symbols(action: String) -> Array:
 
 func render_actions():
 	for action in InputMap.get_actions():
-		var container = HBoxContainer.new()
-		$InputManagementContainer/ScrollContainer/Actions.add_child(container)
-		var label = RichTextLabel.new()
-		label.rect_min_size = Vector2(100, 0)
-		label.fit_content_height = true
-		label.text = action
-		container.add_child(label)
-		var symbol_list = VButtonMenu.new()
-		symbol_list.deactivate_on_press = false
-		container.add_child(symbol_list)
+		var button = UIButton.new()
+		button.text = action
+		button.connect("button_down", self, "_on_Action_selected", [action])
+		$InputManagementContainer/ScrollContainer/Actions.add_child(button)
+		var action_container_parent = ScrollContainer.new()
+		action_container_parent.name = action
+		action_container_parent.rect_min_size = Vector2(100, 500)
+		action_container_parent.rect_position = Vector2(1024, 0)
+		action_container_parent.scroll_horizontal_enabled = false
+		var action_container = VButtonMenu.new()
+		action_container.rect_min_size = Vector2(100, 600)
+		var current_button = action_symbol_scene.instance()
+		current_button.connect("button_up", self, "remove_binding", [action, 0])
+		current_button.append_bbcode("[center]")
+		var index = 0
 		var symbols = yield(get_action_symbols(action), "completed")
-		var action_symbol = action_symbol_scene.instance()
 		for symbol in symbols:
-			if symbol is ImageTexture:
-				action_symbol.add_image(symbol)
-				action_symbol.rect_min_size.x += symbol.get_width()
-			elif symbol == " or ":
-				symbol_list.add_child(action_symbol)
-				action_symbol = action_symbol_scene.instance()
-			else:
-				action_symbol.append_bbcode(symbol)
-				action_symbol.rect_min_size.x += font.get_wordwrap_string_size(symbol, INF).x
+			if symbol is String:
+				if symbol == " or ":
+					action_container.add_child(current_button)
+					current_button = action_symbol_scene.instance()
+					current_button.append_bbcode("[center]")
+					index += 1
+					current_button.connect("button_up", self, "remove_binding", [action, index])
+				else:
+					current_button.append_bbcode(symbol)
+			elif symbol is Texture:
+				current_button.add_image(symbol)
+		action_container.add_child(current_button)
+		action_container.add_child(HSeparator.new())
+		var new_button = action_symbol_scene.instance()
+		new_button.bbcode_text = "[center]Add binding[/center]"
+		new_button.connect("button_up", self, "new_action_binding", [action])
+		action_container.add_child(new_button)
+		var back_button = action_symbol_scene.instance()
+		back_button.bbcode_text = "[center]Back[/center]"
+		back_button.connect("button_up", self, "to_action_menu", [action])
+		action_container.add_child(back_button)
+		action_container_parent.add_child(action_container)
+		$InputManagementContainer.add_child(action_container_parent)
+	$InputManagementContainer/ScrollContainer/Actions.add_child(HSeparator.new())
+	var leave_button = UIButton.new()
+	leave_button.text = "Back"
+	leave_button.connect("button_up", self, "leave_menu")
+	$InputManagementContainer/ScrollContainer/Actions.add_child(leave_button)
+	$InputManagementContainer/ScrollContainer/Actions.update()
+
+func leave_menu():
+	emit_signal("menu_closed")
+	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(1024, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.start()
+
+func _on_Action_selected(action: String):
+	var action_container = get_node("InputManagementContainer/" + action)
+	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(462, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 1)
+	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(-400, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	action_container.get_child(0).activate()
+
+func to_action_menu(last_action: String):
+	var action_container = get_node("InputManagementContainer/" + last_action)
+	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(362, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$InputManagementContainer/ScrollContainer/Actions.activate()
+
+func activate():
+	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(0, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$InputManagementContainer/ScrollContainer/Actions.activate()
 
 func _ready():
 	input_symbol_generator = input_symbol_generator_scene.instance()

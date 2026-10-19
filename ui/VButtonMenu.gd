@@ -14,6 +14,8 @@ func update():
 	buttons = []
 	var i = 0
 	for child in get_children():
+		if child is HSeparator:
+			continue
 		child.id = i
 		if not child.is_connected("button_up", self, "deactivate"):
 			if not child.toggle_mode and deactivate_on_press:
@@ -67,7 +69,8 @@ func _process(_delta):
 						selected -= 1
 					break
 			buttons[selected].focused = true
-			buttons[selected].grab_focus()
+			if get_parent() is ScrollContainer:
+				get_parent().ensure_control_visible(buttons[selected])
 		if Input.is_action_just_pressed("ui_up"):
 			buttons[selected].focused = false
 			selected -= 1
@@ -81,4 +84,5 @@ func _process(_delta):
 						selected += 1
 					break
 			buttons[selected].focused = true
-			buttons[selected].grab_focus()
+			if get_parent() is ScrollContainer:
+				get_parent().ensure_control_visible(buttons[selected])

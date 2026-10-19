@@ -26,12 +26,15 @@ margin_right = 1.0
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
 
-[node name="Tween" type="Tween" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -100
 
-[node name="Stars" parent="." instance=ExtResource( 1 )]
+[node name="Stars" parent="CanvasLayer" instance=ExtResource( 1 )]
+margin_left = 1.0
+margin_right = 1025.0
 star_count = 1000
 
-[node name="Title" type="RichTextLabel" parent="Stars"]
+[node name="Title" type="RichTextLabel" parent="CanvasLayer/Stars"]
 margin_right = 1024.0
 margin_bottom = 80.0
 custom_fonts/normal_font = SubResource( 2 )
@@ -42,6 +45,8 @@ text = "
 MythSurvivors"
 scroll_active = false
 custom_effects = [ SubResource( 1 ) ]
+
+[node name="Tween" type="Tween" parent="."]
 
 [node name="MainMenu" type="CenterContainer" parent="."]
 anchor_right = 1.0
@@ -162,9 +167,9 @@ margin_right = 1224.0
 margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SettingsMenu"]
-margin_top = 148.0
+margin_top = 96.0
 margin_right = 200.0
-margin_bottom = 352.0
+margin_bottom = 404.0
 script = ExtResource( 7 )
 
 [node name="LanguageButton" type="Control" parent="SettingsMenu/VButtonMenu"]
@@ -175,11 +180,20 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Select Language"
 
-[node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
+[node name="BindingsButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 104.0
 margin_right = 200.0
 margin_bottom = 204.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Select controls"
+
+[node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 208.0
+margin_right = 200.0
+margin_bottom = 308.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Back"
@@ -224,5 +238,6 @@ custom_effects = [ SubResource( 3 ) ]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/TruthpediaButton" to="." method="_on_TruthpediaButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/LanguageButton" to="." method="_on_LanguageButton_button_down"]
+[connection signal="button_up" from="SettingsMenu/VButtonMenu/BindingsButton" to="." method="_on_BindingsButton_button_up"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="button_down" from="LanguageMenu/VButtonMenu/BackButton" to="." method="_on_LanguageMenu_BackButton_button_down"]

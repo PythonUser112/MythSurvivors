@@ -23,6 +23,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1.0
 margin_right = 1.0
+mouse_filter = 2
 theme = ExtResource( 4 )
 script = ExtResource( 2 )
 
@@ -188,6 +189,7 @@ margin_bottom = 204.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Select controls"
+id = 1
 
 [node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
@@ -197,7 +199,7 @@ margin_bottom = 308.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Back"
-id = 1
+id = 2
 
 [node name="LanguageMenu" type="CenterContainer" parent="."]
 margin_left = 1024.0

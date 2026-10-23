@@ -41,11 +41,11 @@ func render_actions():
 		$InputManagementContainer/ScrollContainer/Actions.add_child(button)
 		var action_container_parent = ScrollContainer.new()
 		action_container_parent.name = action
-		action_container_parent.rect_min_size = Vector2(100, 500)
+		action_container_parent.rect_min_size = Vector2(100, 0)
 		action_container_parent.rect_position = Vector2(1024, 0)
 		action_container_parent.scroll_horizontal_enabled = false
 		var action_container = VButtonMenu.new()
-		action_container.rect_min_size = Vector2(100, 600)
+		action_container.rect_min_size = Vector2(100, 0)
 		var current_button = action_symbol_scene.instance()
 		current_button.connect("button_up", self, "remove_binding", [action, 0])
 		current_button.append_bbcode("[center]")
@@ -84,12 +84,12 @@ func render_actions():
 
 func leave_menu():
 	emit_signal("menu_closed")
-	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(1024, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 
 func _on_Action_selected(action: String):
 	var action_container = get_node("InputManagementContainer/" + action)
-	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(462, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 1)
+	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(462, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 1)
 	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(-400, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
@@ -97,14 +97,14 @@ func _on_Action_selected(action: String):
 
 func to_action_menu(last_action: String):
 	var action_container = get_node("InputManagementContainer/" + last_action)
-	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(362, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(1024, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(362, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$InputManagementContainer/ScrollContainer/Actions.activate()
 
 func activate():
-	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(0, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.interpolate_property($InputManagementContainer, "rect_position", null, Vector2(0, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$InputManagementContainer/ScrollContainer/Actions.activate()

@@ -70,7 +70,7 @@ func _gui_input(event):
 		else:
 			focused = false
 	if focused:
-		if event is InputEventMouseButton and event.pressed:
+		if event is InputEventMouseButton and event.pressed and event.button_index == BUTTON_LEFT:
 			pressed = true
 			if toggle_mode:
 				down = not down

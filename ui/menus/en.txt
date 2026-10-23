@@ -11,6 +11,7 @@ Special
 - Back
 Settings
 - Select Language
+- Select Controls
 - Back
 Language
 - Back

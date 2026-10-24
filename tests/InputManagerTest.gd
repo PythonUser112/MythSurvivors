@@ -4,5 +4,5 @@ func _ready():
 	Modulate.show_everything()
 
 func _process(_delta):
-	InputManager.show()
+	InputManager.activate()
 	set_process(false)

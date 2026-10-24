@@ -4,7 +4,7 @@ const WIKIPATH = "res://truthpedia/wiki/"
 
 var current_page: Control
 var files = {}
-var history = ["main"]
+var history = []
 
 func _ready():
 	var wikidir = Directory.new()
@@ -36,19 +36,20 @@ func has_page(page: String) -> bool:
 	var path = page.replace("wiki://", WIKIPATH).split("#")[0]
 	return f.file_exists(path + "/" + Locale.lang + ".md")
 
-func change_to(page: String, heading: String):
+func change_to(page: String, heading: String, add_to_history: bool = true):
 	if not has_page("wiki://" + page):
 		$ErrorDialog.popup_centered()
 		return
 	if page != current_page.get("wikipage"):
+		if add_to_history:
+			history.append(current_page.wikipage)
+			$InfoLayer/WikiTitle/Search/LastButton.disabled = false
 		Modulate.fade_out()
 		yield(Modulate, "finished")
 		current_page.queue_free()
 		current_page = preload("res://truthpedia/WikiPage.tscn").instance()
 		current_page.wikipage = page
 		add_child(current_page)
-		$InfoLayer/WikiTitle/LastButton.disabled = false
-		history.append(page)
 		Modulate.fade_in()
 		yield(Modulate, "finished")
 	current_page.scroll_to(heading)
@@ -60,6 +61,7 @@ func _on_BackButton_button_down():
 	get_tree().change_scene("res://ui/Main.tscn")
 
 func _on_SearchButton_pressed():
+	history.append(current_page.wikipage)
 	var found = []
 	for page in files:
 		if $InfoLayer/WikiTitle/Search/LineEdit.text.to_lower() in files[page].to_lower():
@@ -84,12 +86,11 @@ func _on_SearchButton_pressed():
 			var button = UIButton.new()
 			button.text = files[page]
 			button.rect_min_size = Vector2(500, 200)
-			button.connect("button_down", self, "change_to", [page, ""])
+			button.connect("button_down", self, "change_to", [page, "", false])
 			current_page.add_child(button)
 		add_child(current_page)
 		Modulate.fade_in()
 
 func _on_LastButton_button_down():
-	history.pop_back()
-	change_to(history[-1], "")
-	$InfoLayer/WikiTitle/LastButton.disabled = len(history) == 1
+	change_to(history.pop_back(), "", false)
+	$InfoLayer/WikiTitle/Search/LastButton.disabled = not history

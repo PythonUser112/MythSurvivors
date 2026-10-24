@@ -64,6 +64,7 @@ margin_bottom = 205.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 7 )
 text = "Truthpedia Article Editor"
+id = 1
 
 [node name="TestButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
 pause_mode = 2
@@ -73,6 +74,7 @@ margin_bottom = 310.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 7 )
 text = "Enter TestManager"
+id = 2
 
 [node name="BackButton" type="Control" parent="MainContainer/CenterContainer/VButtonMenu"]
 pause_mode = 2
@@ -82,6 +84,7 @@ margin_bottom = 415.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 7 )
 text = "Back to Main Menu"
+id = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainContainer"]
 pause_mode = 2

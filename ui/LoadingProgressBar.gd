@@ -1,4 +1,7 @@
+tool
+
 extends ProgressBar
+class_name LoadingBar
 
 export (float) var color_change = 1.0
 
@@ -55,5 +58,5 @@ func _process(delta):
 		if current.b <= 0.0:
 			current.g -= current.b
 			current.b = 0.0
-			state += 1
+			state = 0
 	style.bg_color = current

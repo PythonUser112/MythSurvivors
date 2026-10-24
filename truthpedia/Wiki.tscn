@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://assets/textfx/jump_pulse.gd" type="Script" id=1]
 [ext_resource path="res://truthpedia/Wiki.gd" type="Script" id=2]
-[ext_resource path="res://ui/UIButton.gd" type="Script" id=3]
 [ext_resource path="res://assets/Theme.tres" type="Theme" id=4]
 
 [sub_resource type="StyleBoxFlat" id=2]
@@ -35,44 +34,45 @@ TruthPedia Wiki"
 scroll_active = false
 custom_effects = [ SubResource( 1 ) ]
 
-[node name="BackButton" type="Control" parent="InfoLayer/WikiTitle"]
+[node name="Search" type="HBoxContainer" parent="InfoLayer/WikiTitle"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -403.0
+margin_top = 10.0
+
+[node name="BackButton" type="Button" parent="InfoLayer/WikiTitle/Search"]
 pause_mode = 2
-margin_right = 200.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 200, 100 )
-rect_scale = Vector2( 0.5, 0.5 )
-script = ExtResource( 3 )
+margin_right = 124.0
+margin_bottom = 30.0
+focus_neighbour_right = NodePath("../LastButton")
 text = "Back to Main Menu"
 
-[node name="LastButton" type="Control" parent="InfoLayer/WikiTitle"]
+[node name="LastButton" type="Button" parent="InfoLayer/WikiTitle/Search"]
 pause_mode = 2
-margin_left = 100.0
-margin_right = 300.0
-margin_bottom = 100.0
-rect_min_size = Vector2( 200, 100 )
-rect_scale = Vector2( 0.5, 0.5 )
-script = ExtResource( 3 )
-text = "Last Page"
+margin_left = 128.0
+margin_right = 199.0
+margin_bottom = 30.0
+focus_neighbour_left = NodePath("../BackButton")
+focus_neighbour_right = NodePath("../LineEdit")
 disabled = true
-
-[node name="Search" type="HBoxContainer" parent="InfoLayer/WikiTitle"]
-margin_left = 824.0
-margin_top = 20.0
-margin_right = 1024.0
-margin_bottom = 50.0
+text = "Last Page"
 
 [node name="LineEdit" type="LineEdit" parent="InfoLayer/WikiTitle/Search"]
-margin_right = 146.0
+margin_left = 203.0
+margin_right = 349.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 146, 30 )
+focus_neighbour_left = NodePath("../LastButton")
+focus_neighbour_right = NodePath("../SearchButton")
 expand_to_text_length = true
 placeholder_text = "Search for"
 
 [node name="SearchButton" type="Button" parent="InfoLayer/WikiTitle/Search"]
-margin_left = 150.0
-margin_right = 200.0
+margin_left = 353.0
+margin_right = 403.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 50, 30 )
+focus_neighbour_left = NodePath("../LineEdit")
 text = "Go!"
 
 [node name="AcceptDialog" type="AcceptDialog" parent="."]
@@ -90,6 +90,6 @@ dialog_text = "Could not find that page...
  |
 ¯¯¯¯¯"
 
-[connection signal="button_down" from="InfoLayer/WikiTitle/BackButton" to="." method="_on_BackButton_button_down"]
-[connection signal="button_down" from="InfoLayer/WikiTitle/LastButton" to="." method="_on_LastButton_button_down"]
+[connection signal="button_down" from="InfoLayer/WikiTitle/Search/BackButton" to="." method="_on_BackButton_button_down"]
+[connection signal="button_down" from="InfoLayer/WikiTitle/Search/LastButton" to="." method="_on_LastButton_button_down"]
 [connection signal="pressed" from="InfoLayer/WikiTitle/Search/SearchButton" to="." method="_on_SearchButton_pressed"]

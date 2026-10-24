@@ -27,7 +27,7 @@ func _on_Timer_timeout():
 	else:
 		emit_signal("finished")
 
-func _on_Tween_tween_completed(object, key):
+func _on_Tween_tween_completed(_object, _key):
 	if first_anim:
 		get_node("Page%s/RichTextLabel" % current).bbcode_text += " "
 		first_anim = false

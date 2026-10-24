@@ -17,6 +17,11 @@ func _enter_tree():
 			$TestMenu.add_child(button)
 	d.list_dir_end()
 
+func _ready():
+	Modulate.fade_in()
+	yield(Modulate, "finished")
+	$TestMenu.activate()
+
 func instantiate_scene(scene_path: String):
 	$TestMenu.hide()
 	current_test = load(scene_path).instance()
@@ -28,6 +33,7 @@ func _on_Button_pressed():
 		$TopLayer/CenterContainer/Button.disabled = true
 		Modulate.fade_out()
 		yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://developers/DeveloperMenu.tscn")
 	current_test.queue_free()
 	current_test = null

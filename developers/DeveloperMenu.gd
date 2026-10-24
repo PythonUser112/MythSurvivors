@@ -5,6 +5,7 @@ var scene
 func _ready():
 	Modulate.fade_in()
 	yield(Modulate, "finished")
+	$MainContainer/CenterContainer/VButtonMenu.activate()
 
 func _on_SkilltreeButton_pressed():
 	Modulate.fade_out()

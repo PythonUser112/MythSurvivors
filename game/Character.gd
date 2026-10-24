@@ -36,15 +36,17 @@ const diridx = {
 	"left": 3
 }
 
-func move(dir):
+func move(dir) -> bool:
 	if moving or not dir in directions or raycasts[dir].is_colliding():
-		return
+		return false
 	moving = true
 	$IdleTimer.stop()
 	$FrameTimer.stop()
 	if idle:
 		old_direction = $AnimatedSprite.frame
+	idle = false
 	if (diridx[dir] - old_direction) in [2, -2]:
+		print(dir, " ", diridx[dir], " ", old_direction)
 		var between = ((diridx[dir] + old_direction) / 2 + (randi() % 2) * 2) % 4
 		var anim = diridx.keys()[between]
 		$AnimatedSprite.animation = anim
@@ -52,27 +54,36 @@ func move(dir):
 		$AnimatedSprite.frame = 0
 		$FrameTimer.start()
 		old_direction = diridx[dir]
-		return
+		return true
 	old_direction = diridx[dir]
 	if not raycasts[dir].is_colliding():
 		$Tween.interpolate_property(self, "position", null, position + directions[dir] * speed, 0.5)
 		$Tween.start()
 		$AnimatedSprite.play(dir)
+	return true
 
 func _on_Tween_tween_all_completed():
 	if moving:
 		emit_signal("moving_finished")
+		z_index = int(position.y / 16)
 	moving = false
 	$AnimatedSprite.stop()
 	$AnimatedSprite.frame = 0
 	$IdleTimer.start()
 
 func _ready():
+	var frames = SpriteFrames.new()
+	$AnimatedSprite.frames = frames
+	frames.add_animation("idle")
+	frames.set_animation_loop("idle", true)
+	frames.set_animation_speed("idle", 0.75)
 	old_direction = start_direction
 	for dir in directions:
+		frames.add_animation(dir)
+		frames.set_animation_speed(dir, 8)
 		for frame in range(4):
-			$AnimatedSprite.frames.add_frame(dir, Characters.get_character(character).get_picture(dir + "/%s" % frame))
-		$AnimatedSprite.frames.add_frame("idle", Characters.get_character(character).get_picture(dir + "/0"))
+			frames.add_frame(dir, Characters.get_character(character).get_picture(dir + "/%s" % frame))
+		frames.add_frame("idle", Characters.get_character(character).get_picture(dir + "/0"))
 		raycasts[dir].collision_mask = collision_mask
 	yield(get_tree(), "idle_frame")
 	$AnimatedSprite.animation = "idle"

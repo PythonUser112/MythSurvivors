@@ -38,8 +38,14 @@ func _on_BackButton_button_down():
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ui/Main.tscn")
 
-func _on_TruthpediaEditor_pressed():
+func _on_TruthpediaEditor_button_down():
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://developers/WikiPageCreator.tscn")
+
+func _on_TestButton_button_down():
+	Modulate.fade_out()
+	yield(Modulate, "finished")
+# warning-ignore:return_value_discarded
+	get_tree().change_scene("res://tests/TestManager.tscn")

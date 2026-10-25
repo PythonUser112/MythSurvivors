@@ -49,6 +49,7 @@ func activate(to_select: int = 0):
 				selected = i
 				break
 	buttons[selected].focused = true
+	get_parent().ensure_control_visible(buttons[selected])
 
 func _process(_delta):
 	if not buttons:

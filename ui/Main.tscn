@@ -49,12 +49,13 @@ custom_effects = [ SubResource( 1 ) ]
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="MainMenu" type="CenterContainer" parent="."]
+[node name="MainMenu" type="ScrollContainer" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 412.0
 margin_top = 100.0
 margin_right = -412.0
+scroll_horizontal_enabled = false
 
 [node name="VButtonMenu" type="VBoxContainer" parent="MainMenu"]
 margin_right = 200.0
@@ -68,6 +69,7 @@ margin_bottom = 100.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Play"
+deactivated = true
 
 [node name="SettingsButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
@@ -78,6 +80,7 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Settings"
 id = 1
+deactivated = true
 
 [node name="SpecialButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
@@ -88,6 +91,7 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Special"
 id = 2
+deactivated = true
 
 [node name="CreditButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
@@ -98,6 +102,7 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Credits"
 id = 3
+deactivated = true
 
 [node name="ExitButton" type="Control" parent="MainMenu/VButtonMenu"]
 pause_mode = 2
@@ -108,17 +113,18 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Exit"
 id = 4
+deactivated = true
 
-[node name="SpecialMenu" type="CenterContainer" parent="."]
+[node name="SpecialMenu" type="ScrollContainer" parent="."]
 margin_left = 1024.0
 margin_top = 100.0
 margin_right = 1224.0
 margin_bottom = 600.0
+scroll_horizontal_enabled = false
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SpecialMenu"]
-margin_top = 44.0
 margin_right = 200.0
-margin_bottom = 456.0
+margin_bottom = 412.0
 script = ExtResource( 7 )
 
 [node name="DeveloperButton" type="Control" parent="SpecialMenu/VButtonMenu"]
@@ -161,16 +167,15 @@ script = ExtResource( 6 )
 text = "Back"
 id = 3
 
-[node name="SettingsMenu" type="CenterContainer" parent="."]
+[node name="SettingsMenu" type="ScrollContainer" parent="."]
 margin_left = 1024.0
 margin_top = 100.0
 margin_right = 1224.0
 margin_bottom = 600.0
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SettingsMenu"]
-margin_top = 96.0
 margin_right = 200.0
-margin_bottom = 404.0
+margin_bottom = 308.0
 script = ExtResource( 7 )
 
 [node name="LanguageButton" type="Control" parent="SettingsMenu/VButtonMenu"]
@@ -201,7 +206,7 @@ script = ExtResource( 6 )
 text = "Back"
 id = 2
 
-[node name="LanguageMenu" type="CenterContainer" parent="."]
+[node name="LanguageMenu" type="ScrollContainer" parent="."]
 margin_left = 1024.0
 margin_top = 100.0
 margin_right = 1224.0
@@ -209,9 +214,8 @@ margin_bottom = 600.0
 rect_min_size = Vector2( 200, 500 )
 
 [node name="VButtonMenu" type="VBoxContainer" parent="LanguageMenu"]
-margin_top = 200.0
 margin_right = 200.0
-margin_bottom = 300.0
+margin_bottom = 100.0
 script = ExtResource( 7 )
 
 [node name="BackButton" type="Control" parent="LanguageMenu/VButtonMenu"]

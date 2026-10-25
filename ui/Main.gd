@@ -7,7 +7,6 @@ const character_selector = preload("res://ui/CharacterSelector.tscn")
 func _ready():
 	Modulate.hide_everything()
 	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not Globals.developer_mode
-	$MainMenu/VButtonMenu.activate()
 	$MainMenu.rect_position = Vector2(412, 100)
 	Modulate.fade_in()
 	var f = File.new()
@@ -30,16 +29,17 @@ func _ready():
 		$LanguageMenu/VButtonMenu.add_child(button)
 	$LanguageMenu/VButtonMenu/BackButton.raise()
 	$LanguageMenu/VButtonMenu.update()
+	$MainMenu/VButtonMenu.activate()
 
 func _on_PlayButton_button_down():
-	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-200, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	yield($Tween, "tween_all_completed")
 
 func _on_ExitButton_button_down():
 	get_tree().quit()
 
 func _on_SpecialButton_button_down():
-	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-200, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SpecialMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
@@ -54,7 +54,7 @@ func _on_BackButton_button_down():
 	$MainMenu/VButtonMenu.activate()
 
 func _on_SettingsButton_button_down():
-	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-200, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
@@ -80,7 +80,7 @@ func _on_DeveloperButton_button_down():
 	get_tree().change_scene("res://developers/DeveloperMenu.tscn")
 
 func _on_LanguageButton_button_down():
-	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-200, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")

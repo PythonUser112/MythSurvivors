@@ -4,7 +4,6 @@ extends VBoxContainer
 class_name VButtonMenu
 
 export (bool) var deactivate_on_press = true
-
 var active = false
 
 var buttons: Array = []
@@ -51,6 +50,9 @@ func activate(to_select: int = 0):
 				selected = i
 				break
 	buttons[selected].focused = true
+	if get_parent() is ScrollContainer:
+		get_parent().ensure_control_visible(buttons[selected])
+
 
 func _process(_delta):
 	if not buttons:

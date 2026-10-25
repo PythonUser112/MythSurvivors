@@ -5,6 +5,7 @@
 [ext_resource path="res://ui/VButtonMenu.gd" type="Script" id=3]
 
 [node name="InputManager" type="Control"]
+visible = false
 margin_right = 1024.0
 margin_bottom = 600.0
 mouse_filter = 2

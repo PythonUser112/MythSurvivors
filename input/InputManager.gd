@@ -41,11 +41,11 @@ func render_actions():
 		$InputManagementContainer/ScrollContainer/Actions.add_child(button)
 		var action_container_parent = ScrollContainer.new()
 		action_container_parent.name = action
-		action_container_parent.rect_min_size = Vector2(100, 0)
+		action_container_parent.rect_min_size = Vector2(200, 500)
 		action_container_parent.rect_position = Vector2(1024, 0)
 		action_container_parent.scroll_horizontal_enabled = false
 		var action_container = VButtonMenu.new()
-		action_container.rect_min_size = Vector2(100, 0)
+		action_container.rect_min_size = Vector2(200, 0)
 		var current_button = action_symbol_scene.instance()
 		current_button.connect("button_up", self, "remove_binding", [action, 0])
 		current_button.append_bbcode("[center]")

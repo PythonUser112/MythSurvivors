@@ -30,3 +30,16 @@ rect_min_size = Vector2( 300, 0 )
 script = ExtResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="NewKeyDialog" type="WindowDialog" parent="."]
+margin_right = 48.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 140, 0 )
+window_title = "Add key binding"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="NewKeyDialog"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_min_size = Vector2( 140, 40 )
+
+[connection signal="popup_hide" from="NewKeyDialog" to="." method="_on_NewKeyDialog_popup_hide"]

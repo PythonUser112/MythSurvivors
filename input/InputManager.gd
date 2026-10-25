@@ -2,13 +2,85 @@ extends Control
 
 signal menu_closed
 
-var action_symbol_scene = preload("res://input/ActionSymbol.tscn")
-var font = preload("res://assets/fonts/Jacquard_24/FontSmall.tres")
-var input_symbol_generator_scene = preload("res://input/InputSymbolGenerator.tscn")
+const INPUT_CONFIG_PREFIX = "inputbind_"
+const INPUT_CONFIG_SEPARATOR = ";"
+const action_symbol_scene = preload("res://input/ActionSymbol.tscn")
+const font = preload("res://assets/fonts/Jacquard_24/FontSmall.tres")
+const input_symbol_generator_scene = preload("res://input/InputSymbolGenerator.tscn")
+
 var input_symbol_generator: Control
 var is_recording: bool = false
 var target_action: String
 var current_event: InputEvent
+
+func get_modifiers(action: InputEventWithModifiers) -> PoolStringArray:
+	var modifiers = PoolStringArray()
+	if action.alt:
+		modifiers.append("alt")
+	if action.control:
+		modifiers.append("control")
+	if action.shift:
+		modifiers.append("shift")
+	return modifiers
+
+func serialize_action(action: InputEvent) -> String:
+	if action is InputEventJoypadMotion:
+		return "JoyAxis_%s_%s" % [action.axis, ["", "r", "l"][int(action.axis_value)]]
+	if action is InputEventJoypadButton:
+		return "JoyButton_%s" % action.button_index
+	if action is InputEventKey:
+		return "Key_%s_%s" % [action.scancode, "_".join(get_modifiers(action))]
+	return ""
+
+
+func deserialize_action(action_string: String) -> InputEvent:
+	var action_parts: Array = action_string.lstrip("\n ").rstrip("\n ").split("_")
+	var action_identifier = action_parts.pop_front()
+	var action: InputEvent = null
+	if action_identifier == "Key":
+		action = InputEventKey.new()
+		action.scancode = int(action_parts.pop_front())
+		for modifier in action_parts:
+			action.alt = (modifier == "alt") or action.alt
+			action.control = (modifier == "control") or action.control
+			action.shift = (modifier == "shift") or action.shift
+	elif action_identifier == "JoyButton":
+		action = InputEventJoypadButton.new()
+		action.button_index = int(action_parts.pop_front())
+	elif action_identifier == "JoyAxis":
+		action = InputEventJoypadMotion.new()
+		action.axis = int(action_parts.pop_front())
+		action.axis_value = {"l": -1, "r": 1}[action_parts.pop_front()]
+	return action
+
+func save_keybinds() -> void:
+	var saved = {}
+	for action in InputMap.get_actions():
+		var serialized = PoolStringArray()
+		for event in InputMap.get_action_list(action):
+			var value = serialize_action(event)
+			if not value.empty():
+				serialized.append(value)
+		saved[INPUT_CONFIG_PREFIX + action] = \
+			INPUT_CONFIG_SEPARATOR.join(serialized)
+	Globals.update_config(saved)
+
+
+func load_keybinds() -> void:
+	for action in InputMap.get_actions():
+		var config_key = INPUT_CONFIG_PREFIX + action
+		if not Globals.config.has(config_key):
+			continue
+		var serialized = str(Globals.config[config_key])
+		var old_events = InputMap.get_action_list(action).duplicate()
+		for old_event in old_events:
+			InputMap.action_erase_event(action, old_event)
+		if serialized.empty():
+			continue
+		for value in serialized.split(INPUT_CONFIG_SEPARATOR):
+			var event = deserialize_action(value)
+			if event != null:
+				InputMap.action_add_event(action, event)
 
 func _input(event: InputEvent):
 	if is_recording:
@@ -120,6 +192,7 @@ func render_actions():
 		action_container.add_child(back_button)
 		action_container_parent.add_child(action_container)
 		$InputManagementContainer.add_child(action_container_parent)
+		save_keybinds()
 	$InputManagementContainer/ScrollContainer/Actions.add_child(HSeparator.new())
 	var leave_button = UIButton.new()
 	leave_button.text = "Back"
@@ -139,7 +212,7 @@ func remove_binding(action: String, binding_index: int):
 		child.disconnect("button_up", self, "remove_binding")
 		child.connect("button_up", self, "remove_binding", [action, index])
 		index += 1
-	print(InputMap.get_action_list(action))
+	save_keybinds()
 	get_node("InputManagementContainer/" + action).get_child(0).update()
 	get_node("InputManagementContainer/" + action).get_child(0).activate()
 
@@ -158,7 +231,7 @@ func leave_menu():
 
 func _on_Action_selected(action: String):
 	var action_container = get_node("InputManagementContainer/" + action)
-	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(462, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 1)
+	$Tween.interpolate_property(action_container, "rect_position", null, Vector2(412, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 1)
 	$Tween.interpolate_property($InputManagementContainer/ScrollContainer, "rect_position", null, Vector2(-400, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
@@ -182,6 +255,7 @@ func activate():
 func _ready():
 	input_symbol_generator = input_symbol_generator_scene.instance()
 	add_child(input_symbol_generator)
+	load_keybinds()
 	render_actions()
 
 func _on_NewKeyDialog_popup_hide():

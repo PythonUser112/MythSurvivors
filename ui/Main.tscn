@@ -172,6 +172,7 @@ margin_left = 1024.0
 margin_top = 100.0
 margin_right = 1224.0
 margin_bottom = 600.0
+scroll_horizontal_enabled = false
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SettingsMenu"]
 margin_right = 200.0
@@ -212,6 +213,7 @@ margin_top = 100.0
 margin_right = 1224.0
 margin_bottom = 600.0
 rect_min_size = Vector2( 200, 500 )
+scroll_horizontal_enabled = false
 
 [node name="VButtonMenu" type="VBoxContainer" parent="LanguageMenu"]
 margin_right = 200.0

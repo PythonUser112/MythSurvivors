@@ -38,6 +38,8 @@ func _gui_input(event):
 		pressed = false
 
 func _process(_delta):
+	if not is_visible_in_tree():
+		return
 	if not color_rect:
 		color_rect = ColorRect.new()
 		color_rect.mouse_filter = MOUSE_FILTER_IGNORE

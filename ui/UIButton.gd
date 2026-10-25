@@ -83,6 +83,8 @@ func _gui_input(event):
 func _process(_delta):
 	if color_rect == null:
 		_ready()
+	if not is_visible_in_tree():
+		return
 	if old_text != text:
 		label.bbcode_text = "\n[center][jump_pulse]" + text + "[/jump_pulse][/center]"
 		old_text = text

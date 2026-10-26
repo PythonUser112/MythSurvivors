@@ -1,0 +1,24 @@
+ui_accept: Akzeptieren
+ui_select: Auswählen
+ui_cancel: Abbrechen
+ui_focus_next: Nächstes Element
+ui_focus_prev: Vorheriges Element
+ui_left: Links (UI)
+ui_right: Rechts (UI)
+ui_up: Hoch (UI)
+ui_down: Runter (UI)
+ui_page_up: Bild hoch
+ui_page_down: Bild runter
+ui_home: Erste Position (UI)
+ui_end: Letzte Postion (UI)
+up: Hoch (In-Game)
+down: Runter (In-Game)
+left: Links (In-Game)
+right: Rechts (In-Game)
+zoom_in: Zoom + (Skilltree)
+zoom_out: Zoom - (Skilltree)
+open_file: Öffnen (TruthPedia)
+save_file: Speichern (TruthPedia)
+reset: Werkseinstellungen
+back: Zurück
+add: Kombination hinzufügen

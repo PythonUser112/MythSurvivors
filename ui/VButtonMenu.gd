@@ -53,12 +53,23 @@ func activate(to_select: int = 0):
 	if get_parent() is ScrollContainer:
 		get_parent().ensure_control_visible(buttons[selected])
 
-
 func _process(_delta):
 	if not buttons:
 		update()
 	if active and is_visible_in_tree():
-		if Input.is_action_just_pressed("ui_down"):
+		if Input.is_action_just_pressed("ui_home"):
+			buttons[selected].focused = false
+			selected = 0
+			while buttons[selected].disabled:
+				selected += 1
+			buttons[selected].focused = true
+		if Input.is_action_just_pressed("ui_end"):
+			buttons[selected].focused = false
+			selected = len(buttons) - 1
+			while buttons[selected].disabled:
+				selected -= 1
+			buttons[selected].focused = true
+		if Input.is_action_just_pressed("ui_down") or Input.is_action_just_pressed("ui_focus_next"):
 			buttons[selected].focused = false
 			selected += 1
 			if selected == len(buttons):
@@ -73,7 +84,7 @@ func _process(_delta):
 			buttons[selected].focused = true
 			if get_parent() is ScrollContainer:
 				get_parent().ensure_control_visible(buttons[selected])
-		if Input.is_action_just_pressed("ui_up"):
+		if Input.is_action_just_pressed("ui_up") or Input.is_action_just_pressed("ui_focus_prev"):
 			buttons[selected].focused = false
 			selected -= 1
 			if selected < 0:

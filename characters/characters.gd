@@ -99,6 +99,10 @@ class Character:
 		out += "[/jump_pulse][/font][/center]"
 		return out
 
+func update_locale(new_lang: String):
+	for character_name in characters:
+		get_character(character_name).set_lang(new_lang)
+
 func get_character(character_name) -> Character:
 	if character_name in characters:
 		return characters[character_name]
@@ -106,6 +110,8 @@ func get_character(character_name) -> Character:
 	return characters[character_name]
 
 func init():
+# warning-ignore:return_value_discarded
+	Locale.connect("locale_changed", self, "update_locale")
 	var f = File.new()
 	f.open("res://characters/characters.txt", File.READ)
 	var content = f.get_as_text().split("\n")

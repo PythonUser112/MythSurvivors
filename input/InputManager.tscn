@@ -36,7 +36,7 @@ script = ExtResource( 3 )
 margin_right = 48.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 140, 0 )
-window_title = "Add key binding"
+window_title = "New Binding"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="NewKeyDialog"]
 margin_right = 40.0

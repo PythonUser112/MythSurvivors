@@ -1,13 +1,15 @@
 extends Node
 
+signal locale_changed
+
 export (String) var lang
 
 var locales = {}
 var stat_translations = {}
+var action_translations = {}
 
-func set_locale(locale: String):
-	for character_name in Characters.characters:
-		Characters.get_character(character_name).set_lang(locale)
+func set_locale(locale: String) -> void:
+	emit_signal("locale_changed", locale)
 	Skills.skilltrees = {}
 	lang = locale
 	Globals.update_config({"lang": locale})
@@ -34,7 +36,10 @@ func get_menu_labels() -> Dictionary:
 				menu_labels[current] = []
 	return menu_labels
 
-func init():
+func get_action_translation(action: String) -> String:
+	return action_translations[lang].get(action, action)
+
+func init() -> void:
 	var f = File.new()
 	f.open("res://locales.txt", File.READ)
 	var content = f.get_as_text().split("\n")
@@ -48,10 +53,18 @@ func init():
 		f.close()
 		stat_translations[locale] = {}
 		for line in content:
-			line = line as String
 			if ": " in line:
 				var key_value = line.split(": ")
 				stat_translations[locale][key_value[0]] = key_value[1]
+	for locale in locales:
+		f.open("res://input/locale/%s.txt" % (locale), File.READ)
+		content = f.get_as_text().split("\n")
+		f.close()
+		action_translations[locale] = {}
+		for line in content:
+			if ": " in line:
+				var key_value = line.split(": ")
+				action_translations[locale][key_value[0]] = key_value[1]
 	if not lang in locales:
 		print_debug("Invalid language: ", lang)
 		lang = "en"

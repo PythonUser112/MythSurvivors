@@ -105,6 +105,7 @@ func _input(event: InputEvent):
 				add_button.raise()
 				back_button.raise()
 				get_node("InputManagementContainer/" + target_action).get_child(0).update()
+				save_keybinds()
 			else:
 				current_event = event
 				var symbols = yield(get_symbol(event), "completed")
@@ -153,7 +154,7 @@ func get_action_symbols(action: String) -> Array:
 func render_actions():
 	for action in InputMap.get_actions():
 		var button = UIButton.new()
-		button.text = action
+		button.text = Locale.get_action_translation(action)
 		button.connect("button_down", self, "_on_Action_selected", [action])
 		$InputManagementContainer/ScrollContainer/Actions.add_child(button)
 		var action_container_parent = ScrollContainer.new()
@@ -194,11 +195,19 @@ func render_actions():
 		$InputManagementContainer.add_child(action_container_parent)
 		save_keybinds()
 	$InputManagementContainer/ScrollContainer/Actions.add_child(HSeparator.new())
+	var reset_button = UIButton.new()
+	reset_button.text = Locale.get_action_translation("reset") # Yes, I was too lasy to do this correctly
+	reset_button.connect("button_up", self, "reset_binds")
+	$InputManagementContainer/ScrollContainer/Actions.add_child(reset_button)
 	var leave_button = UIButton.new()
-	leave_button.text = "Back"
+	leave_button.text = Locale.get_action_translation("back") # And here, too
 	leave_button.connect("button_up", self, "leave_menu")
 	$InputManagementContainer/ScrollContainer/Actions.add_child(leave_button)
 	$InputManagementContainer/ScrollContainer/Actions.update()
+
+func reset_binds():
+	InputMap.load_from_globals()
+	save_keybinds()
 
 func remove_binding(action: String, binding_index: int):
 	var action_event = InputMap.get_action_list(action)[binding_index]
@@ -252,11 +261,22 @@ func activate():
 	yield($Tween, "tween_all_completed")
 	$InputManagementContainer/ScrollContainer/Actions.activate()
 
+func update_locale(_new_locale: String) -> void:
+	for child in $InputManagementContainer.get_children():
+		if child.name != "ScrollContainer":
+			child.queue_free()
+	for child in $InputManagementContainer/ScrollContainer/Actions.get_children():
+		child.queue_free()
+	$NewKeyDialog.window_title = Locale.get_action_translation("add") # Please forgive me
+	render_actions()
+
 func _ready():
+# warning-ignore:return_value_discarded
+	Locale.connect("locale_changed", self, "update_locale")
 	input_symbol_generator = input_symbol_generator_scene.instance()
 	add_child(input_symbol_generator)
 	load_keybinds()
-	render_actions()
+	update_locale("") # This was lazyness, too, as this simplifies things.
 
 func _on_NewKeyDialog_popup_hide():
 	is_recording = false

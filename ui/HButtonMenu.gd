@@ -3,6 +3,7 @@ tool
 extends HBoxContainer
 class_name HButtonMenu
 
+export (bool) var deactivate_on_press = true
 var active = false
 
 var buttons: Array = []
@@ -16,7 +17,7 @@ func update():
 			continue
 		child.id = i
 		if not child.is_connected("button_up", self, "deactivate"):
-			if not child.toggle_mode:
+			if not child.toggle_mode and deactivate_on_press:
 				child.connect("button_up", self, "deactivate")
 			child.connect("focused", self, "focus_changed")
 		buttons.append(child)
@@ -49,13 +50,26 @@ func activate(to_select: int = 0):
 				selected = i
 				break
 	buttons[selected].focused = true
-	get_parent().ensure_control_visible(buttons[selected])
+	if get_parent() is ScrollContainer:
+		get_parent().ensure_control_visible(buttons[selected])
 
 func _process(_delta):
 	if not buttons:
 		update()
 	if active and is_visible_in_tree():
-		if Input.is_action_just_pressed("ui_right"):
+		if Input.is_action_just_pressed("ui_home"):
+			buttons[selected].focused = false
+			selected = 0
+			while buttons[selected].disabled:
+				selected += 1
+			buttons[selected].focused = true
+		if Input.is_action_just_pressed("ui_end"):
+			buttons[selected].focused = false
+			selected = len(buttons) - 1
+			while buttons[selected].disabled:
+				selected -= 1
+			buttons[selected].focused = true
+		if Input.is_action_just_pressed("ui_right") or Input.is_action_just_pressed("ui_focus_next"):
 			buttons[selected].focused = false
 			selected += 1
 			if selected == len(buttons):
@@ -70,7 +84,7 @@ func _process(_delta):
 			buttons[selected].focused = true
 			if get_parent() is ScrollContainer:
 				get_parent().ensure_control_visible(buttons[selected])
-		if Input.is_action_just_pressed("ui_left"):
+		if Input.is_action_just_pressed("ui_left") or Input.is_action_just_pressed("ui_focus_prev"):
 			buttons[selected].focused = false
 			selected -= 1
 			if selected < 0:

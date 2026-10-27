@@ -6,7 +6,7 @@ var devil_checker_found = false
 var newsletter_checker_found = false
 
 func _ready():
-	Globals.update_config({"shaders": "1", "textfx": "1", "fullscreen": "0", "maximize": "0"})
+	Globals.update_config({"shaders": "1", "textfx": "1", "fullscreen": "0", "maximized": "0"})
 	for locale in locales:
 		$ScrollContainer/GridContainer/LanguageButton.get_popup().add_item(Locale.locales[locale])
 	Modulate.fade_in()
@@ -22,6 +22,7 @@ func _on_ConfirmButton_button_up():
 func language_selected(index: int):
 	locale_selected = true
 	Globals.update_config({"lang": locales[index]})
+	Locale.init()
 
 func _on_ShaderChecker_toggled(button_pressed: bool):
 	Globals.update_config({"shaders": str(int(button_pressed))})
@@ -39,7 +40,7 @@ func _on_FullscreenChecker_toggled(button_pressed: bool):
 		$ScrollContainer/GridContainer/MaximizeStartupChecker.disabled = false
 
 func _on_MaximizeStartupChecker_toggled(button_pressed: bool):
-	Globals.update_config({"maximize": str(int(button_pressed))})
+	Globals.update_config({"maximized": str(int(button_pressed))})
 
 func _on_DevilChecker_toggled(_button_pressed: bool):
 	devil_checker_found = true
@@ -48,3 +49,6 @@ func _on_DevilChecker_toggled(_button_pressed: bool):
 func _on_NewsletterChecker_toggled(_button_pressed: bool):
 	newsletter_checker_found = true
 	$ScrollContainer/GridContainer/NewsletterChecker.disabled = true
+
+func _on_DeveloperChecker_toggled(button_pressed: bool):
+	Globals.update_config({"developer": str(int(button_pressed))})

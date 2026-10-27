@@ -18,6 +18,7 @@ Language
 - Back
 Graphics
 - Fullscreen mode
+- Maximize on start
 - Shaders
 - Text Effects
 - Back

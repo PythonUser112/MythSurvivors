@@ -7,9 +7,9 @@ const character_selector = preload("res://ui/CharacterSelector.tscn")
 func _ready():
 	InputManager.connect("menu_closed", self, "_on_Settings_BackButton_button_down")
 	OS.window_maximized = Globals.config["maximized"] == "1"
-	$GraphicsMenu/VButtonMenu/MaximizedButton.down = OS.window_maximized
+	$GraphicsMenu/VButtonMenu/MaximizedButton.down = Globals.config["maximized"] == "1"
 	OS.window_fullscreen = Globals.config["fullscreen"] == "1"
-	$GraphicsMenu/VButtonMenu/FullscreenButton.down = OS.window_fullscreen
+	$GraphicsMenu/VButtonMenu/FullscreenButton.down = Globals.config["fullscreen"] == "1"
 	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"
 	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["textfx"] == "1"
 	Modulate.hide_everything()

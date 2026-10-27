@@ -18,6 +18,7 @@ Language
 - Zurück
 Graphics
 - Vollbildmodus
+- Maximieren
 - Shader
 - Texteffekte
 - Zurück

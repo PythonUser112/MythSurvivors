@@ -21,7 +21,7 @@ rect_min_size = Vector2( 1024, 586 )
 
 [node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
 margin_right = 1024.0
-margin_bottom = 308.0
+margin_bottom = 352.0
 rect_min_size = Vector2( 1024, 0 )
 columns = 2
 
@@ -115,10 +115,22 @@ margin_right = 1024.0
 margin_bottom = 284.0
 pressed = true
 
-[node name="ConfirmButton" type="Button" parent="ScrollContainer/GridContainer"]
+[node name="DeveloperLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 301.0
+margin_right = 920.0
+margin_bottom = 315.0
+text = "Developer mode"
+
+[node name="DeveloperChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
 margin_top = 288.0
+margin_right = 1024.0
+margin_bottom = 328.0
+
+[node name="ConfirmButton" type="Button" parent="ScrollContainer/GridContainer"]
+margin_top = 332.0
 margin_right = 149.0
-margin_bottom = 308.0
+margin_bottom = 352.0
 size_flags_horizontal = 2
 disabled = true
 text = "Confirm configuration"
@@ -130,4 +142,5 @@ text = "Confirm configuration"
 [connection signal="toggled" from="ScrollContainer/GridContainer/FullscreenChecker" to="." method="_on_FullscreenChecker_toggled"]
 [connection signal="toggled" from="ScrollContainer/GridContainer/MaximizeStartupChecker" to="." method="_on_MaximizeStartupChecker_toggled"]
 [connection signal="toggled" from="ScrollContainer/GridContainer/DevilChecker" to="." method="_on_DevilChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/DeveloperChecker" to="." method="_on_DeveloperChecker_toggled"]
 [connection signal="button_up" from="ScrollContainer/GridContainer/ConfirmButton" to="." method="_on_ConfirmButton_button_up"]

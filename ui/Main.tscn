@@ -34,9 +34,11 @@ layer = -100
 margin_left = 1.0
 margin_right = 1025.0
 star_count = 1000
+enable_shaders = true
 
-[node name="Title" type="RichTextLabel" parent="CanvasLayer/Stars"]
-margin_right = 1024.0
+[node name="Title" type="RichTextLabel" parent="CanvasLayer"]
+margin_left = 1.0
+margin_right = 1025.0
 margin_bottom = 80.0
 custom_fonts/normal_font = SubResource( 2 )
 bbcode_enabled = true
@@ -48,6 +50,15 @@ scroll_active = false
 custom_effects = [ SubResource( 1 ) ]
 
 [node name="Tween" type="Tween" parent="."]
+
+[node name="Credits" type="RichTextLabel" parent="."]
+margin_left = 100.0
+margin_top = 600.0
+margin_right = 924.0
+margin_bottom = 1200.0
+bbcode_enabled = true
+fit_content_height = true
+custom_effects = [ SubResource( 3 ) ]
 
 [node name="MainMenu" type="ScrollContainer" parent="."]
 anchor_right = 1.0
@@ -176,7 +187,7 @@ scroll_horizontal_enabled = false
 
 [node name="VButtonMenu" type="VBoxContainer" parent="SettingsMenu"]
 margin_right = 200.0
-margin_bottom = 308.0
+margin_bottom = 412.0
 script = ExtResource( 7 )
 
 [node name="LanguageButton" type="Control" parent="SettingsMenu/VButtonMenu"]
@@ -187,25 +198,35 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Select Language"
 
-[node name="BindingsButton" type="Control" parent="SettingsMenu/VButtonMenu"]
+[node name="GraphicsButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 104.0
 margin_right = 200.0
 margin_bottom = 204.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
-text = "Select controls"
+text = "Graphics"
 id = 1
 
-[node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
+[node name="BindingsButton" type="Control" parent="SettingsMenu/VButtonMenu"]
 pause_mode = 2
 margin_top = 208.0
 margin_right = 200.0
 margin_bottom = 308.0
 rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
-text = "Back"
+text = "Select controls"
 id = 2
+
+[node name="BackButton" type="Control" parent="SettingsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 312.0
+margin_right = 200.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Back"
+id = 3
 
 [node name="LanguageMenu" type="ScrollContainer" parent="."]
 margin_left = 1024.0
@@ -228,14 +249,76 @@ rect_min_size = Vector2( 200, 100 )
 script = ExtResource( 6 )
 text = "Back"
 
-[node name="Credits" type="RichTextLabel" parent="."]
-margin_left = 100.0
-margin_top = 600.0
-margin_right = 924.0
-margin_bottom = 1200.0
-bbcode_enabled = true
-fit_content_height = true
-custom_effects = [ SubResource( 3 ) ]
+[node name="GraphicsMenu" type="ScrollContainer" parent="."]
+margin_left = 1024.0
+margin_top = 100.0
+margin_right = 1224.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 200, 500 )
+
+[node name="VButtonMenu" type="VBoxContainer" parent="GraphicsMenu"]
+margin_right = 200.0
+margin_bottom = 516.0
+script = ExtResource( 7 )
+
+[node name="FullscreenButton" type="Control" parent="GraphicsMenu/VButtonMenu"]
+pause_mode = 2
+margin_right = 200.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Fullscreen"
+toggle_mode = true
+
+[node name="MaximizedButton" type="Control" parent="GraphicsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 104.0
+margin_right = 200.0
+margin_bottom = 204.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Maximized"
+toggle_mode = true
+
+[node name="ShaderButton" type="Control" parent="GraphicsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 208.0
+margin_right = 200.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Shaders"
+id = 1
+toggle_mode = true
+
+[node name="TextfxButton" type="Control" parent="GraphicsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 312.0
+margin_right = 200.0
+margin_bottom = 412.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Text Effects"
+id = 1
+toggle_mode = true
+
+[node name="BackButton" type="Control" parent="GraphicsMenu/VButtonMenu"]
+pause_mode = 2
+margin_top = 416.0
+margin_right = 200.0
+margin_bottom = 516.0
+rect_min_size = Vector2( 200, 100 )
+script = ExtResource( 6 )
+text = "Back"
+id = 2
+
+[node name="ShaderConfirmationDialog" type="ConfirmationDialog" parent="."]
+margin_right = 400.0
+margin_bottom = 140.0
+rect_min_size = Vector2( 400, 140 )
+window_title = "Disable Shaders"
+dialog_text = "Disabling shaders will increase performance on older computers. On the other hand, many parts (Image downsampling, Skilltree nodes & connections, ...) rely on shaders to look good. Continue anyway?"
+dialog_autowrap = true
 
 [connection signal="button_down" from="MainMenu/VButtonMenu/PlayButton" to="." method="_on_PlayButton_button_down"]
 [connection signal="button_down" from="MainMenu/VButtonMenu/SettingsButton" to="." method="_on_SettingsButton_button_down"]
@@ -246,6 +329,13 @@ custom_effects = [ SubResource( 3 ) ]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/TruthpediaButton" to="." method="_on_TruthpediaButton_button_down"]
 [connection signal="button_down" from="SpecialMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/LanguageButton" to="." method="_on_LanguageButton_button_down"]
+[connection signal="button_down" from="SettingsMenu/VButtonMenu/GraphicsButton" to="." method="_on_GraphicsButton_button_down"]
 [connection signal="button_up" from="SettingsMenu/VButtonMenu/BindingsButton" to="." method="_on_BindingsButton_button_up"]
 [connection signal="button_down" from="SettingsMenu/VButtonMenu/BackButton" to="." method="_on_BackButton_button_down"]
-[connection signal="button_down" from="LanguageMenu/VButtonMenu/BackButton" to="." method="_on_LanguageMenu_BackButton_button_down"]
+[connection signal="button_down" from="LanguageMenu/VButtonMenu/BackButton" to="." method="_on_Settings_BackButton_button_down"]
+[connection signal="toggled" from="GraphicsMenu/VButtonMenu/FullscreenButton" to="." method="_on_FullscreenButton_toggled"]
+[connection signal="toggled" from="GraphicsMenu/VButtonMenu/MaximizedButton" to="." method="_on_MaximizedButton_toggled"]
+[connection signal="toggled" from="GraphicsMenu/VButtonMenu/ShaderButton" to="." method="_on_ShaderButton_toggled"]
+[connection signal="button_down" from="GraphicsMenu/VButtonMenu/BackButton" to="." method="_on_Settings_BackButton_button_down"]
+[connection signal="confirmed" from="ShaderConfirmationDialog" to="." method="_on_ShaderConfirmationDialog_confirmed"]
+[connection signal="popup_hide" from="ShaderConfirmationDialog" to="." method="_on_ShaderConfirmationDialog_popup_hide"]

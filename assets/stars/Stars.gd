@@ -5,6 +5,7 @@ class_name Stars
 
 export (int) var star_count = 500
 export (float) var star_blink_speed = 5.0
+export (bool) var enable_shaders
 
 var star_shader = preload("res://assets/shaders/StarBlinkShader.tres")
 
@@ -12,6 +13,12 @@ func _ready():
 	redraw()
 
 func redraw():
+	for child in get_children():
+		child.queue_free()
+	if Globals.get("config"):
+		enable_shaders = Globals.config.get("shaders", "1") == "1"
+	else:
+		enable_shaders = true
 	for _i in range(star_count):
 		var star = ColorRect.new()
 		star.rect_size = Vector2(1, 1)
@@ -22,11 +29,12 @@ func redraw():
 		var size = float(randi() % 20) / 10
 		star.rect_size = Vector2(size, size)
 		star.rect_position = Vector2(x, y)
-		star.material = ShaderMaterial.new()
-		star.material.shader = star_shader
-		star.material.set_shader_param("speed", (randi() % 100 + 1) / 50.0 * star_blink_speed)
-		star.material.set_shader_param("bg_color", color)
-		star.material.set_shader_param("glow", (randi() % 100) / 200.0)
-		star.material.set_shader_param("intensity", (randi() % 100) / 200.0 + 0.5)
+		if enable_shaders:
+			star.material = ShaderMaterial.new()
+			star.material.shader = star_shader
+			star.material.set_shader_param("speed", (randi() % 100 + 1) / 50.0 * star_blink_speed)
+			star.material.set_shader_param("bg_color", color)
+			star.material.set_shader_param("glow", (randi() % 100) / 200.0)
+			star.material.set_shader_param("intensity", (randi() % 100) / 200.0 + 0.5)
 		add_child(star)
 

@@ -1,0 +1,133 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://ui/ConfigurationMenu.gd" type="Script" id=1]
+
+[node name="ConfigurationMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="Title" type="Label" parent="."]
+margin_right = 1024.0
+margin_bottom = 14.0
+text = "Configure MythSurvivors"
+align = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+margin_top = 14.0
+margin_right = 1024.0
+margin_bottom = 600.0
+rect_min_size = Vector2( 1024, 586 )
+
+[node name="GridContainer" type="GridContainer" parent="ScrollContainer"]
+margin_right = 1024.0
+margin_bottom = 308.0
+rect_min_size = Vector2( 1024, 0 )
+columns = 2
+
+[node name="LanguageLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 3.0
+margin_right = 920.0
+margin_bottom = 17.0
+text = "Select Language"
+
+[node name="LanguageButton" type="OptionButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_right = 1024.0
+margin_bottom = 20.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 8
+
+[node name="ShaderLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 37.0
+margin_right = 920.0
+margin_bottom = 51.0
+text = "Shaders"
+
+[node name="ShaderChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 64.0
+pressed = true
+
+[node name="TextfxLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 81.0
+margin_right = 920.0
+margin_bottom = 95.0
+text = "Text effects"
+
+[node name="TextfxChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 68.0
+margin_right = 1024.0
+margin_bottom = 108.0
+pressed = true
+
+[node name="NewsletterLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 116.0
+margin_right = 920.0
+margin_bottom = 147.0
+text = "I want to get the MythSurvivors newsletter which gives me 24/7 messages I don't want to read and which spam my mailbox because I was too dumb to find this option"
+autowrap = true
+
+[node name="NewsletterChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 112.0
+margin_right = 1024.0
+margin_bottom = 152.0
+pressed = true
+
+[node name="FullscreenLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 169.0
+margin_right = 920.0
+margin_bottom = 183.0
+text = "Fullscreen mode"
+
+[node name="FullscreenChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 156.0
+margin_right = 1024.0
+margin_bottom = 196.0
+
+[node name="MaximizeStartupLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 213.0
+margin_right = 920.0
+margin_bottom = 227.0
+text = "Maximize on startup"
+
+[node name="MaximizeStartupChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 200.0
+margin_right = 1024.0
+margin_bottom = 240.0
+
+[node name="DevilLabel" type="Label" parent="ScrollContainer/GridContainer"]
+margin_top = 257.0
+margin_right = 920.0
+margin_bottom = 271.0
+text = "I want to sell my soul to the devil"
+
+[node name="DevilChecker" type="CheckButton" parent="ScrollContainer/GridContainer"]
+margin_left = 924.0
+margin_top = 244.0
+margin_right = 1024.0
+margin_bottom = 284.0
+pressed = true
+
+[node name="ConfirmButton" type="Button" parent="ScrollContainer/GridContainer"]
+margin_top = 288.0
+margin_right = 149.0
+margin_bottom = 308.0
+size_flags_horizontal = 2
+disabled = true
+text = "Confirm configuration"
+
+[connection signal="item_selected" from="ScrollContainer/GridContainer/LanguageButton" to="." method="language_selected"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/ShaderChecker" to="." method="_on_ShaderChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/TextfxChecker" to="." method="_on_TextfxChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/NewsletterChecker" to="." method="_on_NewsletterChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/FullscreenChecker" to="." method="_on_FullscreenChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/MaximizeStartupChecker" to="." method="_on_MaximizeStartupChecker_toggled"]
+[connection signal="toggled" from="ScrollContainer/GridContainer/DevilChecker" to="." method="_on_DevilChecker_toggled"]
+[connection signal="button_up" from="ScrollContainer/GridContainer/ConfirmButton" to="." method="_on_ConfirmButton_button_up"]

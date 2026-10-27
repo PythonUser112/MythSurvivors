@@ -208,6 +208,7 @@ func render_actions():
 func reset_binds():
 	InputMap.load_from_globals()
 	save_keybinds()
+	$InputManagementContainer/ScrollContainer/Actions.activate()
 
 func remove_binding(action: String, binding_index: int):
 	var action_event = InputMap.get_action_list(action)[binding_index]

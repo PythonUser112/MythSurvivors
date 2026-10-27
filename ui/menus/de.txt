@@ -10,8 +10,14 @@ Special
 - GodTok®
 - Zurück
 Settings
-- Sprache auswählen
+- Sprache
+- Grafik
 - Steuerung
 - Zurück
 Language
+- Zurück
+Graphics
+- Vollbildmodus
+- Shader
+- Texteffekte
 - Zurück

@@ -93,6 +93,9 @@ func _process(_delta):
 	if focused:
 		if Input.is_action_just_pressed("ui_accept"):
 			pressed = true
+			if toggle_mode:
+				down = not down
+				emit_signal("toggled", down)
 			emit_signal("button_down")
 	if Input.is_action_just_released("ui_accept") and pressed:
 		pressed = false

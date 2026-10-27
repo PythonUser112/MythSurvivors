@@ -10,8 +10,14 @@ Special
 - GodTok®
 - Back
 Settings
-- Select Language
-- Select Controls
+- Language
+- Graphics
+- Controls
 - Back
 Language
+- Back
+Graphics
+- Fullscreen mode
+- Shaders
+- Text Effects
 - Back

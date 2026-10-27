@@ -5,6 +5,13 @@ export (Array, PackedScene) var levels = []
 const character_selector = preload("res://ui/CharacterSelector.tscn")
 
 func _ready():
+	InputManager.connect("menu_closed", self, "_on_Settings_BackButton_button_down")
+	OS.window_maximized = Globals.config["maximized"] == "1"
+	$GraphicsMenu/VButtonMenu/MaximizedButton.down = OS.window_maximized
+	OS.window_fullscreen = Globals.config["fullscreen"] == "1"
+	$GraphicsMenu/VButtonMenu/FullscreenButton.down = OS.window_fullscreen
+	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"
+	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["textfx"] == "1"
 	Modulate.hide_everything()
 	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not Globals.developer_mode
 	$MainMenu.rect_position = Vector2(412, 100)
@@ -48,10 +55,20 @@ func _on_SpecialButton_button_down():
 func _on_BackButton_button_down():
 	$Tween.interpolate_property($SpecialMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$MainMenu/VButtonMenu.activate()
+
+func _on_Settings_BackButton_button_down():
+	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$SettingsMenu/VButtonMenu.activate()
 
 func _on_SettingsButton_button_down():
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
@@ -86,13 +103,6 @@ func _on_LanguageButton_button_down():
 	yield($Tween, "tween_all_completed")
 	$LanguageMenu/VButtonMenu.activate()
 
-func _on_LanguageMenu_BackButton_button_down():
-	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
-	$Tween.start()
-	yield($Tween, "tween_all_completed")
-	$SettingsMenu/VButtonMenu.activate()
-
 func select_language(lang: String):
 	Modulate.fade_out()
 	yield(Modulate, "finished")
@@ -110,3 +120,33 @@ func _on_BindingsButton_button_up():
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	InputManager.activate()
+
+func _on_GraphicsButton_button_down():
+	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
+	$Tween.start()
+	yield($Tween, "tween_all_completed")
+	$GraphicsMenu/VButtonMenu.activate()
+
+func _on_FullscreenButton_toggled(button_pressed: bool):
+	Globals.update_config({"fullscreen": str(int(button_pressed))})
+	OS.window_fullscreen = button_pressed
+
+func _on_MaximizedButton_toggled(button_pressed: bool):
+	Globals.update_config({"maximized": str(int(button_pressed))})
+	OS.window_maximized = button_pressed
+
+func _on_ShaderButton_toggled(button_pressed):
+	if not button_pressed:
+		$ShaderConfirmationDialog.popup_centered()
+	else:
+		Globals.update_config({"shaders": "1"})
+		$CanvasLayer/Stars.redraw()
+
+func _on_ShaderConfirmationDialog_confirmed():
+	Globals.update_config({"shaders": "0"})
+	$CanvasLayer/Stars.redraw()
+
+func _on_ShaderConfirmationDialog_popup_hide():
+	yield(get_tree(), "idle_frame")
+	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"

@@ -6,9 +6,7 @@ const INPUT_CONFIG_PREFIX = "inputbind_"
 const INPUT_CONFIG_SEPARATOR = ";"
 const action_symbol_scene = preload("res://input/ActionSymbol.tscn")
 const font = preload("res://assets/fonts/Jacquard_24/FontSmall.tres")
-const input_symbol_generator_scene = preload("res://input/InputSymbolGenerator.tscn")
 
-var input_symbol_generator: Control
 var is_recording: bool = false
 var target_action: String
 var current_event: InputEvent
@@ -94,7 +92,7 @@ func _input(event: InputEvent):
 				var hseparator = get_node("InputManagementContainer/" + target_action).get_child(0).get_child(ccount - 3)
 				var add_button = get_node("InputManagementContainer/" + target_action).get_child(0).get_child(ccount - 2)
 				var back_button = get_node("InputManagementContainer/" + target_action).get_child(0).get_child(ccount - 1)
-				var symbols = yield(get_symbol(current_event), "completed")
+				var symbols = get_symbol(current_event)
 				var button = action_symbol_scene.instance()
 				button.append_bbcode("[center]")
 				for texture in symbols:
@@ -108,7 +106,7 @@ func _input(event: InputEvent):
 				save_keybinds()
 			else:
 				current_event = event
-				var symbols = yield(get_symbol(event), "completed")
+				var symbols = get_symbol(event)
 				while len(symbols) > $NewKeyDialog/HBoxContainer.get_child_count():
 					var texture_rect = TextureRect.new()
 					texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -124,14 +122,14 @@ func get_symbol(event: InputEvent) -> Array:
 	var symbols = []
 	if event is InputEventKey:
 		if event.control:
-			symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.KEYBOARD, KEY_CONTROL), "completed"))
+			symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_CONTROL))
 		if event.shift:
-			symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.KEYBOARD, KEY_SHIFT), "completed"))
+			symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_SHIFT))
 		if event.alt:
-			symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.KEYBOARD, KEY_ALT), "completed"))
-		symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.KEYBOARD, event.scancode), "completed"))
+			symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, KEY_ALT))
+		symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.KEYBOARD, event.scancode))
 	elif event is InputEventJoypadButton:
-		symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.JOYBUTTON, event.button_index), "completed"))
+		symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.JOYBUTTON, event.button_index))
 	elif event is InputEventJoypadMotion:
 		var axis_pos = ["L", "R"][int(event.axis / 2)]
 		symbols.append(axis_pos)
@@ -140,7 +138,7 @@ func get_symbol(event: InputEvent) -> Array:
 			stick_name += "+"
 		else:
 			stick_name += "-"
-		symbols.append(yield(input_symbol_generator.get_key_symbol(input_symbol_generator.JOYSTICK, stick_name), "completed"))
+		symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.JOYSTICK, stick_name))
 	return symbols
 
 func get_action_symbols(action: String) -> Array:
@@ -148,7 +146,7 @@ func get_action_symbols(action: String) -> Array:
 	for event in InputMap.get_action_list(action):
 		if symbols:
 			symbols.append(" or ")
-		symbols += yield(get_symbol(event), "completed")
+		symbols += get_symbol(event)
 	return symbols
 
 func render_actions():
@@ -168,7 +166,7 @@ func render_actions():
 		current_button.connect("button_up", self, "remove_binding", [action, 0])
 		current_button.append_bbcode("[center]")
 		var index = 0
-		var symbols = yield(get_action_symbols(action), "completed")
+		var symbols = get_action_symbols(action)
 		for symbol in symbols:
 			if symbol is String:
 				if symbol == " or ":
@@ -274,8 +272,6 @@ func update_locale(_new_locale: String) -> void:
 func _ready():
 # warning-ignore:return_value_discarded
 	Locale.connect("locale_changed", self, "update_locale")
-	input_symbol_generator = input_symbol_generator_scene.instance()
-	add_child(input_symbol_generator)
 	load_keybinds()
 	update_locale("") # This was lazyness, too, as this simplifies things.
 

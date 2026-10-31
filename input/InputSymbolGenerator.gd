@@ -1,6 +1,6 @@
 extends Control
 
-export (String, FILE) var filestorage = "usr://inputsymbols.txt"
+export (String, FILE) var filestorage = "user://inputsymbols.txt"
 
 enum {
 	KEYBOARD
@@ -44,7 +44,7 @@ const KEYBOARD_SPECIALS = {
 	KEY_SPACE: "SPACE",
 	KEY_SUPER_L: "WINDOWS",
 	KEY_SUPER_R: "WINDOWS",
-	KEY_TAB: "→>",
+	KEY_TAB: "TAB",
 	KEY_UP: "↑"
 }
 
@@ -70,17 +70,19 @@ const JOYBUTTONS = {
 
 const rot = [[0, -1], [1, 0], [0, 1], [-1, 0]]
 
+var current: Image
 var symbols = {}
 var storagefile_content: String
 
 func _ready():
 	var f = File.new()
 	if f.open(filestorage, File.READ):
-		if f.open(filestorage, File.WRITE):
-			push_error("Couldn't open storage!")
+		var err = f.open(filestorage, File.WRITE)
+		if err:
+			Logger.error("InputSymbolGenerator.gd", "Couldn't open storage: Error code %s" % (err))
 			return
 		else:
-			print_debug("Storage file created!")
+			Logger.debug("InputSymbolGenerator", "Storage file created!")
 		f.close()
 	else:
 		storagefile_content = f.get_as_text()
@@ -102,55 +104,54 @@ func get_keyboard_key_name(key):
 		return char(key).to_upper()
 	return KEYBOARD_SPECIALS[key]
 
-func add_color_rect(x, y, w, h, color):
-	var crect = ColorRect.new()
-	crect.color = color
-	crect.rect_size = Vector2(w, h)
-	crect.rect_position = Vector2(x, y)
-	$InputSymbolViewport/Control.add_child(crect)
+func set_pixels(x, y, w, h, color):
+	current.lock()
+	current.fill_rect(Rect2(x, y, w, h), color)
 
-func add_color_rects(x, y, w, h, xsize, color):
-	add_color_rect(x, y, w, h, color)
-	add_color_rect(xsize - x - w, y, w, h, color)
+func set_pixels_symmetrically(x, y, w, h, xsize, color):
+	current.lock()
+	set_pixels(x, y, w, h, color)
+	set_pixels(xsize - x - w, y, w, h, color)
 
-func add_pixel(x, y, color=Color.black):
-	add_color_rect(x, y, 1, 1, color)
+func set_pixel(x, y, color=Color.black):
+	current.lock()
+	current.set_pixel(x, y, color)
 
 func get_type_name(type):
 	return {KEYBOARD: "KEYBOARD", JOYBUTTON: "JOYBUTTON", JOYSTICK: "JOYSTICK"}[type]
 
 func get_key_symbol(type, key):
 	if get_type_name(type) + str(key) in symbols:
-		yield(get_tree(), "idle_frame")
 		var texture = ImageTexture.new()
 		var image = Image.new()
 		image.load(symbols[get_type_name(type) + str(key)])
 		texture.create_from_image(image)
 		return texture
 	var imagepath: String
-	var image: Image = Image.new()
+	current = Image.new()
 	if type == KEYBOARD:
 		var keyname = get_keyboard_key_name(key)
 		var xsize = 7 + 6 * len(keyname)
-		$InputSymbolViewport.size = Vector2(xsize, 18)
-		yield(get_tree(), "idle_frame")
-		add_color_rects(0, 2, 1, 8, xsize, Color.black)
-		add_color_rects(1, 1, 1, 2, xsize, Color.black)
-		add_color_rects(2, 0, 1, 2, xsize, Color.black)
-		add_color_rects(1, 9, 1, 2, xsize, Color.black)
-		add_color_rects(2, 10, 1, 2, xsize, Color.black)
-		add_color_rect(3, 0, xsize - 5, 1, Color.black)
-		add_color_rect(3, 11, xsize - 5, 1, Color.black)
-		add_color_rects(0, 10, 1, 6, xsize, Color.gray)
-		add_color_rects(1, 11, 1, 6, xsize, Color.gray)
+		current.create(xsize, 18, false, Image.FORMAT_RGBA8)
+		current.lock()
+		current.fill(Color(0, 0, 0, 0))
+		set_pixels_symmetrically(0, 2, 1, 8, xsize, Color.black)
+		set_pixels_symmetrically(1, 1, 1, 2, xsize, Color.black)
+		set_pixels_symmetrically(2, 0, 1, 2, xsize, Color.black)
+		set_pixels_symmetrically(1, 9, 1, 2, xsize, Color.black)
+		set_pixels_symmetrically(2, 10, 1, 2, xsize, Color.black)
+		set_pixels(3, 0, xsize - 5, 1, Color.black)
+		set_pixels(3, 11, xsize - 5, 1, Color.black)
+		set_pixels_symmetrically(0, 10, 1, 6, xsize, Color.gray)
+		set_pixels_symmetrically(1, 11, 1, 6, xsize, Color.gray)
 		for x in range(2, xsize - 2):
-			add_color_rect(x, 12, 1, 6, Color.gray)
-		add_color_rects(1, 3, 1, 6, xsize, Color.white)
-		add_color_rects(2, 2, 1, 8, xsize, Color.white)
-		add_color_rect(3, 1, xsize - 6, 10, Color.white)
+			set_pixels(x, 12, 1, 6, Color.gray)
+		set_pixels_symmetrically(1, 3, 1, 6, xsize, Color.white)
+		set_pixels_symmetrically(2, 2, 1, 8, xsize, Color.white)
+		set_pixels(3, 1, xsize - 6, 10, Color.white)
 		var positions = FontManager.render(FontManager.GLOBALFONT, keyname, Vector2(4, 2))
 		for pos in positions:
-			add_pixel(pos.x, pos.y)
+			set_pixel(pos.x, pos.y)
 		imagepath = "user://keysym_%s.png" % int(Time.get_unix_time_from_system() * 1000000)
 	elif type == JOYBUTTON:
 		var joybuttonname = get_joybutton_name(key)
@@ -159,91 +160,84 @@ func get_key_symbol(type, key):
 		if joybuttoncolor == Color.black:
 			shadow = Color.gray
 		var xsize = 7 + 6 * len(joybuttonname)
-		$InputSymbolViewport.size = Vector2(xsize, 18)
-		yield(get_tree(), "idle_frame")
-		add_color_rects(0, 4, 1, 6, xsize, Color.black)
-		add_color_rects(1, 2, 1, 3, xsize, Color.black)
-		add_color_rects(1, 9, 1, 3, xsize, Color.black)
-		add_color_rects(2, 1, 3, 1, xsize, Color.black)
-		add_color_rects(2, 12, 3, 1, xsize, Color.black)
-		add_pixel(2, 2)
-		add_pixel(2, 11)
-		add_pixel(xsize - 3, 2)
-		add_pixel(xsize - 3, 11)
-		add_color_rects(3, 1, 2, 1, xsize, Color.black)
-		add_color_rects(3, 12, 2, 1, xsize, Color.black)
-		add_color_rect(4, 0, xsize - 8, 1, Color.black)
-		add_color_rect(4, 13, xsize - 8, 1, Color.black)
-		add_color_rects(1, 5, 1, 4, xsize, Color.white)
-		add_color_rects(2, 3, 1, 8, xsize, Color.white)
-		add_color_rect(5, 1, xsize - 10, 1, Color.white)
-		add_color_rect(5, 12, xsize - 10, 1, Color.white)
-		add_color_rect(3, 2, xsize - 6, 1, Color.white)
-		add_color_rect(3, 11, xsize - 6, 1, Color.white)
-		add_color_rect(3, 3, xsize - 6, 8, Color.white)
-		add_color_rects(0, 10, 1, 4, xsize, shadow)
-		add_color_rects(1, 12, 1, 4, xsize, shadow)
-		add_color_rects(2, 13, 1, 4, xsize, shadow)
-		add_color_rects(3, 13, 1, 4, xsize, shadow)
+		current.create(xsize, 18, false, Image.FORMAT_RGBA8)
+		current.fill(Color(0, 0, 0, 0))
+		set_pixels_symmetrically(0, 4, 1, 6, xsize, Color.black)
+		set_pixels_symmetrically(1, 2, 1, 3, xsize, Color.black)
+		set_pixels_symmetrically(1, 9, 1, 3, xsize, Color.black)
+		set_pixels_symmetrically(2, 1, 3, 1, xsize, Color.black)
+		set_pixels_symmetrically(2, 12, 3, 1, xsize, Color.black)
+		set_pixel(2, 2)
+		set_pixel(2, 11)
+		set_pixel(xsize - 3, 2)
+		set_pixel(xsize - 3, 11)
+		set_pixels_symmetrically(3, 1, 2, 1, xsize, Color.black)
+		set_pixels_symmetrically(3, 12, 2, 1, xsize, Color.black)
+		set_pixels(4, 0, xsize - 8, 1, Color.black)
+		set_pixels(4, 13, xsize - 8, 1, Color.black)
+		set_pixels_symmetrically(1, 5, 1, 4, xsize, Color.white)
+		set_pixels_symmetrically(2, 3, 1, 8, xsize, Color.white)
+		set_pixels(5, 1, xsize - 10, 1, Color.white)
+		set_pixels(5, 12, xsize - 10, 1, Color.white)
+		set_pixels(3, 2, xsize - 6, 1, Color.white)
+		set_pixels(3, 11, xsize - 6, 1, Color.white)
+		set_pixels(3, 3, xsize - 6, 8, Color.white)
+		set_pixels_symmetrically(0, 10, 1, 4, xsize, shadow)
+		set_pixels_symmetrically(1, 12, 1, 4, xsize, shadow)
+		set_pixels_symmetrically(2, 13, 1, 4, xsize, shadow)
+		set_pixels_symmetrically(3, 13, 1, 4, xsize, shadow)
 		for x in range(4, xsize - 4):
-			add_color_rect(x, 14, 1, 4, shadow)
+			set_pixels(x, 14, 1, 4, shadow)
 		var positions = FontManager.render(FontManager.GLOBALFONT, joybuttonname, Vector2(4, 3))
 		for pos in positions:
-			add_pixel(pos.x, pos.y, joybuttoncolor)
+			set_pixel(pos.x, pos.y, joybuttoncolor)
 		imagepath = "user://joybut_%s.png" % int(Time.get_unix_time_from_system() * 1000000)
 	elif type == JOYSTICK:
-		$InputSymbolViewport.size = Vector2(9, 18)
-		add_color_rects(0, 2, 1, 3, 9, Color.black)
-		add_color_rects(1, 1, 1, 2, 9, Color.black)
-		add_color_rects(1, 4, 1, 2, 9, Color.black)
-		add_color_rects(2, 0, 1, 2, 9, Color.black)
-		add_color_rects(2, 5, 1, 2, 9, Color.black)
-		add_color_rect(3, 0, 3, 1, Color.black)
-		add_color_rect(3, 6, 3, 1, Color.black)
-		add_color_rects(1, 3, 1, 1, 9, Color.gray)
-		add_color_rects(2, 2, 1, 3, 9, Color.gray)
-		add_color_rect(3, 1, 3, 5, Color.gray)
-		add_pixel(4, 3, Color.black)
+		current.create(9, 18, false, Image.FORMAT_RGBA8)
+		current.fill(Color(0, 0, 0, 0))
+		set_pixels_symmetrically(0, 2, 1, 3, 9, Color.black)
+		set_pixels_symmetrically(1, 1, 1, 2, 9, Color.black)
+		set_pixels_symmetrically(1, 4, 1, 2, 9, Color.black)
+		set_pixels_symmetrically(2, 0, 1, 2, 9, Color.black)
+		set_pixels_symmetrically(2, 5, 1, 2, 9, Color.black)
+		set_pixels(3, 0, 3, 1, Color.black)
+		set_pixels(3, 6, 3, 1, Color.black)
+		set_pixels_symmetrically(1, 3, 1, 1, 9, Color.gray)
+		set_pixels_symmetrically(2, 2, 1, 3, 9, Color.gray)
+		set_pixels(3, 1, 3, 5, Color.gray)
+		set_pixel(4, 3, Color.black)
 		var idx = {"1-": 0, "0+": 1, "1+": 2, "0-": 3}[key]
 		var i = 0
 		for pos in rot:
 			if idx != i:
-				add_pixel(4 + pos[0], 3 + pos[1])
+				set_pixel(4 + pos[0], 3 + pos[1])
 			i += 1
-		add_pixel(0, 5, Color.gray)
-		add_pixel(1, 6, Color.gray)
-		add_color_rect(2, 7, 5, 1, Color.gray)
-		add_pixel(7, 6, Color.gray)
-		add_pixel(8, 5, Color.gray)
-		add_color_rect(3, 8, 3, 8, Color.black)
-		add_color_rects(0, 14, 1, 3, 9, Color.black)
-		add_color_rects(1, 13, 1, 2, 9, Color.black)
-		add_color_rects(1, 16, 1, 2, 9, Color.black)
-		add_color_rects(2, 13, 1, 1, 9, Color.black)
-		add_color_rect(2, 17, 5, 1, Color.black)
-		add_color_rects(1, 15, 1, 1, 9, Color.white)
-		add_color_rects(2, 14, 1, 3, 9, Color.white)
-		add_color_rect(3, 16, 3, 1, Color.white)
+		set_pixel(0, 5, Color.gray)
+		set_pixel(1, 6, Color.gray)
+		set_pixels(2, 7, 5, 1, Color.gray)
+		set_pixel(7, 6, Color.gray)
+		set_pixel(8, 5, Color.gray)
+		set_pixels(3, 8, 3, 8, Color.black)
+		set_pixels_symmetrically(0, 14, 1, 3, 9, Color.black)
+		set_pixels_symmetrically(1, 13, 1, 2, 9, Color.black)
+		set_pixels_symmetrically(1, 16, 1, 2, 9, Color.black)
+		set_pixels_symmetrically(2, 13, 1, 1, 9, Color.black)
+		set_pixels(2, 17, 5, 1, Color.black)
+		set_pixels_symmetrically(1, 15, 1, 1, 9, Color.white)
+		set_pixels_symmetrically(2, 14, 1, 3, 9, Color.white)
+		set_pixels(3, 16, 3, 1, Color.white)
 		imagepath = "user://joystick_%s.png" % int(Time.get_unix_time_from_system() * 1000000)
-	while image.is_empty():
-		$InputSymbolViewport/Control.update()
-		yield(VisualServer, "frame_post_draw")
-		image = $InputSymbolViewport.get_texture().get_data()
-		if image.is_empty():
-			push_error("No image data from viewport, retrying!")
-			continue
-	image.convert(Image.FORMAT_RGBA8)
 # warning-ignore:return_value_discarded
-	image.save_png(imagepath)
+	current.save_png(imagepath)
 	storagefile_content += get_type_name(type) + str(key) + ": " + imagepath + "\n"
 	var f = File.new()
-	f.open(filestorage, File.WRITE)
-	f.store_string(storagefile_content)
+	var err = f.open(filestorage, File.WRITE)
+	if err:
+		Logger.error("InputSymbolGenerator", "Couldn't save binding: Code %s" %(err))
+	else:
+		f.store_string(storagefile_content)
 	f.close()
-	for child in $InputSymbolViewport/Control.get_children():
-		child.queue_free()
-	yield(get_tree(), "idle_frame")
 	var texture = ImageTexture.new()
-	texture.create_from_image(image)
+	texture.create_from_image(current)
 	symbols[get_type_name(type) + str(key)] = imagepath
 	return texture

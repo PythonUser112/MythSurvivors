@@ -1,9 +1,11 @@
 extends Node
 
 export (bool) var developer_mode = false
+export (bool) var textfx = false
 export (String) var lang
-var config: Dictionary = {}
-var version
+export (Dictionary) var config = {}
+export (String) var version
+
 const config_path: String = "user://config.txt"
 
 func _ready():
@@ -22,12 +24,14 @@ func _ready():
 			line = line.right(2).split(": ")
 			config[line[0]] = line[1]
 	developer_mode = config.get("developer", null) != null or OS.has_feature("developer")
+	textfx = config.get("textfx") == "1"
 	Locale.lang = config.get("lang")
 	Locale.init()
 
 func update_config(new_cfg: Dictionary):
 	for key in new_cfg:
 		config[key] = new_cfg[key]
+	textfx = config.get("textfx") == "1"
 	var f = File.new()
 	f.open(config_path, File.WRITE)
 	for key in config:

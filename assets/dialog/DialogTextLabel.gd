@@ -45,7 +45,7 @@ func show_text(_text: String):
 func _process(delta):
 	if finished:
 		return
-	if Input.is_action_just_pressed("select"):
+	if Input.is_action_just_pressed("ui_select"):
 		if $Tween.is_active() and not finished:
 			$Tween.stop_all()
 			visible_characters = characters

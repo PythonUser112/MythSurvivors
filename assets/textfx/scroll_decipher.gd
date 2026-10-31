@@ -8,6 +8,9 @@ var offsets: PoolVector2Array = []
 var character: PoolIntArray = []
 
 func _process_custom_fx(char_fx: CharFXTransform):
+	if Globals:
+		if not Globals.textfx:
+			return false
 	var lift_height: int = char_fx.env.get("lift_height", 20)
 	var text_color: Color = char_fx.env.get("text_color", Color.black)
 	var glow_color: Color = char_fx.env.get("glow_color", Color.yellow)

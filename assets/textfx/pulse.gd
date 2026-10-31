@@ -8,6 +8,9 @@ class_name RichTextPulse
 var bbcode = "pulse"
 
 func _process_custom_fx(char_fx):
+	if Globals:
+		if not Globals.textfx:
+			return false
 	# Get parameters, or use the provided default value if missing.
 	var color = char_fx.env.get("color", char_fx.color)
 	var height = char_fx.env.get("height", 0.0)

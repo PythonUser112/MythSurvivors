@@ -9,6 +9,7 @@ var f = File.new()
 
 func _ready():
 	if Globals.config.get("config_version", null) != Globals.version:
+# warning-ignore:return_value_discarded
 		get_tree().change_scene("res://ui/ConfigurationMenu.tscn")
 		return
 	Modulate.fade_in()
@@ -45,9 +46,10 @@ func load_asset(asset: String):
 	else:
 		load_path = ""
 	if not f.file_exists(load_path):
-		push_error("Couldn't find asset '%s'"%(asset))
+		Logger.error("Loader", "Couldn't find asset '%s'"%(asset))
 		breakpoint
 		return
+	Logger.info("Loader", "Loading %s" % asset)
 	loaders.append([ResourceLoader.load_interactive(load_path), load_path])
 	tasks += 1
 	while not load_path in finished:

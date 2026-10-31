@@ -5,13 +5,14 @@ export (Array, PackedScene) var levels = []
 const character_selector = preload("res://ui/CharacterSelector.tscn")
 
 func _ready():
+# warning-ignore:return_value_discarded
 	InputManager.connect("menu_closed", self, "_on_Settings_BackButton_button_down")
 	OS.window_maximized = Globals.config["maximized"] == "1"
 	$GraphicsMenu/VButtonMenu/MaximizedButton.down = Globals.config["maximized"] == "1"
 	OS.window_fullscreen = Globals.config["fullscreen"] == "1"
 	$GraphicsMenu/VButtonMenu/FullscreenButton.down = Globals.config["fullscreen"] == "1"
 	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"
-	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["textfx"] == "1"
+	$GraphicsMenu/VButtonMenu/TextfxButton.down = Globals.config["textfx"] == "1"
 	Modulate.hide_everything()
 	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not Globals.developer_mode
 	$MainMenu.rect_position = Vector2(412, 100)
@@ -136,7 +137,7 @@ func _on_MaximizedButton_toggled(button_pressed: bool):
 	Globals.update_config({"maximized": str(int(button_pressed))})
 	OS.window_maximized = button_pressed
 
-func _on_ShaderButton_toggled(button_pressed):
+func _on_ShaderButton_toggled(button_pressed: bool):
 	if not button_pressed:
 		$ShaderConfirmationDialog.popup_centered()
 	else:
@@ -150,3 +151,17 @@ func _on_ShaderConfirmationDialog_confirmed():
 func _on_ShaderConfirmationDialog_popup_hide():
 	yield(get_tree(), "idle_frame")
 	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"
+
+func _on_TextfxButton_toggled(button_pressed: bool):
+	if not button_pressed:
+		$TextfxConfirmationDialog.popup_centered()
+	else:
+		Globals.update_config({"textfx": "1"})
+
+func _on_TextfxConfirmationDialog_confirmed():
+	Globals.update_config({"textfx": "0"})
+
+func _on_TextfxConfirmationDialog_popup_hide():
+	yield(get_tree(), "idle_frame")
+	$GraphicsMenu/VButtonMenu/TextfxButton.down = Globals.config["shaders"] == "1"
+

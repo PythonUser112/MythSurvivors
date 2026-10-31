@@ -1,14 +1,38 @@
 extends Control
 
-onready var locales = Locale.locales.keys()
+onready var locales: Array = Locale.locales.keys()
 var locale_selected = false
 var devil_checker_found = false
 var newsletter_checker_found = false
+const STDCONF = {
+	"lang": "en",
+	"shaders": "1",
+	"textfx": "1",
+	"fullscreen": "0",
+	"maximized": "0",
+	"developer": "0"
+}
+onready var targets = {
+	"shaders": $ScrollContainer/GridContainer/ShaderChecker,
+	"textfx": $ScrollContainer/GridContainer/TextfxChecker,
+	"fullscreen": $ScrollContainer/GridContainer/FullscreenChecker,
+	"maximized": $ScrollContainer/GridContainer/MaximizeStartupChecker,
+	"developer": $ScrollContainer/GridContainer/DeveloperChecker
+}
 
 func _ready():
-	Globals.update_config({"shaders": "1", "textfx": "1", "fullscreen": "0", "maximized": "0"})
+	var conf = STDCONF
+	for key in conf:
+		if Globals.config.has(key):
+			conf[key] = Globals.config.get(key)
+		if key in targets:
+			targets[key].pressed = conf[key] == "1"
+	Globals.update_config(conf)
 	for locale in locales:
 		$ScrollContainer/GridContainer/LanguageButton.get_popup().add_item(Locale.locales[locale])
+	if Globals.config.has("lang"):
+		$ScrollContainer/GridContainer/LanguageButton.selected = locales.find(Globals.config.get("lang"))
+		locale_selected = true
 	Modulate.fade_in()
 
 func _process(_delta):
@@ -52,3 +76,6 @@ func _on_NewsletterChecker_toggled(_button_pressed: bool):
 
 func _on_DeveloperChecker_toggled(button_pressed: bool):
 	Globals.update_config({"developer": str(int(button_pressed))})
+
+func _on_MatrixChecker_toggled(button_pressed):
+	Globals.update_config({"auto_matrix_mode": str(int(button_pressed))})

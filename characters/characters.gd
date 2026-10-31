@@ -111,7 +111,8 @@ func get_character(character_name) -> Character:
 
 func init():
 # warning-ignore:return_value_discarded
-	Locale.connect("locale_changed", self, "update_locale")
+	if not Locale.is_connected("locale_changed", self, "update_locale"):
+		Locale.connect("locale_changed", self, "update_locale")
 	var f = File.new()
 	f.open("res://characters/characters.txt", File.READ)
 	var content = f.get_as_text().split("\n")

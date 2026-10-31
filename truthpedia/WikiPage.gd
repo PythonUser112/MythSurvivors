@@ -30,7 +30,7 @@ func redraw():
 	var idx = 0
 	for line in content:
 		if line.begins_with("!!"):
-			push_warning("Warning: line %s: Todo mark!" % (idx))
+			Logger.warn("TruthPedia WikiPage", "Warning: line %s: Todo mark!" % (idx))
 			continue
 		if line.begins_with("# "):
 			if bbcode_text:
@@ -159,7 +159,7 @@ func redraw():
 						if tmp2.begins_with("wiki://"):
 							if get_parent().get("WIKIPATH") != null:
 								if not get_parent().has_page(tmp2):
-									push_error("Page %s doesn't exist!" % tmp2)
+									Logger.error("TruthPedia WikiPage", "Page %s doesn't exist!" % tmp2)
 						line_parsed += "]"
 						line_parsed += tmp1
 						line_parsed += "[/url][/color]"

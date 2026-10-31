@@ -8,6 +8,9 @@ class_name RichTextMatrix
 var bbcode = "matrix"
 
 func _process_custom_fx(char_fx):
+	if Globals:
+		if not Globals.textfx:
+			return false
 	# Get parameters, or use the provided default value if missing.
 	var clear_time = char_fx.env.get("clean", 2.0)
 	var dirty_time = char_fx.env.get("dirty", 1.0)

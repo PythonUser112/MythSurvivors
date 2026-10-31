@@ -6,6 +6,7 @@ export (String) var character
 export (bool) var npc = true
 export (int) var speed = 16
 export (int, "up", "right", "down", "left") var start_direction = 2
+export (Vector2) var grid_position
 var old_direction
 
 var mana = 0
@@ -15,28 +16,28 @@ var def = 0
 var moving = false
 var idle = false
 
-onready var raycasts = {
+onready var raycasts: Dictionary = {
 	"up": $RayUp,
 	"right": $RayRight,
 	"down": $RayDown,
 	"left": $RayLeft,
 }
 
-const directions = {
+const directions: Dictionary = {
 	"up": Vector2(0, -1),
 	"right": Vector2(1, 0),
 	"down": Vector2(0, 1),
 	"left": Vector2(-1, 0)
 }
 
-const diridx = {
+const diridx: Dictionary = {
 	"up": 0,
 	"right": 1,
 	"down": 2,
 	"left": 3
 }
 
-func move(dir) -> bool:
+func move(dir: String) -> bool:
 	if moving or not dir in directions or raycasts[dir].is_colliding():
 		return false
 	moving = true
@@ -46,7 +47,6 @@ func move(dir) -> bool:
 		old_direction = $AnimatedSprite.frame
 	idle = false
 	if (diridx[dir] - old_direction) in [2, -2]:
-		print(dir, " ", diridx[dir], " ", old_direction)
 		var between = ((diridx[dir] + old_direction) / 2 + (randi() % 2) * 2) % 4
 		var anim = diridx.keys()[between]
 		$AnimatedSprite.animation = anim
@@ -98,3 +98,4 @@ func _on_IdleTimer_timeout():
 
 func _on_FrameTimer_timeout():
 	moving = false
+	grid_position = position / Vector2(16, 16)

@@ -6,6 +6,9 @@ class_name JumpPulse
 var bbcode = "jump_pulse"
 
 func _process_custom_fx(char_fx):
+	if Globals:
+		if not Globals.textfx:
+			return false
 	var amp = char_fx.env.get("amp", 25)
 	var freq = char_fx.env.get("freq", 2.0 / 3)
 	var uptime = char_fx.env.get("uptime", 0.5 / 3)

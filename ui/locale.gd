@@ -4,9 +4,9 @@ signal locale_changed
 
 export (String) var lang
 
-var locales = {}
-var stat_translations = {}
-var action_translations = {}
+var locales: Dictionary = {}
+var stat_translations: Dictionary = {}
+var action_translations: Dictionary = {}
 
 func set_locale(locale: String) -> void:
 	emit_signal("locale_changed", locale)

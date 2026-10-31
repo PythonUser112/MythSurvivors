@@ -9,7 +9,7 @@ var history = []
 func _ready():
 	var wikidir = Directory.new()
 	if wikidir.open(WIKIPATH) != OK:
-		push_error("Truthpedia wiki doesn't exist!")
+		Logger.error("TruthPedia", "TruthPedia wiki doesn't exist!")
 		return
 	wikidir.list_dir_begin()
 	var dir
@@ -38,6 +38,7 @@ func has_page(page: String) -> bool:
 
 func change_to(page: String, heading: String, add_to_history: bool = true):
 	if not has_page("wiki://" + page):
+		Logger.warn("TruthPedia", "TruthPedia page '%s' doesn't exist!" % page)
 		$ErrorDialog.popup_centered()
 		return
 	if page != current_page.get("wikipage"):

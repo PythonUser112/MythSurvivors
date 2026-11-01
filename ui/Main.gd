@@ -5,6 +5,8 @@ export (Array, PackedScene) var levels = []
 const character_selector = preload("res://ui/CharacterSelector.tscn")
 
 func _ready():
+	Logger.info("Main Scene", "Main scene preparing...")
+	Modulate.hide_everything()
 # warning-ignore:return_value_discarded
 	InputManager.connect("menu_closed", self, "_on_Settings_BackButton_button_down")
 	OS.window_maximized = Globals.config["maximized"] == "1"
@@ -13,10 +15,8 @@ func _ready():
 	$GraphicsMenu/VButtonMenu/FullscreenButton.down = Globals.config["fullscreen"] == "1"
 	$GraphicsMenu/VButtonMenu/ShaderButton.down = Globals.config["shaders"] == "1"
 	$GraphicsMenu/VButtonMenu/TextfxButton.down = Globals.config["textfx"] == "1"
-	Modulate.hide_everything()
 	$SpecialMenu/VButtonMenu/DeveloperButton.disabled = not Globals.developer_mode
 	$MainMenu.rect_position = Vector2(412, 100)
-	Modulate.fade_in()
 	var f = File.new()
 	f.open("res://credits.txt", File.READ)
 	var content = "\n[jump_pulse]" + f.get_as_text() + "[jump_pulse]"
@@ -38,15 +38,22 @@ func _ready():
 	$LanguageMenu/VButtonMenu/BackButton.raise()
 	$LanguageMenu/VButtonMenu.update()
 	$MainMenu/VButtonMenu.activate()
+	Logger.info("Main Scene", "Main scene fully prepared")
+	Modulate.fade_in()
+	yield(Modulate, "finished")
+	Logger.info("Main Scene", "Main scene now fully displayed")
 
 func _on_PlayButton_button_down():
+	Logger.error("Main Scene", "Play menu not developed!")
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	yield($Tween, "tween_all_completed")
 
 func _on_ExitButton_button_down():
+	Logger.info("Main Scene", "Exiting")
 	get_tree().quit()
 
 func _on_SpecialButton_button_down():
+	Logger.info("Main Scene", "Entering specials menu")
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SpecialMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
@@ -54,6 +61,7 @@ func _on_SpecialButton_button_down():
 	$SpecialMenu/VButtonMenu.activate()
 
 func _on_BackButton_button_down():
+	Logger.info("Main Scene", "Entering main menu")
 	$Tween.interpolate_property($SpecialMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
@@ -64,6 +72,7 @@ func _on_BackButton_button_down():
 	$MainMenu/VButtonMenu.activate()
 
 func _on_Settings_BackButton_button_down():
+	Logger.info("Main Scene", "Entering settings menu")
 	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
@@ -72,6 +81,7 @@ func _on_Settings_BackButton_button_down():
 	$SettingsMenu/VButtonMenu.activate()
 
 func _on_SettingsButton_button_down():
+	Logger.info("Main Scene", "Entering settings menu")
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
@@ -79,25 +89,28 @@ func _on_SettingsButton_button_down():
 	$SettingsMenu/VButtonMenu.activate()
 
 func _on_CreditButton_button_down():
+	Logger.info("Main Scene", "Displaying credits")
 	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, -600), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
-	$Tween.interpolate_property($Stars/Title, "rect_position", null, Vector2(0, -700), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/Title, "rect_position", null, Vector2(0, -600), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($Credits, "rect_position", null, Vector2(100, -$Credits.rect_size.y), 30, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT, 1)
 	$Tween.start()
 	yield($Tween, "tween_all_completed")
 	$Credits.rect_position = Vector2(100, 600)
-	$Stars/Title.rect_position = Vector2(0, 0)
-	$Tween.interpolate_property($MainMenu, "rect_position", Vector2(412, -500 - $Credits.rect_size.y), Vector2(412, 100), 10, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($MainMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property($CanvasLayer/Title, "rect_position", null, Vector2(0, 0), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	yield($Tween, "tween_completed")
 	$MainMenu/VButtonMenu.activate()
 
 func _on_DeveloperButton_button_down():
+	Logger.info("Main Scene", "Entering developer menu")
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://developers/DeveloperMenu.tscn")
 
 func _on_LanguageButton_button_down():
+	Logger.info("Main Scene", "Entering language menu")
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($LanguageMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
@@ -112,17 +125,20 @@ func select_language(lang: String):
 	get_tree().change_scene("res://ui/Main.tscn")
 
 func _on_TruthpediaButton_button_down():
+	Logger.info("Main Scene", "Entering TruthPedia")
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://truthpedia/Wiki.tscn")
 
 func _on_BindingsButton_button_up():
+	Logger.info("Main Scene", "Entering InputManager menu")
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-1024, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.start()
 	InputManager.activate()
 
 func _on_GraphicsButton_button_down():
+	Logger.info("Main Scene", "Entering graphics menu")
 	$Tween.interpolate_property($SettingsMenu, "rect_position", null, Vector2(-250, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT)
 	$Tween.interpolate_property($GraphicsMenu, "rect_position", null, Vector2(412, 100), 1, Tween.TRANS_CUBIC, Tween.EASE_IN_OUT, 0.25)
 	$Tween.start()
@@ -164,4 +180,3 @@ func _on_TextfxConfirmationDialog_confirmed():
 func _on_TextfxConfirmationDialog_popup_hide():
 	yield(get_tree(), "idle_frame")
 	$GraphicsMenu/VButtonMenu/TextfxButton.down = Globals.config["shaders"] == "1"
-

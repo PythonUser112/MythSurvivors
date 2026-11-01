@@ -28,7 +28,9 @@ func _ready():
 	Locale.lang = config.get("lang")
 	Locale.init()
 
-func update_config(new_cfg: Dictionary):
+func update_config(new_cfg: Dictionary, display: bool = true):
+	if display:
+		Logger.info("Globals", "Config updated: %s" % new_cfg)
 	for key in new_cfg:
 		config[key] = new_cfg[key]
 	textfx = config.get("textfx") == "1"

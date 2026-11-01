@@ -9,6 +9,7 @@ var stat_translations: Dictionary = {}
 var action_translations: Dictionary = {}
 
 func set_locale(locale: String) -> void:
+	Logger.info("Locale", "New locale '%s' selected" % locale)
 	emit_signal("locale_changed", locale)
 	Skills.skilltrees = {}
 	lang = locale

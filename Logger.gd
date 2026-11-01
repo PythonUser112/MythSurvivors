@@ -2,7 +2,7 @@ extends CanvasLayer
 
 func _message(color: String, stage: String, part: String, message: String) -> void:
 	var timestamp = OS.get_unix_time()
-	$LoggerMessages.append_bbcode("[color=%s]%s %s: [b]%s[/b] %s[/color]\n" %[color, timestamp, stage, part, message])
+	$LoggerMessages.append_bbcode("[color=%s]%s %s: [color=#00ffff]%s[/color] %s[/color]\n" %[color, timestamp, stage, part, message])
 
 func error(part: String, message: String) -> void:
 	_message("red", "ERROR", part, message)

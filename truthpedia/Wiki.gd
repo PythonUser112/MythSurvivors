@@ -42,6 +42,7 @@ func change_to(page: String, heading: String, add_to_history: bool = true):
 		$ErrorDialog.popup_centered()
 		return
 	if page != current_page.get("wikipage"):
+		Logger.info("TruthPedia", "Changing to page '%s'" % page)
 		if add_to_history:
 			history.append(current_page.wikipage)
 			$InfoLayer/WikiTitle/Search/LastButton.disabled = false
@@ -56,6 +57,7 @@ func change_to(page: String, heading: String, add_to_history: bool = true):
 	current_page.scroll_to(heading)
 
 func _on_BackButton_button_down():
+	Logger.info("TruthPedia", "Leaving TruthPedia")
 	Modulate.fade_out()
 	yield(Modulate, "finished")
 # warning-ignore:return_value_discarded

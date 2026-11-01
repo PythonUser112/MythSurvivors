@@ -52,6 +52,7 @@ func deserialize_action(action_string: String) -> InputEvent:
 	return action
 
 func save_keybinds() -> void:
+	Logger.info("InputManager", "Updating keybind storage")
 	var saved = {}
 	for action in InputMap.get_actions():
 		var serialized = PoolStringArray()
@@ -61,10 +62,11 @@ func save_keybinds() -> void:
 				serialized.append(value)
 		saved[INPUT_CONFIG_PREFIX + action] = \
 			INPUT_CONFIG_SEPARATOR.join(serialized)
-	Globals.update_config(saved)
+	Globals.update_config(saved, false)
 
 
 func load_keybinds() -> void:
+	Logger.info("InputManager", "Loading keybind storage")
 	for action in InputMap.get_actions():
 		var config_key = INPUT_CONFIG_PREFIX + action
 		if not Globals.config.has(config_key):
@@ -139,6 +141,8 @@ func get_symbol(event: InputEvent) -> Array:
 		else:
 			stick_name += "-"
 		symbols.append(InputSymbolGenerator.get_key_symbol(InputSymbolGenerator.JOYSTICK, stick_name))
+	else:
+		Logger.warn("InputManager", "Symbol of type '%s' requested, couldn't render!" % event.get_class())
 	return symbols
 
 func get_action_symbols(action: String) -> Array:
@@ -191,7 +195,7 @@ func render_actions():
 		action_container.add_child(back_button)
 		action_container_parent.add_child(action_container)
 		$InputManagementContainer.add_child(action_container_parent)
-		save_keybinds()
+	save_keybinds()
 	$InputManagementContainer/ScrollContainer/Actions.add_child(HSeparator.new())
 	var reset_button = UIButton.new()
 	reset_button.text = Locale.get_action_translation("reset") # Yes, I was too lasy to do this correctly

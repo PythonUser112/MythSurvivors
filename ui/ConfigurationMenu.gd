@@ -39,6 +39,7 @@ func _process(_delta):
 	$ScrollContainer/GridContainer/ConfirmButton.disabled = not (locale_selected and devil_checker_found and newsletter_checker_found)
 
 func _on_ConfirmButton_button_up():
+	Logger.info("Configuration", "Configuration done")
 	Globals.update_config({"config_version": Globals.version})
 # warning-ignore:return_value_discarded
 	get_tree().change_scene("res://ui/BootSplash.tscn")

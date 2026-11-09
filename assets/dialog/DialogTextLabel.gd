@@ -42,7 +42,7 @@ func show_text(_text: String):
 	$Tween.start()
 	show()
 
-func _process(delta):
+func _process(_delta):
 	if finished:
 		return
 	if Input.is_action_just_pressed("ui_select"):

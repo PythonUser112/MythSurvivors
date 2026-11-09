@@ -28,7 +28,7 @@ func get_menu_labels() -> Dictionary:
 	for line in content:
 		if line.begins_with("- "):
 			if not current:
-				push_error("Label without menu!")
+				Logger.error("Locale", "Label without menu!")
 			else:
 				menu_labels[current].append(line.right(2))
 		else:
@@ -38,7 +38,10 @@ func get_menu_labels() -> Dictionary:
 	return menu_labels
 
 func get_action_translation(action: String) -> String:
-	return action_translations[lang].get(action, action)
+	if action in action_translations[lang]:
+		return action_translations[lang][action]
+	Logger.warn("Locale", "For action '%s', no translation was found!" % action)
+	return action
 
 func init() -> void:
 	var f = File.new()
@@ -67,7 +70,7 @@ func init() -> void:
 				var key_value = line.split(": ")
 				action_translations[locale][key_value[0]] = key_value[1]
 	if not lang in locales:
-		print_debug("Invalid language: ", lang)
+		Logger.debug("Locale", "Invalid language: '%s'" % lang)
 		lang = "en"
 		Globals.update_config({"lang": lang})
 	Characters.init()

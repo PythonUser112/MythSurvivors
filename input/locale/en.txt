@@ -22,3 +22,4 @@ save_file: Save (TruthPedia)
 reset: Reset to defaults
 back: Back
 add: Add key binding
+matrix_mode: Display debug information

@@ -22,3 +22,4 @@ save_file: Speichern (TruthPedia)
 reset: Werkseinstellungen
 back: Zurück
 add: Kombination hinzufügen
+matrix_mode: Debug-Inofs anzeigen

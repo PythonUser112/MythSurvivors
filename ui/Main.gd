@@ -40,8 +40,6 @@ func _ready():
 	$MainMenu/VButtonMenu.activate()
 	Logger.info("Main Scene", "Main scene fully prepared")
 	Modulate.fade_in()
-	yield(Modulate, "finished")
-	Logger.info("Main Scene", "Main scene now fully displayed")
 
 func _on_PlayButton_button_down():
 	Logger.error("Main Scene", "Play menu not developed!")

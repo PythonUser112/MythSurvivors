@@ -29,14 +29,13 @@ func instantiate_scene(scene_path: String):
 	$TopLayer/CenterContainer/Button.text = "End test"
 
 func _on_Button_pressed():
-	if current_test == null:
+	if not is_instance_valid(current_test):
 		$TopLayer/CenterContainer/Button.disabled = true
 		Modulate.fade_out()
 		yield(Modulate, "finished")
 # warning-ignore:return_value_discarded
 		get_tree().change_scene("res://developers/DeveloperMenu.tscn")
 	current_test.queue_free()
-	current_test = null
 	$TopLayer/CenterContainer/Button.text = "Back to developer menu"
 	$TestMenu.show()
 	$TestMenu.activate()

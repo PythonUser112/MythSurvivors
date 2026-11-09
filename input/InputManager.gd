@@ -99,7 +99,7 @@ func _input(event: InputEvent):
 				button.append_bbcode("[center]")
 				for texture in symbols:
 					button.add_image(texture)
-				button.connect("button_up", self, "remove_binding", [target_action, ccount - 4])
+				button.connect("button_up", self, "remove_binding", [target_action, ccount - 3])
 				get_node("InputManagementContainer/" + target_action).get_child(0).add_child(button)
 				hseparator.raise()
 				add_button.raise()
@@ -210,6 +210,7 @@ func render_actions():
 func reset_binds():
 	InputMap.load_from_globals()
 	save_keybinds()
+	yield(get_tree(), "idle_frame")
 	$InputManagementContainer/ScrollContainer/Actions.activate()
 
 func remove_binding(action: String, binding_index: int):

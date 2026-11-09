@@ -81,7 +81,7 @@ class Skilltree:
 						skills_ordered.append([])
 				skills_ordered[order].append(skill)
 		if len(skills_ordered[0]) > 1:
-			push_warning("Skilltree '%s' should contain only one root item." % (skilltree_filename))
+			Logger.warn("Skilltree Management", "Skilltree '%s' should contain only one root item." % (skilltree_filename))
 
 	func get_skill_color(skill):
 		return colors[skill_attributes[skill]["color"]]
@@ -90,7 +90,7 @@ class Skilltree:
 		return skill_deps[skill]
 
 	func is_skill_active(_skill):
-		push_warning("Skilltree.is_skill_active not defined yet!")
+		Logger.warn("Skilltree Management", "Skilltree.is_skill_active not defined yet!")
 		return false
 
 	func unlockable(skill):

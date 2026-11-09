@@ -37,7 +37,7 @@ class Character:
 		self._path = character
 		var f = File.new()
 		if not f.file_exists(character_file % character):
-			push_error("Character '%s' doesn't exist!" %(character))
+			Logger.error("Character Management", "Character '%s' doesn't exist!" %(character))
 			return
 		self.skilltree = Skills.get_skilltree(character)
 		f.open(character_file % character, File.READ)
@@ -57,7 +57,7 @@ class Character:
 					self.stats[line[0]] = line[1]
 		for lang in Locale.locales:
 			if f.open(desc_path % [self._path, lang], File.READ) != OK:
-				push_error("Couldn't open desc file '%s/%s'!" % [self._path, lang])
+				Logger.error("Character Management", "Couldn't open desc file '%s/%s'!" % [self._path, lang])
 				return
 			lines = f.get_as_text().split("\n")
 			f.close()
@@ -75,7 +75,7 @@ class Character:
 					elif key == "skill":
 						self._skill[lang] = value
 					else:
-						push_warning("Descriptor '%s' found, but not used!" % key)
+						Logger.warn("Character Management", "Descriptor '%s' found, but not used!" % key)
 		set_lang(Locale.lang)
 		self._fully_instantiated = true
 
@@ -87,12 +87,12 @@ class Character:
 
 	func get_picture(pose: String) -> Texture:
 		if not self._fully_instantiated:
-			push_error("Not instantiated correctly!")
+			Logger.error("Character Management", "Not instantiated correctly!")
 		return load(picture_paths % [self._path, pose]) as Texture
 
 	func to_bbcode() -> String:
 		if not self._fully_instantiated:
-			push_error("Not instantiated correctly!")
+			Logger.error("Character Management", "Not instantiated correctly!")
 		var out = "[center][jump_pulse]" + self.name + "[/jump_pulse][/center]"
 		out += "\n[center][font=res://assets/fonts/Jacquard_24/FontMedium.tres][jump_pulse]"
 		out += self.fighter_class

@@ -49,5 +49,6 @@ bbcode_text = "
 [center][jump_pulse]Skill[/jump_pulse][/center]"
 text = "
 Skill"
+fit_content_height = true
 scroll_active = false
 custom_effects = [ SubResource( 4 ) ]

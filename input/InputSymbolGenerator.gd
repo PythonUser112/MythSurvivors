@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 export (String, FILE) var filestorage = "user://inputsymbols.txt"
 
@@ -206,7 +206,7 @@ func get_key_symbol(type, key):
 		set_pixels_symmetrically(2, 2, 1, 3, 9, Color.gray)
 		set_pixels(3, 1, 3, 5, Color.gray)
 		set_pixel(4, 3, Color.black)
-		var idx = {"1-": 0, "0+": 1, "1+": 2, "0-": 3}[key]
+		var idx = {"1+": 0, "0-": 1, "1-": 2, "0+": 3}[key]
 		var i = 0
 		for pos in rot:
 			if idx != i:

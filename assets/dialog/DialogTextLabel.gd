@@ -23,7 +23,7 @@ func show_text(_text: String):
 		characters += index - last_index 
 		last_index = _text.find(">>", index)
 		var action = _text.substr(index + 2, last_index - index - 2)
-		var symbols = yield(InputManager.get_action_symbols(action), "completed")
+		var symbols = InputManager.get_action_symbols(action)
 		for sym in symbols:
 			if sym is String:
 # warning-ignore:return_value_discarded
